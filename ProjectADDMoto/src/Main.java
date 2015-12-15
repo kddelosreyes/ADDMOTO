@@ -1,5 +1,6 @@
 
 import javax.swing.UIManager;
+import project.addmoto.database.Query;
 import project.addmoto.view.UI_Login;
 
 /**
@@ -8,6 +9,9 @@ import project.addmoto.view.UI_Login;
  */
 public class Main {
     public static void main(String[] args) {
+        
+        Query query = new Query();
+        
         try {
             UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
         } catch(Exception exc) {
@@ -16,7 +20,7 @@ public class Main {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UI_Login().setVisible(true);
+                new UI_Login(query).setVisible(true);
             }
         });
     }

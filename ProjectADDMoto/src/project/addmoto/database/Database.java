@@ -18,6 +18,7 @@ public class Database {
     All tables from ADDMOTODB database
     */
     public static final String EXPENSE_TABLE = "expense_table";
+    public static final String LOGS_TABLE = "logs_table";
     public static final String MOTOR_LINE_TABLE = "motor_line_table";
     public static final String ORDERS_TABLE = "orders_table";
     public static final String ORDER_LINE_TABLE = "order_line_table";
@@ -29,6 +30,14 @@ public class Database {
     public static final String SOLD_ITEMS_TABLE = "sold_items_table";
     public static final String SUPPLIER_CONTACTS_TABLE = "supplier_contacts_table";
     public static final String SUPPLIER_TABLE = "supplier_table";
+    
+    /*
+    LOGS_TABLE columns
+    */
+    public static final String LOG_ID = "log_id";
+    public static final String LOG_DATETIME = "log_datetime";
+    public static final String LOG_SELLER_ID_FK = "seller_id";
+    //public static final String 
     
     /*
     SELLER_ACCOUNT_TABLE columns
