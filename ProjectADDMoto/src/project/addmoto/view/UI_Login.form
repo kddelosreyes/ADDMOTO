@@ -63,16 +63,16 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="UILogin_jTextField_username" min="-2" pref="178" max="-2" attributes="0"/>
-                      <Component id="UILogin_jPasswordField_password" min="-2" pref="178" max="-2" attributes="0"/>
+                      <Component id="UILogin_usernameTextField" min="-2" pref="178" max="-2" attributes="0"/>
+                      <Component id="UILogin_passwordPasswordField" min="-2" pref="178" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="16" max="32767" attributes="0"/>
-                  <Component id="UILogin_jButton_login" min="-2" pref="161" max="-2" attributes="0"/>
+                  <Component id="UILogin_loginButton" min="-2" pref="161" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="UILogin_jButton_createNew" min="-2" pref="161" max="-2" attributes="0"/>
+                  <Component id="UILogin_createButton" min="-2" pref="161" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -82,18 +82,18 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="UILogin_jTextField_username" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="UILogin_usernameTextField" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="UILogin_jLabel_username" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="UILogin_jLabel_password" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="UILogin_jPasswordField_password" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                      <Component id="UILogin_passwordPasswordField" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="UILogin_jButton_createNew" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
-                      <Component id="UILogin_jButton_login" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="UILogin_createButton" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="UILogin_loginButton" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
@@ -119,7 +119,7 @@
             <Property name="text" type="java.lang.String" value="Password:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="UILogin_jTextField_username">
+        <Component class="javax.swing.JTextField" name="UILogin_usernameTextField">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="18" style="0"/>
@@ -127,7 +127,7 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="UILogin_jPasswordField_password">
+        <Component class="javax.swing.JPasswordField" name="UILogin_passwordPasswordField">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="18" style="0"/>
@@ -135,7 +135,7 @@
             <Property name="horizontalAlignment" type="int" value="0"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="UILogin_jButton_createNew">
+        <Component class="javax.swing.JButton" name="UILogin_createButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="22" style="0"/>
@@ -144,7 +144,7 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="UILogin_jButton_login">
+        <Component class="javax.swing.JButton" name="UILogin_loginButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="22" style="0"/>
@@ -152,7 +152,7 @@
             <Property name="text" type="java.lang.String" value="Login"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UILogin_jButton_loginActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UILogin_loginButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
