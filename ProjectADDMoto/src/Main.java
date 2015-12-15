@@ -9,7 +9,6 @@ import project.addmoto.view.UI_Login;
  */
 public class Main {
     public static void main(String[] args) {
-        
         Query query = new Query();
         
         try {
