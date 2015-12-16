@@ -10,13 +10,17 @@ public class Receipt {
     private String transactionTimeStamp;
     private double totalPrice;
     private int sellerID;
+    private double pricePaid;
+    private boolean isFullyPaid;
     
     public Receipt(int receiptID, String transactionTimeStamp, double totalPrice,
-            int sellerID) {
+            int sellerID, double pricePaid, boolean isFullyPaid) {
         this.receiptID = receiptID;
         this.transactionTimeStamp = transactionTimeStamp;
         this.totalPrice = totalPrice;
         this.sellerID = sellerID;
+        this.pricePaid = pricePaid;
+        this.isFullyPaid = isFullyPaid;
     }
 
     public int getReceiptID() {
@@ -49,5 +53,21 @@ public class Receipt {
 
     public void setSellerID(int sellerID) {
         this.sellerID = sellerID;
+    }
+
+    public double getPricePaid() {
+        return pricePaid;
+    }
+
+    public void setPricePaid(double pricePaid) {
+        this.pricePaid = pricePaid;
+    }
+
+    public boolean isIsFullyPaid() {
+        return isFullyPaid;
+    }
+
+    public void setIsFullyPaid(boolean isFullyPaid) {
+        this.isFullyPaid = isFullyPaid;
     }
 }

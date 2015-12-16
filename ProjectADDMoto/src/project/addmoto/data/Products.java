@@ -19,15 +19,15 @@ public class Products {
     private Image imagePicture;
     private String description;
     private String characteristics;
+    private String motors;
     private int productLineID;
-    private int motorLineID;
     private int supplierID;
     
     public Products(int productID, String addmotoCode, String supplierCode,
             int currentQuantity, double unitPrice, double sellingPrice,
             double profitMargin, int thresholdCount, Image imagePicture,
-            String description, String characteristics, int productLineID,
-            int motorLineID, int supplierID) {
+            String description, String characteristics, String motors,
+            int productLineID, int supplierID) {
         this.productID = productID;
         this.addmotoCode = addmotoCode;
         this.supplierCode = supplierCode;
@@ -40,7 +40,7 @@ public class Products {
         this.description = description;
         this.characteristics = characteristics;
         this.productLineID = productLineID;
-        this.motorLineID = motorLineID;
+        this.motors = motors;
         this.supplierID = supplierID;
     }
 
@@ -131,6 +131,14 @@ public class Products {
     public void setCharacteristics(String characteristics) {
         this.characteristics = characteristics;
     }
+    
+    public String getMotors() {
+        return motors;
+    }
+
+    public void setMotors(String motors) {
+        this.motors = motors;
+    }
 
     public int getProductLineID() {
         return productLineID;
@@ -138,14 +146,6 @@ public class Products {
 
     public void setProductLineID(int productLineID) {
         this.productLineID = productLineID;
-    }
-
-    public int getMotorLineID() {
-        return motorLineID;
-    }
-
-    public void setMotorLineID(int motorLineID) {
-        this.motorLineID = motorLineID;
     }
 
     public int getSupplierID() {

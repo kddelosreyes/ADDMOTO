@@ -12,6 +12,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import project.addmoto.utilities.TimerUtilities;
 
 /**
  *
@@ -28,23 +30,7 @@ public class UI_Dashboard extends javax.swing.JFrame {
         this.parentFrame = parentFrame;
         initComponents();
         setLocationRelativeTo(null);
-        runTime();
-    }
-    
-    private void runTime() {
-        final DateFormat dateTimeFormat = new SimpleDateFormat("dd MMM YYYY, HH:mm:ss");
-        
-        ActionListener timerListener = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                Date date = new Date();
-                String dateTime = dateTimeFormat.format(date);
-                UIDashboard_dateTimeLabel.setText(dateTime);
-            }
-        };
-        
-        Timer timer = new Timer(1000, timerListener);
-        timer.setInitialDelay(0);
-        timer.start();
+        TimerUtilities.runTime(UIDashboard_dateTimeLabel);
     }
     
     @SuppressWarnings("unchecked")
@@ -66,9 +52,16 @@ public class UI_Dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("ADD Moto - Motorcycle Parts and Accessories");
         setBackground(new java.awt.Color(0, 0, 0));
+        setMaximumSize(new java.awt.Dimension(1084, 680));
+        setMinimumSize(new java.awt.Dimension(1084, 680));
+        setPreferredSize(new java.awt.Dimension(0, 0));
         setResizable(false);
+        setSize(new java.awt.Dimension(1084, 680));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel1.setMaximumSize(new java.awt.Dimension(1084, 80));
+        jPanel1.setMinimumSize(new java.awt.Dimension(1084, 80));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1084, 80));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
@@ -77,12 +70,14 @@ public class UI_Dashboard extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         jLabel2.setText("ADD MOTO");
 
-        UIDashboard_inventoryButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        UIDashboard_inventoryButton.setText("INVENTORY");
+        UIDashboard_inventoryButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UIDashboard_inventoryButton.setMnemonic('I');
+        UIDashboard_inventoryButton.setText("Inventory");
         UIDashboard_inventoryButton.setPreferredSize(new java.awt.Dimension(105127, 25));
 
-        UIDashboard_logoutButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        UIDashboard_logoutButton.setText("LOG OUT");
+        UIDashboard_logoutButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UIDashboard_logoutButton.setMnemonic('L');
+        UIDashboard_logoutButton.setText("Log Out");
         UIDashboard_logoutButton.setPreferredSize(new java.awt.Dimension(127, 25));
         UIDashboard_logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,8 +85,9 @@ public class UI_Dashboard extends javax.swing.JFrame {
             }
         });
 
-        UIDashboard_pointOfSaleButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        UIDashboard_pointOfSaleButton.setText("POINT OF SALE");
+        UIDashboard_pointOfSaleButton.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        UIDashboard_pointOfSaleButton.setMnemonic('P');
+        UIDashboard_pointOfSaleButton.setText("Point of Sale");
         UIDashboard_pointOfSaleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 UIDashboard_pointOfSaleButtonActionPerformed(evt);
@@ -210,9 +206,9 @@ public class UI_Dashboard extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -222,7 +218,17 @@ public class UI_Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void UIDashboard_pointOfSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UIDashboard_pointOfSaleButtonActionPerformed
-        // TODO add your handling code here:
+        try {
+            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new UI_PointOfSale(UI_Dashboard.this).setVisible(true);
+            }
+        });
     }//GEN-LAST:event_UIDashboard_pointOfSaleButtonActionPerformed
 
     private void UIDashboard_logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UIDashboard_logoutButtonActionPerformed

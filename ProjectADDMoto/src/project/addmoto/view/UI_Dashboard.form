@@ -7,7 +7,19 @@
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="0" green="0" red="0" type="rgb"/>
     </Property>
+    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1084, 680]"/>
+    </Property>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1084, 680]"/>
+    </Property>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[0, 0]"/>
+    </Property>
     <Property name="resizable" type="boolean" value="false"/>
+    <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[1084, 680]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -46,9 +58,9 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Component id="jPanel3" alignment="0" pref="536" max="32767" attributes="0"/>
-                  <Component id="jPanel2" alignment="0" pref="536" max="32767" attributes="0"/>
-                  <Component id="jPanel4" pref="536" max="32767" attributes="0"/>
+                  <Component id="jPanel3" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel4" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" pref="14" max="-2" attributes="0"/>
@@ -64,6 +76,15 @@
           <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
             <EtchetBorder/>
           </Border>
+        </Property>
+        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[1084, 80]"/>
+        </Property>
+        <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[1084, 80]"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[1084, 80]"/>
         </Property>
       </Properties>
 
@@ -147,9 +168,10 @@
         <Component class="javax.swing.JButton" name="UIDashboard_inventoryButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="INVENTORY"/>
+            <Property name="mnemonic" type="int" value="73"/>
+            <Property name="text" type="java.lang.String" value="Inventory"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[105127, 25]"/>
             </Property>
@@ -158,9 +180,10 @@
         <Component class="javax.swing.JButton" name="UIDashboard_logoutButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="LOG OUT"/>
+            <Property name="mnemonic" type="int" value="76"/>
+            <Property name="text" type="java.lang.String" value="Log Out"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[127, 25]"/>
             </Property>
@@ -172,9 +195,10 @@
         <Component class="javax.swing.JButton" name="UIDashboard_pointOfSaleButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
+              <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="POINT OF SALE"/>
+            <Property name="mnemonic" type="int" value="80"/>
+            <Property name="text" type="java.lang.String" value="Point of Sale"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UIDashboard_pointOfSaleButtonActionPerformed"/>
