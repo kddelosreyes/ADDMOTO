@@ -6,6 +6,7 @@
 package project.addmoto.view;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import project.addmoto.utilities.TimerUtilities;
 
@@ -16,6 +17,7 @@ import project.addmoto.utilities.TimerUtilities;
 public class UI_PointOfSale extends javax.swing.JFrame {
     
     private final JFrame parentFrame;
+    private final String EMPTY = "";
 
     /**
      * Creates new form UI_PointOfSale
@@ -24,7 +26,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         this.parentFrame = parentFrame;
         initComponents();
         setLocationRelativeTo(null);
-        PromptSupport.setPrompt("Add a Product", UIPointOfSale_addProductTextField);
+        PromptSupport.setPrompt(" Add a Product", UIPointOfSale_addProductTextField);
         TimerUtilities.runTime(UIPointOfSale_dateTimeLabel);
     }
 
@@ -32,6 +34,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -48,8 +51,13 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        UIPointOfSale_subtotalLabel = new javax.swing.JLabel();
+        UIPointOfSale_taxLabel = new javax.swing.JLabel();
+        UIPointOfSale_totalLabel = new javax.swing.JLabel();
+        UIPointOfSale_amountDueLabel = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
         UIPointOfSale_payButton = new javax.swing.JButton();
         UIPointOfSale_voidButton = new javax.swing.JButton();
         UIPointOfSale_creditButton = new javax.swing.JButton();
@@ -57,11 +65,13 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel6.setText("TOTAL");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("ADD Moto - Motorcycle Parts and Accessories");
         setMaximumSize(new java.awt.Dimension(1084, 680));
         setMinimumSize(new java.awt.Dimension(1084, 680));
-        setPreferredSize(new java.awt.Dimension(1084, 680));
         setResizable(false);
         setSize(new java.awt.Dimension(1084, 680));
 
@@ -145,6 +155,11 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         UIPointOfSale_enterButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         UIPointOfSale_enterButton.setMnemonic('E');
         UIPointOfSale_enterButton.setText("Enter");
+        UIPointOfSale_enterButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UIPointOfSale_enterButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
@@ -195,12 +210,29 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tax (12%)");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel6.setText("TOTAL");
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(204, 0, 0));
         jLabel7.setText("Amount Due");
+
+        UIPointOfSale_subtotalLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        UIPointOfSale_subtotalLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        UIPointOfSale_subtotalLabel.setText("PhP   0.00");
+
+        UIPointOfSale_taxLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        UIPointOfSale_taxLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        UIPointOfSale_taxLabel.setText("PhP   0.00");
+
+        UIPointOfSale_totalLabel.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        UIPointOfSale_totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        UIPointOfSale_totalLabel.setText("PhP   0.00");
+
+        UIPointOfSale_amountDueLabel.setFont(new java.awt.Font("Tahoma", 1, 28)); // NOI18N
+        UIPointOfSale_amountDueLabel.setForeground(new java.awt.Color(204, 0, 0));
+        UIPointOfSale_amountDueLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        UIPointOfSale_amountDueLabel.setText("PhP   0.00");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel8.setText("Total");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -209,24 +241,47 @@ public class UI_PointOfSale extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator1)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(UIPointOfSale_subtotalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(UIPointOfSale_taxLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(UIPointOfSale_totalLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(UIPointOfSale_amountDueLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel4)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(UIPointOfSale_subtotalLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(UIPointOfSale_taxLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addContainerGap())
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UIPointOfSale_totalLabel)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(UIPointOfSale_amountDueLabel)
+                    .addComponent(jLabel7))
+                .addGap(11, 11, 11))
         );
 
         UIPointOfSale_payButton.setBackground(new java.awt.Color(0, 153, 0));
@@ -379,14 +434,26 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_UIPointOfSale_backButtonActionPerformed
 
+    private void UIPointOfSale_enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UIPointOfSale_enterButtonActionPerformed
+        if(getContents().equals(EMPTY)) {
+            JOptionPane.showMessageDialog(UI_PointOfSale.this, "Enter Product Code.", "Error.", JOptionPane.ERROR_MESSAGE);
+        } else {
+            
+        }
+    }//GEN-LAST:event_UIPointOfSale_enterButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField UIPointOfSale_addProductTextField;
+    private javax.swing.JLabel UIPointOfSale_amountDueLabel;
     private javax.swing.JButton UIPointOfSale_backButton;
     private javax.swing.JButton UIPointOfSale_creditButton;
     private javax.swing.JLabel UIPointOfSale_dateTimeLabel;
     private javax.swing.JButton UIPointOfSale_enterButton;
     private javax.swing.JTable UIPointOfSale_itemsTable;
     private javax.swing.JButton UIPointOfSale_payButton;
+    private javax.swing.JLabel UIPointOfSale_subtotalLabel;
+    private javax.swing.JLabel UIPointOfSale_taxLabel;
+    private javax.swing.JLabel UIPointOfSale_totalLabel;
     private javax.swing.JButton UIPointOfSale_voidButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -395,6 +462,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -403,6 +471,15 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
+
+    private String getContents() {
+        return UIPointOfSale_addProductTextField.getText();
+    }
+    
+    private void setContents() {
+        UIPointOfSale_addProductTextField.setText("");
+    }
 }

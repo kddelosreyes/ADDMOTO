@@ -54,7 +54,6 @@ public class UI_Dashboard extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0));
         setMaximumSize(new java.awt.Dimension(1084, 680));
         setMinimumSize(new java.awt.Dimension(1084, 680));
-        setPreferredSize(new java.awt.Dimension(0, 0));
         setResizable(false);
         setSize(new java.awt.Dimension(1084, 680));
 
@@ -226,6 +225,7 @@ public class UI_Dashboard extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                UI_Dashboard.this.setVisible(false);
                 new UI_PointOfSale(UI_Dashboard.this).setVisible(true);
             }
         });

@@ -1,5 +1,6 @@
 package project.addmoto.database;
 
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import project.addmoto.data.Products;
 import project.addmoto.data.SellerAccount;
 
 /**
@@ -86,5 +88,43 @@ public class Query {
             exc.printStackTrace();
         }
         return 0;
+    }
+    
+    public Products getProduct(String productCode) {
+        Products product = null;
+        
+        try {
+            query = "SELECT * FROM " + Database.PRODUCTS_TABLE + 
+                    " WHERE " + Database.PRODUCT_ADDMOTO_CODE + " = '" + productCode + "';";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                int id = resultSet.getInt(Database.PRODUCT_ID);
+                String addmotoCode = resultSet.getString(Database.PRODUCT_ADDMOTO_CODE);
+                String supplierCode = resultSet.getString(Database.PRODUCT_SUPPLIER_CODE);
+                int quantity = resultSet.getInt(Database.PRODUCT_CURRENT_QUANTITY);
+                double unitPrice = resultSet.getDouble(Database.PRODUCT_UNIT_PRICE);
+                double sellingPrice = resultSet.getDouble(Database.PRODUCT_SELLING_PRICE);
+                double profitMargin = resultSet.getDouble(Database.PRODUCT_PROFIT_MARGIN);
+                int threshold = resultSet.getInt(Database.PRODUCT_THRESHOLD_COUNT);
+                Image imagePicture = null;
+                String description = resultSet.getString(Database.PRODUCT_DESCRIPTION);
+                String characteristics = resultSet.getString(Database.PRODUCT_CHARACTERISTICS);
+                String motors = resultSet.getString(Database.PRODUCT_MOTORS);
+                int productLineID = resultSet.getInt(Database.PRODUCT_LINE_ID_FK);
+                int supplierID = resultSet.getInt(Database.PRODUCT_SUPPLIER_ID_FK);
+                
+                product = new Products(id, addmotoCode, supplierCode,
+                        quantity, unitPrice, sellingPrice,
+                        profitMargin, threshold, imagePicture,
+                        description, characteristics, motors,
+                        productLineID, supplierID);
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        
+        return product;
     }
 }
