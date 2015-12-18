@@ -51,7 +51,7 @@ public class Database {
     public static final String PRODUCT_THRESHOLD_COUNT = "product_threshold_count";
     public static final String PRODUCT_IMAGE_PICTURE = "product_image_picture";
     public static final String PRODUCT_DESCRIPTION = "product_description";
-    public static final String PRODUCT_CHARACTERISTICS = "product_characteristics";
+    public static final String PRODUCT_CHARACTERISTICS = "product_characteristic";
     public static final String PRODUCT_MOTORS = "product_motors";
     public static final String PRODUCT_LINE_ID_FK = "product_line_id";
     public static final String PRODUCT_SUPPLIER_ID_FK = "supplier_id";

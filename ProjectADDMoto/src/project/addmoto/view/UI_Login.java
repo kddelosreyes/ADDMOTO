@@ -155,7 +155,7 @@ public class UI_Login extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     UI_Login.this.setVisible(false);
-                    new UI_Dashboard(UI_Login.this).setVisible(true);
+                    new UI_Dashboard(UI_Login.this, query).setVisible(true);
                 }
             });
         } else {

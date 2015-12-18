@@ -5,14 +5,9 @@
  */
 package project.addmoto.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JFrame;
-import javax.swing.Timer;
 import javax.swing.UIManager;
+import project.addmoto.database.Query;
 import project.addmoto.utilities.TimerUtilities;
 
 /**
@@ -21,12 +16,14 @@ import project.addmoto.utilities.TimerUtilities;
  */
 public class UI_Dashboard extends javax.swing.JFrame {
     
+    private Query query;
     private JFrame parentFrame;
 
     /**
      * Creates new form UI_Dashboard
      */
-    public UI_Dashboard(JFrame parentFrame) {
+    public UI_Dashboard(JFrame parentFrame, Query query) {
+        this.query = query;
         this.parentFrame = parentFrame;
         initComponents();
         setLocationRelativeTo(null);
@@ -226,7 +223,7 @@ public class UI_Dashboard extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 UI_Dashboard.this.setVisible(false);
-                new UI_PointOfSale(UI_Dashboard.this).setVisible(true);
+                new UI_PointOfSale(UI_Dashboard.this, query).setVisible(true);
             }
         });
     }//GEN-LAST:event_UIDashboard_pointOfSaleButtonActionPerformed

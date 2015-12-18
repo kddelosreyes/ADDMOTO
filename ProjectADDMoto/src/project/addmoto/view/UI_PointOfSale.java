@@ -8,6 +8,9 @@ package project.addmoto.view;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jdesktop.swingx.prompt.PromptSupport;
+import product.addmoto.controller.POSController;
+import project.addmoto.data.Products;
+import project.addmoto.database.Query;
 import project.addmoto.utilities.TimerUtilities;
 
 /**
@@ -16,13 +19,16 @@ import project.addmoto.utilities.TimerUtilities;
  */
 public class UI_PointOfSale extends javax.swing.JFrame {
     
+    private Query query;
     private final JFrame parentFrame;
     private final String EMPTY = "";
+    private POSController posController;
 
     /**
      * Creates new form UI_PointOfSale
      */
-    public UI_PointOfSale(JFrame parentFrame) {
+    public UI_PointOfSale(JFrame parentFrame, Query query) {
+        this.query = query;
         this.parentFrame = parentFrame;
         initComponents();
         setLocationRelativeTo(null);
@@ -435,10 +441,21 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     }//GEN-LAST:event_UIPointOfSale_backButtonActionPerformed
 
     private void UIPointOfSale_enterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UIPointOfSale_enterButtonActionPerformed
-        if(getContents().equals(EMPTY)) {
+        String productCode = getContents();
+        if(productCode.equals(EMPTY)) {
             JOptionPane.showMessageDialog(UI_PointOfSale.this, "Enter Product Code.", "Error.", JOptionPane.ERROR_MESSAGE);
         } else {
-            
+            Products product = query.getProduct(productCode);
+            if(product == null) {
+                JOptionPane.showMessageDialog(UI_PointOfSale.this, "Has no product");
+            } else {
+                JOptionPane.showMessageDialog(UI_PointOfSale.this, product.getAddmotoCode());
+            }
+            if(posController == null) {
+                posController = new POSController();
+            }
+            posController.addProduct(product);
+            setFields();
         }
     }//GEN-LAST:event_UIPointOfSale_enterButtonActionPerformed
 
@@ -481,5 +498,11 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     
     private void setContents() {
         UIPointOfSale_addProductTextField.setText("");
+    }
+    
+    private void setFields() {
+        UIPointOfSale_subtotalLabel.setText("PhP   " + posController.getSubtotalPrice());
+        UIPointOfSale_taxLabel.setText("PhP   " + posController.getTaxablePrice());
+        UIPointOfSale_totalLabel.setText("PhP   " + posController.getTotalPriceString());
     }
 }
