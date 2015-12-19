@@ -253,9 +253,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="UIPointOfSale_voidButton" min="-2" pref="125" max="-2" attributes="0"/>
+                                  <Component id="UIPointOfSale_clearButton" min="-2" pref="125" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="UIPointOfSale_creditButton" min="-2" pref="125" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="UIPointOfSale_voidButton" min="-2" pref="125" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="UIPointOfSale_payButton" min="-2" pref="155" max="-2" attributes="0"/>
                               </Group>
@@ -285,9 +287,10 @@
                           <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="UIPointOfSale_payButton" max="32767" attributes="0"/>
-                              <Component id="UIPointOfSale_voidButton" max="32767" attributes="0"/>
+                              <Component id="UIPointOfSale_payButton" pref="40" max="32767" attributes="0"/>
                               <Component id="UIPointOfSale_creditButton" alignment="0" max="32767" attributes="0"/>
+                              <Component id="UIPointOfSale_clearButton" alignment="0" max="32767" attributes="0"/>
+                              <Component id="UIPointOfSale_voidButton" alignment="1" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -370,6 +373,9 @@
                         </Property>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
+                        </Property>
+                        <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
+                          <JTableSelectionModel selectionMode="0"/>
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
@@ -557,6 +563,7 @@
                     </Property>
                     <Property name="mnemonic" type="int" value="86"/>
                     <Property name="text" type="java.lang.String" value="Void"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="UIPointOfSale_creditButton">
@@ -570,8 +577,23 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="mnemonic" type="int" value="67"/>
+                    <Property name="mnemonic" type="int" value="82"/>
                     <Property name="text" type="java.lang.String" value="Credit"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="UIPointOfSale_clearButton">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="cc" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="20" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="mnemonic" type="int" value="67"/>
+                    <Property name="text" type="java.lang.String" value="Clear"/>
                   </Properties>
                 </Component>
               </SubComponents>
