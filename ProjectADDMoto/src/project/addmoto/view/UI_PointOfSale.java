@@ -7,6 +7,7 @@ package project.addmoto.view;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import product.addmoto.controller.POSController;
 import project.addmoto.data.Products;
@@ -23,6 +24,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     private final JFrame parentFrame;
     private final String EMPTY = "";
     private POSController posController;
+    private DefaultTableModel tableModel;
 
     /**
      * Creates new form UI_PointOfSale
@@ -34,6 +36,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         PromptSupport.setPrompt(" Add a Product", UIPointOfSale_addProductTextField);
         TimerUtilities.runTime(UIPointOfSale_dateTimeLabel);
+        tableModel = (DefaultTableModel) UIPointOfSale_itemsTable.getModel();
     }
 
     @SuppressWarnings("unchecked")
@@ -445,17 +448,19 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         if(productCode.equals(EMPTY)) {
             JOptionPane.showMessageDialog(UI_PointOfSale.this, "Enter Product Code.", "Error.", JOptionPane.ERROR_MESSAGE);
         } else {
+            if(posController == null) {
+                posController = new POSController();
+            }
+            
             Products product = query.getProduct(productCode);
             if(product == null) {
                 JOptionPane.showMessageDialog(UI_PointOfSale.this, "Has no product");
             } else {
                 JOptionPane.showMessageDialog(UI_PointOfSale.this, product.getAddmotoCode());
+                posController.addProduct(product);
+                setFields();
+                //Object[] row = {product.getAddmotoCode(), product.get};
             }
-            if(posController == null) {
-                posController = new POSController();
-            }
-            posController.addProduct(product);
-            setFields();
         }
     }//GEN-LAST:event_UIPointOfSale_enterButtonActionPerformed
 

@@ -57,6 +57,12 @@ public class Database {
     public static final String PRODUCT_SUPPLIER_ID_FK = "supplier_id";
     
     /*
+    PRODUCT_LINE_TABLE columns
+    */
+    public static final String PRODUCT_LINE_ID = "product_line_id";
+    public static final String PRODUCT_LINE_NAME = "product_line_name";
+    
+    /*
     SELLER_ACCOUNT_TABLE columns
     */
     public static final String SELLER_ID = "seller_id";

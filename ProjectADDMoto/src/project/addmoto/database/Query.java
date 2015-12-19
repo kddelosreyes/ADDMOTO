@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import project.addmoto.data.ProductLine;
 import project.addmoto.data.Products;
 import project.addmoto.data.SellerAccount;
 
@@ -126,5 +127,27 @@ public class Query {
         }
         
         return product;
+    }
+    
+    public ProductLine getProductLine(int productLineID) {
+        ProductLine productLine = null;
+        
+        try {
+            query = "SELECT * FROM " + Database.PRODUCT_LINE_TABLE + 
+                    " WHERE " + Database.PRODUCT_LINE_ID + " = " + productLineID + ";";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                int id = resultSet.getInt(Database.PRODUCT_LINE_ID);
+                String productLineName = resultSet.getString(Database.PRODUCT_LINE_NAME);
+                
+                productLine = new ProductLine(id, productLineName);
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        
+        return productLine;
     }
 }
