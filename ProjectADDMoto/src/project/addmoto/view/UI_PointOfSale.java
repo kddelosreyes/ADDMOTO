@@ -7,11 +7,17 @@ package project.addmoto.view;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
 import product.addmoto.controller.POSController;
+import project.addmoto.data.ProductLine;
 import project.addmoto.data.Products;
+import project.addmoto.data.SalesItems;
 import project.addmoto.database.Query;
+import project.addmoto.utilities.Formatter;
 import project.addmoto.utilities.TimerUtilities;
 
 /**
@@ -25,6 +31,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     private final String EMPTY = "";
     private POSController posController;
     private DefaultTableModel tableModel;
+    private ListSelectionModel selectionModel;
 
     /**
      * Creates new form UI_PointOfSale
@@ -37,6 +44,18 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         PromptSupport.setPrompt(" Add a Product", UIPointOfSale_addProductTextField);
         TimerUtilities.runTime(UIPointOfSale_dateTimeLabel);
         tableModel = (DefaultTableModel) UIPointOfSale_itemsTable.getModel();
+        selectionModel = (ListSelectionModel) UIPointOfSale_itemsTable.getSelectionModel();
+        selectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if(e.getValueIsAdjusting()) return;
+                int row = UIPointOfSale_itemsTable.getSelectedRow();
+                System.out.println(row);
+                SalesItems salesItems = posController.getItem(row);
+                JOptionPane.showMessageDialog(UI_PointOfSale.this, salesItems.getItemCode());
+                UIPointOfSale_itemsTable.clearSelection();
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -70,6 +89,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         UIPointOfSale_payButton = new javax.swing.JButton();
         UIPointOfSale_voidButton = new javax.swing.JButton();
         UIPointOfSale_creditButton = new javax.swing.JButton();
+        UIPointOfSale_clearButton = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -197,6 +217,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
             }
         });
         UIPointOfSale_itemsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        UIPointOfSale_itemsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         UIPointOfSale_itemsTable.getTableHeader().setResizingAllowed(false);
         UIPointOfSale_itemsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(UIPointOfSale_itemsTable);
@@ -304,12 +325,19 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         UIPointOfSale_voidButton.setForeground(new java.awt.Color(255, 255, 255));
         UIPointOfSale_voidButton.setMnemonic('V');
         UIPointOfSale_voidButton.setText("Void");
+        UIPointOfSale_voidButton.setEnabled(false);
 
         UIPointOfSale_creditButton.setBackground(new java.awt.Color(102, 102, 102));
         UIPointOfSale_creditButton.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         UIPointOfSale_creditButton.setForeground(new java.awt.Color(255, 255, 255));
-        UIPointOfSale_creditButton.setMnemonic('C');
+        UIPointOfSale_creditButton.setMnemonic('R');
         UIPointOfSale_creditButton.setText("Credit");
+
+        UIPointOfSale_clearButton.setBackground(new java.awt.Color(204, 0, 0));
+        UIPointOfSale_clearButton.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        UIPointOfSale_clearButton.setForeground(new java.awt.Color(255, 255, 255));
+        UIPointOfSale_clearButton.setMnemonic('C');
+        UIPointOfSale_clearButton.setText("Clear");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -319,9 +347,11 @@ public class UI_PointOfSale extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(UIPointOfSale_voidButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(UIPointOfSale_clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(UIPointOfSale_creditButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(UIPointOfSale_voidButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(UIPointOfSale_payButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,9 +375,10 @@ public class UI_PointOfSale extends javax.swing.JFrame {
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(UIPointOfSale_payButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(UIPointOfSale_voidButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(UIPointOfSale_creditButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(UIPointOfSale_payButton, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(UIPointOfSale_creditButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(UIPointOfSale_clearButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(UIPointOfSale_voidButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -448,18 +479,34 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         if(productCode.equals(EMPTY)) {
             JOptionPane.showMessageDialog(UI_PointOfSale.this, "Enter Product Code.", "Error.", JOptionPane.ERROR_MESSAGE);
         } else {
+            int quantity = -1;
+            if(productCode.contains("*")) {
+                String[] parts = productCode.split("\\*");
+                productCode = parts[0];
+                quantity = Integer.parseInt(parts[1]);
+            } else {
+                quantity = 1;
+            }
             if(posController == null) {
                 posController = new POSController();
             }
             
             Products product = query.getProduct(productCode);
             if(product == null) {
-                JOptionPane.showMessageDialog(UI_PointOfSale.this, "Has no product");
+                JOptionPane.showMessageDialog(UI_PointOfSale.this, "No product on list");
             } else {
                 JOptionPane.showMessageDialog(UI_PointOfSale.this, product.getAddmotoCode());
+                ProductLine productLine = query.getProductLine(product.getProductLineID());
+                SalesItems salesItems = new SalesItems(product.getProductID(), product.getAddmotoCode(),
+                        productLine.getProductLineName() + " " + product.getDescription() + " " + product.getCharacteristics(), quantity,
+                        product.getSellingPrice(), product.getSellingPrice() * quantity);
+                posController.addItem(salesItems);
                 posController.addProduct(product);
+                
+                Object[] row = {salesItems.getItemCode(), salesItems.getItemName(), salesItems.getQuantity(),
+                    salesItems.getSellingPrice(), Double.parseDouble(Formatter.format(salesItems.getExtPrice()))};
+                tableModel.addRow(row);
                 setFields();
-                //Object[] row = {product.getAddmotoCode(), product.get};
             }
         }
     }//GEN-LAST:event_UIPointOfSale_enterButtonActionPerformed
@@ -468,6 +515,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     private javax.swing.JTextField UIPointOfSale_addProductTextField;
     private javax.swing.JLabel UIPointOfSale_amountDueLabel;
     private javax.swing.JButton UIPointOfSale_backButton;
+    private javax.swing.JButton UIPointOfSale_clearButton;
     private javax.swing.JButton UIPointOfSale_creditButton;
     private javax.swing.JLabel UIPointOfSale_dateTimeLabel;
     private javax.swing.JButton UIPointOfSale_enterButton;

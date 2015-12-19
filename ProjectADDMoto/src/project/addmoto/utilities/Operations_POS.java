@@ -2,7 +2,7 @@ package project.addmoto.utilities;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import project.addmoto.data.Products;
+import project.addmoto.data.SalesItems;
 
 /**
  *
@@ -12,10 +12,10 @@ public class Operations_POS {
     
     private static final DecimalFormat decimalFormat = new DecimalFormat("#.00");
     
-    public static double getTotalAmount(ArrayList<Products> productList) {
+    public static double getTotalAmount(ArrayList<SalesItems> itemList) {
         double total = 0;
-        for(Products product : productList) {
-            total += product.getSellingPrice();
+        for(SalesItems items : itemList) {
+            total += items.getExtPrice();
         }
         return total;
     }
