@@ -32,6 +32,33 @@ public class UI_Login extends javax.swing.JFrame {
     private String getPassword() {
         return new String(UILogin_passwordPasswordField.getPassword());
     }
+    
+    private void loginUser() {
+        String username = getUsername();
+        String password = getPassword();
+        int returnedValue = query.countSellerAccount(username, password);
+        SellerAccount sellerAccount = query.getSellerAcount(username, password);
+        
+        if(returnedValue == 1 && query.insertLog(sellerAccount) == 1) {
+            JOptionPane.showMessageDialog(UI_Login.this, "Welcome " + sellerAccount.getFirstName() +
+                    " " + sellerAccount.getLastName() + "!\n" +
+                    "Have a good day!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+            try {
+                UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
+            } catch(Exception exc) {
+                exc.printStackTrace();
+            }
+            
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    UI_Login.this.setVisible(false);
+                    new UI_Dashboard(UI_Login.this, query).setVisible(true);
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(UI_Login.this, "Login credentials does not exist.", "Login Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -61,15 +88,31 @@ public class UI_Login extends javax.swing.JFrame {
 
         UILogin_usernameTextField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         UILogin_usernameTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        UILogin_usernameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UILogin_usernameTextFieldActionPerformed(evt);
+            }
+        });
 
         UILogin_passwordPasswordField.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         UILogin_passwordPasswordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        UILogin_passwordPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UILogin_passwordPasswordFieldActionPerformed(evt);
+            }
+        });
 
-        UILogin_createButton.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        UILogin_createButton.setBackground(new java.awt.Color(255, 255, 51));
+        UILogin_createButton.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        UILogin_createButton.setForeground(new java.awt.Color(51, 51, 51));
+        UILogin_createButton.setMnemonic('C');
         UILogin_createButton.setText("Create");
         UILogin_createButton.setToolTipText("");
 
-        UILogin_loginButton.setFont(new java.awt.Font("Century Gothic", 0, 22)); // NOI18N
+        UILogin_loginButton.setBackground(new java.awt.Color(0, 153, 0));
+        UILogin_loginButton.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        UILogin_loginButton.setForeground(new java.awt.Color(255, 255, 255));
+        UILogin_loginButton.setMnemonic('L');
         UILogin_loginButton.setText("Login");
         UILogin_loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,31 +180,16 @@ public class UI_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void UILogin_loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UILogin_loginButtonActionPerformed
-        String username = getUsername();
-        String password = getPassword();
-        int returnedValue = query.countSellerAccount(username, password);
-        SellerAccount sellerAccount = query.getSellerAcount(username, password);
-        
-        if(returnedValue == 1 && query.insertLog(sellerAccount) == 1) {
-            JOptionPane.showMessageDialog(UI_Login.this, "Welcome " + sellerAccount.getFirstName() +
-                    " " + sellerAccount.getLastName() + "!\n" +
-                    "Have a good day!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-            try {
-                UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-            } catch(Exception exc) {
-                exc.printStackTrace();
-            }
-            
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    UI_Login.this.setVisible(false);
-                    new UI_Dashboard(UI_Login.this, query).setVisible(true);
-                }
-            });
-        } else {
-            JOptionPane.showMessageDialog(UI_Login.this, "Username does not exist!", "Login Error", JOptionPane.ERROR_MESSAGE);
-        }
+        loginUser();
     }//GEN-LAST:event_UILogin_loginButtonActionPerformed
+
+    private void UILogin_usernameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UILogin_usernameTextFieldActionPerformed
+        loginUser();
+    }//GEN-LAST:event_UILogin_usernameTextFieldActionPerformed
+
+    private void UILogin_passwordPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UILogin_passwordPasswordFieldActionPerformed
+        loginUser();
+    }//GEN-LAST:event_UILogin_passwordPasswordFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton UILogin_createButton;

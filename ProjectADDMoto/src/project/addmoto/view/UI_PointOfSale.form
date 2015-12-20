@@ -305,11 +305,20 @@
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Enter &quot;ADDMoto Product Code&quot; or &quot;ADDMoto Product Code * Quantity&quot;"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="UIPointOfSale_addProductTextFieldKeyReleased"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="UIPointOfSale_enterButton">
                   <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="99" red="0" type="rgb"/>
+                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="18" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="69"/>
                     <Property name="text" type="java.lang.String" value="Enter"/>
@@ -381,6 +390,9 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="UIPointOfSale_itemsTableMousePressed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -565,6 +577,9 @@
                     <Property name="text" type="java.lang.String" value="Void"/>
                     <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="UIPointOfSale_voidButtonActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="UIPointOfSale_creditButton">
                   <Properties>

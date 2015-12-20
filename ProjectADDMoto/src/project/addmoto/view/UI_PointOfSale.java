@@ -32,6 +32,7 @@ public class UI_PointOfSale extends javax.swing.JFrame {
     private POSController posController;
     private DefaultTableModel tableModel;
     private ListSelectionModel selectionModel;
+    private int selectedRow = -1;
 
     /**
      * Creates new form UI_PointOfSale
@@ -51,9 +52,12 @@ public class UI_PointOfSale extends javax.swing.JFrame {
                 if(e.getValueIsAdjusting()) return;
                 int row = UIPointOfSale_itemsTable.getSelectedRow();
                 System.out.println(row);
-                SalesItems salesItems = posController.getItem(row);
-                JOptionPane.showMessageDialog(UI_PointOfSale.this, salesItems.getItemCode());
-                UIPointOfSale_itemsTable.clearSelection();
+                if(row != -1) {
+                    selectedRow = row;
+                    SalesItems salesItems = posController.getItem(row);
+                    JOptionPane.showMessageDialog(UI_PointOfSale.this, salesItems.getItemCode());
+                    UIPointOfSale_voidButton.setEnabled(true);
+                }
             }
         });
     }
@@ -180,8 +184,15 @@ public class UI_PointOfSale extends javax.swing.JFrame {
 
         UIPointOfSale_addProductTextField.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         UIPointOfSale_addProductTextField.setToolTipText("Enter \"ADDMoto Product Code\" or \"ADDMoto Product Code * Quantity\"");
+        UIPointOfSale_addProductTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                UIPointOfSale_addProductTextFieldKeyReleased(evt);
+            }
+        });
 
+        UIPointOfSale_enterButton.setBackground(new java.awt.Color(0, 153, 0));
         UIPointOfSale_enterButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        UIPointOfSale_enterButton.setForeground(new java.awt.Color(255, 255, 255));
         UIPointOfSale_enterButton.setMnemonic('E');
         UIPointOfSale_enterButton.setText("Enter");
         UIPointOfSale_enterButton.addActionListener(new java.awt.event.ActionListener() {
@@ -220,6 +231,11 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         UIPointOfSale_itemsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         UIPointOfSale_itemsTable.getTableHeader().setResizingAllowed(false);
         UIPointOfSale_itemsTable.getTableHeader().setReorderingAllowed(false);
+        UIPointOfSale_itemsTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                UIPointOfSale_itemsTableMousePressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(UIPointOfSale_itemsTable);
         if (UIPointOfSale_itemsTable.getColumnModel().getColumnCount() > 0) {
             UIPointOfSale_itemsTable.getColumnModel().getColumn(0).setMinWidth(100);
@@ -326,6 +342,11 @@ public class UI_PointOfSale extends javax.swing.JFrame {
         UIPointOfSale_voidButton.setMnemonic('V');
         UIPointOfSale_voidButton.setText("Void");
         UIPointOfSale_voidButton.setEnabled(false);
+        UIPointOfSale_voidButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UIPointOfSale_voidButtonActionPerformed(evt);
+            }
+        });
 
         UIPointOfSale_creditButton.setBackground(new java.awt.Color(102, 102, 102));
         UIPointOfSale_creditButton.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
@@ -501,15 +522,75 @@ public class UI_PointOfSale extends javax.swing.JFrame {
                         productLine.getProductLineName() + " " + product.getDescription() + " " + product.getCharacteristics(), quantity,
                         product.getSellingPrice(), product.getSellingPrice() * quantity);
                 posController.addItem(salesItems);
-                posController.addProduct(product);
                 
                 Object[] row = {salesItems.getItemCode(), salesItems.getItemName(), salesItems.getQuantity(),
                     salesItems.getSellingPrice(), Double.parseDouble(Formatter.format(salesItems.getExtPrice()))};
                 tableModel.addRow(row);
                 setFields();
+                setContents();
+                UIPointOfSale_addProductTextField.requestFocusInWindow();
             }
         }
     }//GEN-LAST:event_UIPointOfSale_enterButtonActionPerformed
+
+    private void UIPointOfSale_itemsTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UIPointOfSale_itemsTableMousePressed
+        if(selectedRow != -1) {
+            UIPointOfSale_itemsTable.clearSelection();
+            selectedRow = -1;
+            UIPointOfSale_voidButton.setEnabled(false);
+        }
+    }//GEN-LAST:event_UIPointOfSale_itemsTableMousePressed
+
+    private void UIPointOfSale_voidButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UIPointOfSale_voidButtonActionPerformed
+        if(selectedRow == -1) {
+            JOptionPane.showMessageDialog(UI_PointOfSale.this, "Nothing Selected!");
+        } else {
+            SalesItems itemSelected = posController.getItem(selectedRow);
+            int quantity = itemSelected.getQuantity();
+            String productCode = itemSelected.getItemCode();
+            int dialogResult = JOptionPane.showConfirmDialog(UI_PointOfSale.this, "Are you sure to void item " + productCode + "?",
+                    "Verify void", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            
+            if(dialogResult == JOptionPane.YES_OPTION) {
+                if(quantity > 1) {
+                    String result = JOptionPane.showInputDialog(UI_PointOfSale.this, "How many would you like to void?",
+                            "Void quantity", JOptionPane.QUESTION_MESSAGE);
+                    int quantityValue = -1;
+                    try {
+                        if(result.contains(".")) {
+                            throw new Exception();
+                        }
+                        quantityValue = Integer.parseInt(result);
+                        if(quantityValue > quantity) {
+                            throw new Exception();
+                        }
+                    } catch(Exception exc) {
+                        exc.printStackTrace();
+                    }
+                    if(quantityValue == -1) {
+                        JOptionPane.showMessageDialog(UI_PointOfSale.this, "Invalid quantity.", "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        if(quantity - quantityValue == 0) {
+                            tableModel.removeRow(selectedRow);
+                        } else {
+                            tableModel.setValueAt(quantity - quantityValue, selectedRow, 2);
+                        }
+                    }
+                } else {
+                    tableModel.removeRow(selectedRow);
+                    posController.removeItem(selectedRow);
+                }
+                setFields();
+                UIPointOfSale_voidButton.setEnabled(false);
+            }
+            UIPointOfSale_itemsTable.clearSelection();
+        }
+    }//GEN-LAST:event_UIPointOfSale_voidButtonActionPerformed
+
+    private void UIPointOfSale_addProductTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_UIPointOfSale_addProductTextFieldKeyReleased
+        UIPointOfSale_addProductTextField.setText(Formatter.makeUpperCase(UIPointOfSale_addProductTextField.getText()));
+    }//GEN-LAST:event_UIPointOfSale_addProductTextFieldKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField UIPointOfSale_addProductTextField;

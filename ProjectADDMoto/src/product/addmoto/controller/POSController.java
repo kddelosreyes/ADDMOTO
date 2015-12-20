@@ -32,22 +32,12 @@ public class POSController {
         return salesItemsList.get(index);
     }
     
-    public boolean removeProduct(Products product) {
-        for(Products _product : productList) {
-            if(product.getAddmotoCode().equals(_product.getAddmotoCode())) {
-                return productList.remove(_product);
-            }
-        }
-        return false;
+    public Products removeProduct(int index) {
+        return productList.remove(index);
     }
     
-    public boolean removeItem(SalesItems item) {
-        for(SalesItems _item : salesItemsList) {
-            if(item.getItemCode().equals(_item.getItemCode())) {
-                return salesItemsList.remove(_item);
-            }
-        }
-        return false;
+    public SalesItems removeItem(int index) {
+        return salesItemsList.remove(index);
     }
     
     public double getTotalPrice() {
