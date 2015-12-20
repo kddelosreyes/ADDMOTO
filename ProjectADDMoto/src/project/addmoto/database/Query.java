@@ -45,6 +45,22 @@ public class Query {
         return 0;
     }
     
+    public boolean doesUsernameExists(String username) {
+        try {
+            query = "SELECT count(*) FROM " + Database.SELLER_ACCOUNT_TABLE + 
+                    " WHERE " + Database.SELLER_ACCOUNT_USERNAME + " = '" + username + "';";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                return resultSet.getInt(1) == 1;
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        return false;
+    }
+    
     public SellerAccount getSellerAcount(String username, String password) {
         SellerAccount sellerAccount = null;
         
@@ -84,6 +100,22 @@ public class Query {
             preparedStatement.setString(1, dateTime);
             preparedStatement.setInt(2, sellerAccount.getSellerID());
             
+            return preparedStatement.executeUpdate();
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        return 0;
+    }
+    
+    public int createSellerAccount(String firstname, String lastname, String username, String password) {
+        try {
+            query = "INSERT INTO " + Database.SELLER_ACCOUNT_TABLE + " (" + Database.SELLER_ACCOUNT_FIRST_NAME + ", " + Database.SELLER_ACCOUNT_LAST_NAME + ", " + Database.SELLER_ACCOUNT_USERNAME + ", " +  Database.SELLER_ACCOUNT_PASSWORD + ")"
+                    + " VALUES (?, ?, ?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, firstname);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, username);
+            preparedStatement.setString(4, password);
             return preparedStatement.executeUpdate();
         } catch(Exception exc) {
             exc.printStackTrace();

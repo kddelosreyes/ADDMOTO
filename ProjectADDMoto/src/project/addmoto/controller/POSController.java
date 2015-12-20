@@ -1,4 +1,4 @@
-package product.addmoto.controller;
+package project.addmoto.controller;
 
 import project.addmoto.data.Products;
 import project.addmoto.data.SalesItems;

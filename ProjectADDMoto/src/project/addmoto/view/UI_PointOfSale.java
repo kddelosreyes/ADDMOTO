@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.prompt.PromptSupport;
-import product.addmoto.controller.POSController;
+import project.addmoto.controller.POSController;
 import project.addmoto.data.ProductLine;
 import project.addmoto.data.Products;
 import project.addmoto.data.SalesItems;
