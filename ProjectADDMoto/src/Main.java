@@ -1,7 +1,7 @@
 
 import javax.swing.UIManager;
 import project.addmoto.database.Query;
-import project.addmoto.view.UI_Login;
+import project.addmoto.view.Login;
 
 /**
  *
@@ -19,7 +19,7 @@ public class Main {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UI_Login(query).setVisible(true);
+                new Login(query).setVisible(true);
             }
         });
     }

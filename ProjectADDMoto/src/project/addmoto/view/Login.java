@@ -1,7 +1,11 @@
 package project.addmoto.view;
 
 import java.awt.Color;
-import javax.swing.JFrame;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import project.addmoto.data.SellerAccount;
@@ -11,14 +15,14 @@ import project.addmoto.database.Query;
  *
  * @author Kim Howel delos Reyes
  */
-public class UI_Login extends javax.swing.JFrame {
+public class Login extends javax.swing.JFrame {
 
     private Query query;
 
     /**
      * Creates new form UI_Login
      */
-    public UI_Login(Query query) {
+    public Login(Query query) {
         this.query = query;
         initComponents();
         setLocationRelativeTo(null);
@@ -42,7 +46,7 @@ public class UI_Login extends javax.swing.JFrame {
         SellerAccount sellerAccount = query.getSellerAcount(username, password);
 
         if (returnedValue == 1 && query.insertLog(sellerAccount) == 1) {
-            JOptionPane.showMessageDialog(UI_Login.this, "Welcome " + sellerAccount.getFirstName()
+            JOptionPane.showMessageDialog(Login.this, "Welcome " + sellerAccount.getFirstName()
                     + " " + sellerAccount.getLastName() + "!\n"
                     + "Have a good day!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
             try {
@@ -53,12 +57,12 @@ public class UI_Login extends javax.swing.JFrame {
 
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                    UI_Login.this.setVisible(false);
-                    new UI_Dashboard(UI_Login.this, query).setVisible(true);
+                    Login.this.setVisible(false);
+                    new App(Login.this, sellerAccount).setVisible(true);
                 }
             });
         } else {
-            JOptionPane.showMessageDialog(UI_Login.this, "Login credentials does not exist.", "Login Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(Login.this, "Login credentials does not exist.", "Login Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -141,6 +145,11 @@ public class UI_Login extends javax.swing.JFrame {
 
         UILogin_passwordPasswordField.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         UILogin_passwordPasswordField.setBorder(null);
+        UILogin_passwordPasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UILogin_passwordPasswordFieldActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -315,8 +324,8 @@ public class UI_Login extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                UI_Login.this.setVisible(false);
-                new UI_Register(UI_Login.this, query).setVisible(true);
+                Login.this.setVisible(false);
+                new Register(Login.this, query).setVisible(true);
             }
         });
     }//GEN-LAST:event_UILogin_createUserMouseClicked
@@ -329,10 +338,10 @@ public class UI_Login extends javax.swing.JFrame {
         UILogin_createUser.setForeground(Color.WHITE);
     }//GEN-LAST:event_UILogin_createUserMouseExited
 
-    private void UILogin_passwordPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {                                                              
+    private void UILogin_passwordPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UILogin_passwordPasswordFieldActionPerformed
         loginUser();
-    }                                                             
-
+    }//GEN-LAST:event_UILogin_passwordPasswordFieldActionPerformed
+                                                     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel UILogin_createUser;
     private javax.swing.JLabel UILogin_jLabel_password;

@@ -63,6 +63,17 @@ public class Database {
     public static final String PRODUCT_LINE_NAME = "product_line_name";
     
     /*
+    RECEIPTS_TABLE columns
+    */
+    public static final String RECEIPT_ID = "receipt_id";
+    public static final String RECEIPT_NO = "receipt_no";
+    public static final String RECEIPT_TRANSACTION_TIMESTAMP = "receipt_transaction_timestamp";
+    public static final String RECEIPT_TOTAL_PRICE = "receipt_total_price";
+    public static final String SELLER_ID_FK = "seller_id";
+    public static final String RECEIPT_PRICE_PAID = "receipt_price_paid";
+    public static final String RECEIPT_IS_FULLY_PAID = "receipt_is_fully_paid";
+    
+    /*
     SELLER_ACCOUNT_TABLE columns
     */
     public static final String SELLER_ID = "seller_id";
@@ -70,6 +81,16 @@ public class Database {
     public static final String SELLER_ACCOUNT_LAST_NAME = "seller_account_last_name";
     public static final String SELLER_ACCOUNT_USERNAME = "seller_account_username";
     public static final String SELLER_ACCOUNT_PASSWORD = "seller_account_password";
+    
+    /*
+    SOLD_ITEMS_TABLE columns
+    */
+    public static final String SOLD_ID = "sold_id";
+    public static final String SOLD_ITEM_QUANTITY = "sold_item_quantity";
+    public static final String SOLD_ITEM_TOTAL_PRICE = "sold_item_total_price";
+    public static final String SOLD_ITEM_TOTAL_PROFIT = "sold_item_total_profit";
+    public static final String PRODUCT_ID_FK = "product_id";
+    public static final String RECEIPT_ID_FK = "receipt_id";
     
     public Connection getConnection() {
         if(connection == null) {

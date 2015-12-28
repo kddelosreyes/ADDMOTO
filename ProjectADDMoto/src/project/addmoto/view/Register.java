@@ -14,7 +14,7 @@ import project.addmoto.database.Query;
  *
  * @author User
  */
-public class UI_Register extends javax.swing.JFrame {
+public class Register extends javax.swing.JFrame {
 
     private Query query;
     private JFrame parent;
@@ -44,7 +44,7 @@ public class UI_Register extends javax.swing.JFrame {
         return new String(UIRegister_confirmPassword.getPassword());
     }
     
-    public UI_Register(JFrame parent, Query query) {
+    public Register(JFrame parent, Query query) {
         this.parent = parent;
         this.query = query;
         initComponents();
@@ -257,13 +257,13 @@ public class UI_Register extends javax.swing.JFrame {
                     parent.setVisible(true);
                     dispose();
                 } else {
-                    JOptionPane.showMessageDialog(UI_Register.this, "Something is wrong! Please restart application.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Register.this, "Something is wrong! Please restart application.", "Registration Failed", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(UI_Register.this, "Your password does not match or username already exists!", "Registration Failed", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(Register.this, "Your password does not match or username already exists!", "Registration Failed", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(UI_Register.this, "Some fields are left empty!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(Register.this, "Some fields are left empty!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_UILogin_createButtonActionPerformed
 
