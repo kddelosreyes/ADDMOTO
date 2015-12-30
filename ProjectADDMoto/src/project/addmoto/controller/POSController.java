@@ -1,9 +1,16 @@
 package project.addmoto.controller;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,57 +21,65 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+import project.addmoto.data.InventoryChange;
 import project.addmoto.data.ProductLine;
 import project.addmoto.model.POSModel;
 import project.addmoto.data.Products;
+import project.addmoto.data.Receipt;
 import project.addmoto.data.SalesItems;
 import project.addmoto.datacollections.ProductsList;
 import project.addmoto.datacollections.SalesItemsList;
+import project.addmoto.mvc.Controller;
 import project.addmoto.utilities.Formatter;
 import project.addmoto.utilities.Operations_POS;
 import project.addmoto.view.App;
+import project.addmoto.view.Payment;
 
 /**
  *
  * @author Kim Howel delos Reyes
  */
-public class POSController {
+public final class POSController extends Controller {
 
-    private ProductsList productList;
-    private SalesItemsList salesItemsList;
+    private final Toolkit tk = Toolkit.getDefaultToolkit();
 
-    private App view;
-    private POSModel model;
+    private final String PHP = "PhP   ";
 
-    private JTextField addProduct;
-    private JButton enterProduct;
-    private JButton clearSales;
-    private JButton creditSales;
-    private JButton voidItem;
-    private JButton paySales;
-    private JTable itemsTable;
-    private JLabel subtotalValue;
-    private JLabel taxValue;
-    private JLabel totalValue;
-    private JLabel payValue;
-    private JLabel productCode;
-    private JLabel productLine;
-    private JLabel description;
-    private JLabel quantityOnHand;
-    private JLabel sellingPrice;
-    private JTextField quantityField;
-    private JButton addItem;
-    private JComboBox filterType;
+    private final ProductsList productList;
+    private final SalesItemsList salesItemsList;
 
-    private DefaultTableModel tableModel;
-    private ListSelectionModel selectionModel;
+    private final App view;
+    private final POSModel model;
+
+    private final JTextField addProduct;
+    private final JButton enterProduct;
+    private final JButton clearSales;
+    private final JButton creditSales;
+    private final JButton voidItem;
+    private final JButton paySales;
+    private final JTable itemsTable;
+    private final JLabel subtotalValue;
+    private final JLabel taxValue;
+    private final JLabel totalValue;
+    private final JLabel payValue;
+    private final JLabel productCode;
+    private final JLabel productLine;
+    private final JLabel description;
+    private final JLabel quantityOnHand;
+    private final JLabel sellingPrice;
+    private final JTextField quantityField;
+    private final JButton addItem;
+    private final JComboBox filterType;
+
+    private final DefaultTableModel tableModel;
+    private final ListSelectionModel selectionModel;
 
     private int selectedRow = -1;
     private Products selectedProduct = null;
 
-    public POSController(App view) {
+    public POSController(App view, final Connection connection) {
         this.view = view;
-        model = new POSModel();
+        model = new POSModel(connection);
 
         productList = new ProductsList();
         salesItemsList = new SalesItemsList();
@@ -95,8 +110,25 @@ public class POSController {
 
         setListeners();
     }
+    
+    public int getSelectedRow() {
+        return selectedRow;
+    }
 
-    private void setListeners() {
+    public Products getSelectedProduct() {
+        return selectedProduct;
+    }
+
+    public void setSelectedRow(int selectedRow) {
+        this.selectedRow = selectedRow;
+    }
+
+    public void setSelectedProduct(Products selectedProduct) {
+        this.selectedProduct = selectedProduct;
+    }
+
+    @Override
+    public void setListeners() {
         addProduct.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -124,6 +156,26 @@ public class POSController {
             public void actionPerformed(ActionEvent e) {
                 getProduct();
             }
+        });
+
+        quantityField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE)
+                        || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
         });
 
         voidItem.addActionListener(new ActionListener() {
@@ -197,15 +249,147 @@ public class POSController {
                 }
             }
         });
-        
+
         addItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addItemToTable();
             }
         });
+
+        paySales.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int choice = JOptionPane.showConfirmDialog(view, "<html><span style='font-size:10px'>Do you want to proceed with the payment?",
+                        "Confirm payment", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (choice == JOptionPane.OK_OPTION) {
+                    Payment paymentPanel = new Payment();
+                    JLabel p_sales = paymentPanel.getPaymentSalesTotal();
+                    JLabel p_balance = paymentPanel.getPaymentBalance();
+                    JTextField p_payment = paymentPanel.getPayment();
+                    double dueAmount = Double.parseDouble(payValue.getText().split("\\s+")[1]);
+                    p_sales.setText(PHP + dueAmount);
+                    p_balance.setText(PHP + dueAmount);
+                    p_payment.addKeyListener(new KeyListener() {
+                        @Override
+                        public void keyTyped(KeyEvent e) {
+                            char ch = e.getKeyChar();
+                            if (!((ch >= '0') && (ch <= '9')
+                                    || (ch == KeyEvent.VK_BACK_SPACE)
+                                    || (ch == KeyEvent.VK_DELETE)
+                                    || (ch == '.'))) {
+                                tk.beep();
+                                e.consume();
+                            } else if ((ch == '.' && p_payment.getText().contains("."))
+                                    || (ch == '.' && p_payment.getText().equals(""))) {
+                                tk.beep();
+                                e.consume();
+                            }
+                        }
+
+                        @Override
+                        public void keyPressed(KeyEvent e) {
+                        }
+
+                        @Override
+                        public void keyReleased(KeyEvent e) {
+                            String payValue_ = p_payment.getText();
+                            if (payValue_.equals("")) {
+                                p_balance.setText(PHP + dueAmount);
+                            } else {
+                                double inputPayment = Double.parseDouble(p_payment.getText());
+                                p_balance.setText(PHP + Formatter.format(dueAmount - inputPayment));
+                            }
+                        }
+                    });
+
+                    int kPress = JOptionPane.showOptionDialog(view, paymentPanel,
+                            "Enter payment", JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.PLAIN_MESSAGE, null, null, null);
+                    if (kPress == JOptionPane.OK_OPTION) {
+                        if (p_payment.equals("") || Double.parseDouble(p_balance.getText().split("\\s+")[1]) > 0) {
+                            JOptionPane.showMessageDialog(view, "Cannot process payment", "Error", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            Calendar calendar = Calendar.getInstance();
+                            DateFormat dFormat = new SimpleDateFormat("yyyy MM dd HH mm ss"),
+                                    dateTimeFormat = new SimpleDateFormat("MMM dd, YYYY, HH:mm:ss");
+                            Date date = calendar.getTime();
+                            String receiptNo = dFormat.format(date).replaceAll(" ", "");
+
+                            Receipt receipt = new Receipt(receiptNo, dateTimeFormat.format(date), dueAmount,
+                                    view.getSellerAccount().getSellerID(), Double.parseDouble(p_payment.getText()), true);
+                            int returnValue = model.insertReceipt(receipt);
+                            if (returnValue == 0) {
+                                JOptionPane.showMessageDialog(view, "Cannot process transaction properly during inserting receipt", "Error", JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                int receiptID_ = model.getReceiptID(receiptNo);
+                                System.out.println("Receipt ID: " + receiptID_);
+                                int countInserted = model.insertSoldItems(salesItemsList, receiptID_);
+                                if (countInserted == salesItemsList.size()) {
+                                    JOptionPane.showMessageDialog(view, "<html><span style='font-size:10px'>Transaction processed completely.</span><br><span style='font-size:16px'>Receipt No: " + receiptNo,
+                                            "Payment Success", JOptionPane.PLAIN_MESSAGE);
+
+                                    ArrayList<InventoryChange> changeList = new ArrayList<>();
+                                    System.out.println("Size: " + salesItemsList.size());
+
+                                    for (SalesItems itemsX : salesItemsList) {
+                                        Products productX = model.getProduct(itemsX.getProductID());
+                                        InventoryChange change = new InventoryChange(dateTimeFormat.format(date),
+                                                productX.getCurrentQuantity(), productX.getCurrentQuantity() - itemsX.getQuantity(),
+                                                itemsX.getQuantity(), itemsX.getProductID());
+                                        System.out.println(change.toString());
+                                        changeList.add(change);
+                                    }
+
+                                    int insertChangeLog = model.insertChangeItems(changeList);
+                                    if (insertChangeLog == salesItemsList.size()) {
+                                        System.out.println("Successful insert to update item change log.");
+                                    } else {
+                                        System.out.println("Not successful insert to update item change log.");
+                                    }
+
+                                    int updateChange = model.updateChangeItems(salesItemsList);
+                                    if (updateChange == salesItemsList.size()) {
+                                        System.out.println("Successful update item quantity");
+                                    } else {
+                                        System.out.println("Not successful update item quantity");
+                                    }
+
+                                    itemsTable.clearSelection();
+                                    while (tableModel.getRowCount() > 0) {
+                                        tableModel.removeRow(0);
+                                    }
+                                    subtotalValue.setText("Php   0.00");
+                                    taxValue.setText("PhP   0.00");
+                                    totalValue.setText("PhP   0.00");
+                                    payValue.setText("PhP   0.00");
+                                    paySales.setEnabled(false);
+                                    voidItem.setEnabled(false);
+                                    salesItemsList.clear();
+                                    System.out.println("Size: " + salesItemsList.size());
+                                    filterType.setSelectedIndex(0);
+                                    selectedProduct = null;
+                                    POSController.this.productCode.setText("-----");
+                                    POSController.this.productLine.setText("-----");
+                                    description.setText("-----");
+                                    description.setToolTipText(description.getText());
+                                    quantityOnHand.setText("NA");
+                                    sellingPrice.setText("NA");
+                                    quantityField.setText("");
+                                    quantityField.setEnabled(false);
+                                    addItem.setEnabled(false);
+                                    addProduct.setText("");
+                                } else {
+                                    JOptionPane.showMessageDialog(view, "Cannot process transaction properly during inserting sold items", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
-    
+
     private void getProduct() {
         String productCode = getContents(),
                 selectedFilter = (String) filterType.getSelectedItem();
@@ -221,30 +405,39 @@ public class POSController {
             addItem.setEnabled(false);
             selectedProduct = null;
         } else {
-            if(selectedFilter.equalsIgnoreCase("Product Code")) {
+            if (selectedFilter.equalsIgnoreCase("Product Code")) {
                 selectedProduct = model.getProduct(productCode);
-            } else if(selectedFilter.equalsIgnoreCase("Product Line")) {
-                
-            } else if(selectedFilter.equalsIgnoreCase("Item Name")) {
-                
-            } else if(selectedFilter.equalsIgnoreCase("Description")) {
-                
-            } else if(selectedFilter.equalsIgnoreCase("None")) {
-                
+            } else if (selectedFilter.equalsIgnoreCase("Product Line")) {
+
+            } else if (selectedFilter.equalsIgnoreCase("Item Name")) {
+
+            } else if (selectedFilter.equalsIgnoreCase("Description")) {
+
+            } else if (selectedFilter.equalsIgnoreCase("None")) {
+
             }
-            
-            if(selectedProduct == null) {
+
+            if (selectedProduct == null) {
                 JOptionPane.showMessageDialog(view, "No product on list.", "Error.", JOptionPane.ERROR_MESSAGE);
+                this.productCode.setText("-----");
+                this.productLine.setText("-----");
+                description.setText("-----");
+                description.setToolTipText(description.getText());
+                quantityOnHand.setText("NA");
+                sellingPrice.setText("NA");
+                quantityField.setEnabled(false);
+                addItem.setEnabled(false);
+                selectedProduct = null;
             } else {
                 quantityField.setEnabled(true);
                 addItem.setEnabled(true);
                 ProductLine productLine = model.getProductLine(selectedProduct.getProductLineID());
-            
+
                 this.productCode.setText(selectedProduct.getAddmotoCode());
                 this.productLine.setText(productLine.getProductLineName());
-                description.setText((selectedProduct.getCharacteristics() + 
-                        " " + selectedProduct.getDescription() +
-                        " " + selectedProduct.getMotors()).trim());
+                description.setText((selectedProduct.getCharacteristics()
+                        + " " + selectedProduct.getDescription()
+                        + " " + selectedProduct.getMotors()).trim());
                 description.setToolTipText(description.getText());
                 quantityOnHand.setText(String.valueOf(selectedProduct.getCurrentQuantity()));
                 sellingPrice.setText("PhP " + selectedProduct.getSellingPrice());
@@ -255,25 +448,26 @@ public class POSController {
     }
 
     private void addItemToTable() {
-        Products product = selectedProduct;
-        if (product == null) {
-            selectedProduct = null;
+        if (quantityField.getText().equals("")) {
+            JOptionPane.showMessageDialog(view, "Please enter a valid quantity value", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            boolean isAlreadyListed = false;
-            int itemIdx = -1, i = 0;
-            for (SalesItems items : salesItemsList) {
-                if (items.getItemCode().equals(product.getAddmotoCode())) {
-                    isAlreadyListed = true;
-                    itemIdx = i;
-                    break;
-                }
-                i++;
-            }
-            
-            String quantity_ = quantityField.getText();
-            if (quantity_.equals("") || quantity_.matches(".*[a-zA-Z]+.*") || hasSpecialCharacter(quantity_.toCharArray())) {
-                JOptionPane.showMessageDialog(view, "Invalid number format", "Error", JOptionPane.ERROR_MESSAGE);
+            Products product = selectedProduct;
+            if (product == null) {
+                selectedProduct = null;
             } else {
+                boolean isAlreadyListed = false;
+                int itemIdx = -1, i = 0;
+                for (SalesItems items : salesItemsList) {
+                    if (items.getItemCode().equals(product.getAddmotoCode())) {
+                        isAlreadyListed = true;
+                        itemIdx = i;
+                        break;
+                    }
+                    i++;
+                }
+
+                String quantity_ = quantityField.getText();
+
                 int quantity = Integer.parseInt(quantityField.getText());
 
                 if (isAlreadyListed) {
@@ -289,12 +483,17 @@ public class POSController {
                     ProductLine productLine = model.getProductLine(product.getProductLineID());
                     SalesItems salesItems = new SalesItems(product.getProductID(), product.getAddmotoCode(),
                             productLine.getProductLineName() + " " + product.getDescription() + " " + product.getCharacteristics(), quantity,
-                            product.getSellingPrice(), product.getSellingPrice() * quantity);
+                            product.getSellingPrice(), product.getSellingPrice() * quantity, product.getUnitPrice());
                     addItem(salesItems);
 
                     Object[] row = {salesItems.getItemCode(), salesItems.getItemName(), salesItems.getQuantity(),
                         salesItems.getSellingPrice(), Double.parseDouble(Formatter.format(salesItems.getExtPrice()))};
                     tableModel.addRow(row);
+                }
+                if (salesItemsList.size() == 0) {
+                    paySales.setEnabled(false);
+                } else {
+                    paySales.setEnabled(true);
                 }
                 setFields();
                 addProduct.setText("");
@@ -312,15 +511,6 @@ public class POSController {
             }
         }
     }
-    
-    private boolean hasSpecialCharacter(char[] str) {
-        for(char tmp : str) {
-            if(Character.isSpaceChar(tmp) || !((tmp >= 'a' && tmp <= 'z') || (tmp >= 'A' && tmp <= 'Z'))) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     private String getContents() {
         return addProduct.getText();
@@ -330,6 +520,7 @@ public class POSController {
         subtotalValue.setText("PhP   " + getSubtotalPrice());
         taxValue.setText("PhP   " + getTaxablePrice());
         totalValue.setText("PhP   " + getTotalPriceString());
+        payValue.setText("PhP   " + getTotalPriceString());
     }
 
     /*

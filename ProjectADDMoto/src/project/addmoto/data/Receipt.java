@@ -6,16 +6,17 @@ package project.addmoto.data;
  */
 public class Receipt {
     
-    private int receiptID;
+    private String receiptNo;
     private String transactionTimeStamp;
     private double totalPrice;
     private int sellerID;
     private double pricePaid;
     private boolean isFullyPaid;
     
-    public Receipt(int receiptID, String transactionTimeStamp, double totalPrice,
-            int sellerID, double pricePaid, boolean isFullyPaid) {
-        this.receiptID = receiptID;
+    public Receipt(String receiptNo, String transactionTimeStamp,
+            double totalPrice, int sellerID, double pricePaid,
+            boolean isFullyPaid) {
+        this.receiptNo = receiptNo;
         this.transactionTimeStamp = transactionTimeStamp;
         this.totalPrice = totalPrice;
         this.sellerID = sellerID;
@@ -23,13 +24,13 @@ public class Receipt {
         this.isFullyPaid = isFullyPaid;
     }
 
-    public int getReceiptID() {
-        return receiptID;
+    public String getReceiptNo() {
+        return receiptNo;
     }
 
-    public void setReceiptID(int receiptID) {
-        this.receiptID = receiptID;
-    }
+    public void setReceiptNo(String receiptNo) {
+        this.receiptNo = receiptNo;
+    }    
 
     public String getTransactionTimeStamp() {
         return transactionTimeStamp;

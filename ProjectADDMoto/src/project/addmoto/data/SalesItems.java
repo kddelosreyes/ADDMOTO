@@ -12,6 +12,7 @@ public class SalesItems {
     private int quantity;
     private double sellingPrice;
     private double extPrice;
+    private double unitPrice;
     
     /**
      *
@@ -21,15 +22,17 @@ public class SalesItems {
      * @param quantity
      * @param sellingPrice
      * @param extPrice
+     * @param unitPrice
      */
     public SalesItems(int productID, String itemCode, String itemName, int quantity,
-            double sellingPrice, double extPrice) {
+            double sellingPrice, double extPrice, double unitPrice) {
         this.productID = productID;
         this.itemCode = itemCode;
         this.itemName = itemName;
         this.quantity = quantity;
         this.sellingPrice = sellingPrice;
         this.extPrice = extPrice;
+        this.unitPrice = unitPrice;
     }
 
     /**
@@ -127,4 +130,21 @@ public class SalesItems {
     public void setExtPrice(double extPrice) {
         this.extPrice = extPrice;
     }
+
+    /**
+     *
+     * @return The unit price of the product
+     */
+    public double getUnitPrice() {
+        return unitPrice;
+    }
+
+    /**
+     *
+     * @param unitPrice Sets the unit price of the item from the database
+     */
+    public void setUnitPrice(double unitPrice) {
+        this.unitPrice = unitPrice;
+    }
+    
 }
