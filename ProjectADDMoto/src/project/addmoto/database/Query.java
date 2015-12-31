@@ -1,16 +1,12 @@
 package project.addmoto.database;
 
-import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import project.addmoto.data.ProductLine;
-import project.addmoto.data.Products;
 import project.addmoto.data.SellerAccount;
 
 /**

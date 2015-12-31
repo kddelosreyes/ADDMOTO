@@ -33,6 +33,16 @@ public class Database {
     public static final String SUPPLIER_TABLE = "supplier_table";
     
     /*
+    EXPENSE_TABLE columns
+    */
+    public static final String EXPENSE_ID = "expense_id";
+    public static final String EXPENSE_AMOUNT = "expense_amount";
+    public static final String EXPENSE_TIMESTAMP = "expense_timestamp";
+    public static final String EXPENSE_REASON = "expense_reason";
+    public static final String EXPENSE_DETAIL = "expense_detail";
+    public static final String EXPENSE_SELLER_ID_FK = "seller_id";
+    
+    /*
     INVENTORY_CHANGE_TABLE columns
     */
     public static final String CHANGE_ID = "change_id";

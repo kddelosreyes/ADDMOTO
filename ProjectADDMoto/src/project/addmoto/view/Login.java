@@ -49,11 +49,11 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(Login.this, "Welcome " + sellerAccount.getFirstName()
                     + " " + sellerAccount.getLastName() + "!\n"
                     + "Have a good day!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-            try {
+            /*try {
                 UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
             } catch (Exception exc) {
                 exc.printStackTrace();
-            }
+            }*/
 
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {

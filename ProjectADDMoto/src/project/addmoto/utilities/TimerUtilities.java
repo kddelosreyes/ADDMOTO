@@ -14,13 +14,11 @@ import javax.swing.JLabel;
 public class TimerUtilities {
     
     public static void runTime(JLabel timeLabel) {
-        final DateFormat dateTimeFormat = new SimpleDateFormat("dd MMM YYYY, HH:mm:ss");
         
         ActionListener timerListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 Date date = new Date();
-                String dateTime = dateTimeFormat.format(date);
-                timeLabel.setText(dateTime);
+                timeLabel.setText(Formatter.formatDate(date));
             }
         };
         

@@ -2,7 +2,8 @@ package project.addmoto.controller;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Connection;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,20 +22,20 @@ import project.addmoto.view.SupplierDetails;
  */
 public final class SupplierController extends Controller {
     
-    private App view;
-    private SupplierModel model;
+    private final App view;
+    private final SupplierModel model;
     
-    private JScrollPane supplierPane;
-    private JLabel sCompanyName;
-    private JLabel sContactName;
-    private JLabel sContactTitle;
-    private JLabel sAddress;
-    private JLabel sCityCountry;
-    private JLabel sContactNo;
-    private JLabel sEdit;
-    private JLabel sDelete;
-    private JLabel sManageContacts;
-    private JLabel sProducts;
+    private final JScrollPane supplierPane;
+    private final JLabel sCompanyName;
+    private final JLabel sContactName;
+    private final JLabel sContactTitle;
+    private final JLabel sAddress;
+    private final JLabel sCityCountry;
+    private final JLabel sContactNo;
+    private final JLabel sEdit;
+    private final JLabel sDelete;
+    private final JLabel sManageContacts;
+    private final JLabel sProducts;
     
     private SupplierSummary selectedSupplier = null;
     
@@ -63,7 +64,9 @@ public final class SupplierController extends Controller {
 
     @Override
     public void setListeners() {
-        sEdit.addMouseListener(new MouseAdapter() {
+        sEdit.addMouseListener(new MouseListener() {
+            
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(selectedSupplier == null) {
                     showSupplierError();
@@ -72,16 +75,26 @@ public final class SupplierController extends Controller {
                 }
             }
             
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setRedForeground(sEdit);
             }
             
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBlackForeground(sEdit);
             }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
         });
         
-        sDelete.addMouseListener(new MouseAdapter() {
+        sDelete.addMouseListener(new MouseListener() {
+            
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(selectedSupplier == null) {
                     showSupplierError();
@@ -90,16 +103,25 @@ public final class SupplierController extends Controller {
                 }
             }
             
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setRedForeground(sDelete);
             }
             
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBlackForeground(sDelete);
             }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
         });
         
-        sManageContacts.addMouseListener(new MouseAdapter() {
+        sManageContacts.addMouseListener(new MouseListener() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(selectedSupplier == null) {
                     showSupplierError();
@@ -108,16 +130,26 @@ public final class SupplierController extends Controller {
                 }
             }
             
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setRedForeground(sManageContacts);
             }
             
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBlackForeground(sManageContacts);
             }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
         });
         
-        sProducts.addMouseListener(new MouseAdapter() {
+        sProducts.addMouseListener(new MouseListener() {
+            
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(selectedSupplier == null) {
                     showSupplierError();
@@ -126,13 +158,21 @@ public final class SupplierController extends Controller {
                 }
             }
             
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 setRedForeground(sProducts);
             }
             
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBlackForeground(sProducts);
             }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
         });
     }
     
@@ -159,7 +199,9 @@ public final class SupplierController extends Controller {
             sDetail.getsSupplierCity().setText(sSummary.getSupplierCity());
             sDetail.getsSupplierPostal().setText(String.valueOf(sSummary.getSupplierPostal()));
             sDetail.getsSupplierCountry().setText(sSummary.getSupplierCountry());
-            sDetail.addMouseListener(new MouseAdapter() {
+            sDetail.addMouseListener(new MouseListener() {
+                
+                @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
                     JOptionPane.showMessageDialog(view, String.valueOf(sSummary.getSupplierID()));
                     sCompanyName.setText(sSummary.getSupplierName());
@@ -171,9 +213,18 @@ public final class SupplierController extends Controller {
                     selectedSupplier = sSummary;
                     setOtherToDefault(sDetail, sDetails);
                 }
+                
+                @Override
                 public void mouseEntered(java.awt.event.MouseEvent evt) {}
                 
+                @Override
                 public void mouseExited(java.awt.event.MouseEvent evt) {}
+                
+                @Override
+                public void mousePressed(MouseEvent e) {}
+
+                @Override
+                public void mouseReleased(MouseEvent e) {}
             });
             
             supplierPanel.add(sDetail);
