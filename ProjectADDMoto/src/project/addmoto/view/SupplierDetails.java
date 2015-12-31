@@ -20,8 +20,36 @@ public class SupplierDetails extends javax.swing.JPanel {
         initComponents();
     }
 
-    public JLabel getSupplierName() {
-        return supplierName;
+    public JLabel getsSupplierAddress() {
+        return sSupplierAddress;
+    }
+
+    public JLabel getsSupplierCity() {
+        return sSupplierCity;
+    }
+
+    public JLabel getsSupplierCompanyName() {
+        return sSupplierCompanyName;
+    }
+
+    public JLabel getsSupplierContactName() {
+        return sSupplierContactName;
+    }
+
+    public JLabel getsSupplierContactNo() {
+        return sSupplierContactNo;
+    }
+
+    public JLabel getsSupplierCountry() {
+        return sSupplierCountry;
+    }
+
+    public JLabel getsSupplierPosition() {
+        return sSupplierPosition;
+    }
+
+    public JLabel getsSupplierPostal() {
+        return sSupplierPostal;
     }
 
     /**
@@ -33,13 +61,68 @@ public class SupplierDetails extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        supplierName = new javax.swing.JLabel();
+        sSupplierCompanyName = new javax.swing.JLabel();
+        sSupplierContactName = new javax.swing.JLabel();
+        sSupplierPosition = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        sSupplierAddress = new javax.swing.JLabel();
+        sSupplierCity = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        sSupplierPostal = new javax.swing.JLabel();
+        sSupplierCountry = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        sSupplierContactNo = new javax.swing.JLabel();
 
-        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
-        supplierName.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        supplierName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        supplierName.setText("jLabel1");
+        sSupplierCompanyName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        sSupplierCompanyName.setText("Company Name");
+        sSupplierCompanyName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        sSupplierContactName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierContactName.setText("Contact Name");
+
+        sSupplierPosition.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierPosition.setText("Title");
+
+        jLabel1.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel1.setText("Contact Name");
+
+        jLabel2.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel2.setText("Contact Title");
+
+        sSupplierAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierAddress.setText("Address");
+
+        sSupplierCity.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierCity.setText("City");
+
+        jLabel3.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel3.setText("Address");
+
+        jLabel4.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel4.setText("City");
+
+        sSupplierPostal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierPostal.setText("Postal Code");
+
+        sSupplierCountry.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierCountry.setText("Country");
+
+        jLabel5.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel5.setText("Postal Code");
+
+        jLabel6.setForeground(new java.awt.Color(0, 153, 102));
+        jLabel6.setText("Country");
+
+        sSupplierContactNo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        sSupplierContactNo.setForeground(new java.awt.Color(0, 153, 102));
+        sSupplierContactNo.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        sSupplierContactNo.setText("Company Name");
+        sSupplierContactNo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -47,20 +130,82 @@ public class SupplierDetails extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(supplierName, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(sSupplierCompanyName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sSupplierContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sSupplierAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sSupplierContactName, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sSupplierPostal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(sSupplierCountry, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sSupplierCity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(sSupplierPosition, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(supplierName, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sSupplierContactNo, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sSupplierCompanyName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sSupplierContactName)
+                    .addComponent(sSupplierPosition))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sSupplierAddress)
+                    .addComponent(sSupplierCity))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sSupplierPostal)
+                    .addComponent(sSupplierCountry))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel supplierName;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel sSupplierAddress;
+    private javax.swing.JLabel sSupplierCity;
+    private javax.swing.JLabel sSupplierCompanyName;
+    private javax.swing.JLabel sSupplierContactName;
+    private javax.swing.JLabel sSupplierContactNo;
+    private javax.swing.JLabel sSupplierCountry;
+    private javax.swing.JLabel sSupplierPosition;
+    private javax.swing.JLabel sSupplierPostal;
     // End of variables declaration//GEN-END:variables
 }

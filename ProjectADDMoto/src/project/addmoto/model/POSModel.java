@@ -271,7 +271,7 @@ public class POSModel {
     }
     
     public ArrayList<Products> getProducts() {
-        ArrayList<Products> productsList = new ArrayList<Products>();
+        ArrayList<Products> productsList = new ArrayList<>();
         
         try {
             query = "SELECT * FROM " + Database.PRODUCTS_TABLE + ";";

@@ -103,6 +103,36 @@ public class Database {
     public static final String PRODUCT_ID_FK = "product_id";
     public static final String RECEIPT_ID_FK = "receipt_id";
     
+    /*
+    SUPPLIER_TABLE columns
+    */
+    public static final String SUPPLIER_ID = "supplier_id";
+    public static final String SUPPLIER_NAME = "supplier_name";
+    public static final String SUPPLIER_CITY = "supplier_city";
+    public static final String SUPPLIER_COUNTRY = "supplier_country";
+    public static final String SUPPLIER_ADDRESS = "supplier_address";
+    public static final String SUPPLIER_POSTAL = "supplier_postal";
+    
+    /*
+    SUPPLIER_CONTACTS_TABLE
+    */
+    public static final String SUPPLIER_CONTACTS_ID = "supplier_contacts_id";
+    public static final String SUPPLIER_CONTACTS_NAME = "supplier_contacts_name";
+    public static final String SUPPLIER_CONTACTS_CONTACT_NO = "supplier_contacts_contact_no";
+    public static final String SUPPLIER_CONTACTS_EMAIL = "supplier_contacts_email";
+    public static final String SUPPLIER_CONTACTS_POSITION = "supplier_contacts_position";
+    public static final String SUPPLIER_IS_MAIN = "supplier_is_main";
+    public static final String SUPPLIER_SUPPLIER_ID_FK = "supplier_id";
+    
+    /*
+    SUPPLIER SUMMARY FIELDS
+    */
+    public static final String CONTACT_NAME = "contact_name";
+    public static final String CONTACT_NO = "contact_no";
+    public static final String CONTACT_EMAIL = "contact_email";
+    public static final String CONTACT_POSITION = "contact_position";
+    public static final String CONTACT_IS_MAIN = "is_main";
+    
     public Connection getConnection() {
         if(connection == null) {
             try {

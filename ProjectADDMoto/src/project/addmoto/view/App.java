@@ -60,27 +60,34 @@ public class App extends javax.swing.JFrame {
                 switch(index) {
                     case 0:
                         clearPOS();
+                        clearSupplier();
                         break;
                     case 1:
+                        clearSupplier();
                         break;
                     case 2:
                         clearPOS();
+                        clearSupplier();
                         break;
                     case 3:
                         clearPOS();
+                        clearSupplier();
                         break;
                     case 4:
                         clearPOS();
+                        clearSupplier();
                         break;
                     case 5:
                         clearPOS();
                         break;
                     case 6:
                         clearPOS();
+                        clearSupplier();
                         break;
                     default:
                         JOptionPane.showMessageDialog(App.this, "Something is wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
                         clearPOS();
+                        clearSupplier();
                 }
             }
         });
@@ -110,6 +117,17 @@ public class App extends javax.swing.JFrame {
         while( model.getRowCount() > 0 ){
             model.removeRow(0);
         }
+    }
+    
+    private void clearSupplier() {
+        supplierController.setSelectedSupplier(null);
+        supplierController.setAllDefault();
+        sCompanyName.setText(" ");
+        sContactName.setText(" ");
+        sContactNo.setText(" ");
+        sContactTitle.setText(" ");
+        sAddress.setText(" ");
+        sCityCountry.setText(" ");
     }
     
     @SuppressWarnings("unchecked")
@@ -208,6 +226,7 @@ public class App extends javax.swing.JFrame {
         jLabel32 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
         sSupplierPane = new javax.swing.JScrollPane();
+        jButton1 = new javax.swing.JButton();
         jPanel23 = new javax.swing.JPanel();
         jPanel24 = new javax.swing.JPanel();
         sCompanyName = new javax.swing.JLabel();
@@ -961,9 +980,8 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        posPay.setBackground(new java.awt.Color(0, 153, 0));
+        posPay.setBackground(new java.awt.Color(0, 255, 102));
         posPay.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        posPay.setForeground(new java.awt.Color(255, 255, 255));
         posPay.setMnemonic('P');
         posPay.setText("Pay");
         posPay.setEnabled(false);
@@ -1035,9 +1053,8 @@ public class App extends javax.swing.JFrame {
         posAddProduct.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
         posAddProduct.setToolTipText("Enter \"ADDMoto Product Code\" or \"ADDMoto Product Code * Quantity\"");
 
-        posEnter.setBackground(new java.awt.Color(0, 153, 0));
+        posEnter.setBackground(new java.awt.Color(0, 255, 102));
         posEnter.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        posEnter.setForeground(new java.awt.Color(255, 255, 255));
         posEnter.setMnemonic('G');
         posEnter.setText("Go");
 
@@ -1091,9 +1108,8 @@ public class App extends javax.swing.JFrame {
         quantityField.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         quantityField.setEnabled(false);
 
-        addItem.setBackground(new java.awt.Color(0, 153, 0));
+        addItem.setBackground(new java.awt.Color(0, 255, 102));
         addItem.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        addItem.setForeground(new java.awt.Color(255, 255, 255));
         addItem.setMnemonic('a');
         addItem.setText("Add");
         addItem.setEnabled(false);
@@ -1285,52 +1301,65 @@ public class App extends javax.swing.JFrame {
         jLabel31.setText("   This is a list of all suppliers.");
         jLabel31.setOpaque(true);
 
+        jButton1.setBackground(new java.awt.Color(0, 255, 102));
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/add40.png"))); // NOI18N
+        jButton1.setText("New Supplier");
+
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
             .addComponent(sSupplierPane)
+            .addGroup(jPanel22Layout.createSequentialGroup()
+                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel22Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sSupplierPane))
+                .addComponent(sSupplierPane, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
         );
 
         jPanel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
 
         sCompanyName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sCompanyName.setText("Company Name");
+        sCompanyName.setText("                                        ");
 
         jLabel33.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel33.setText("Company Name");
 
         sContactName.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sContactName.setText("Contact Name");
+        sContactName.setText("                                        ");
 
         jLabel34.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel34.setText("Contact Name");
 
         sContactTitle.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sContactTitle.setText("Contact Title");
+        sContactTitle.setText("                                        ");
 
         jLabel35.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel35.setText("Contact Title");
 
         sAddress.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sAddress.setText("Address");
+        sAddress.setText("                                        ");
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel36.setText("Address");
 
         sCityCountry.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sCityCountry.setText("City, Country");
+        sCityCountry.setText("                                        ");
 
         jLabel37.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel37.setText("City, Country");
@@ -1406,7 +1435,7 @@ public class App extends javax.swing.JFrame {
         jLabel39.setText("Contact No.:");
 
         sContactNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        sContactNo.setText("+63936 221 7946");
+        sContactNo.setText("                                        ");
 
         jLabel41.setBackground(new java.awt.Color(0, 255, 102));
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1598,6 +1627,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel description;
     private javax.swing.JComboBox<String> filterType;
     private javax.swing.JPanel inventoryPanel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
