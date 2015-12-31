@@ -56,6 +56,7 @@ public final class SupplierController extends Controller {
         sManageContacts = view.getsManageContacts();
         sProducts = view.getsProducts();
         supplierPane = view.getsSupplierPane();
+        supplierPane.getVerticalScrollBar().setUnitIncrement(20);
         
         addSuppliersToPane();
         

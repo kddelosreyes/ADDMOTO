@@ -46,18 +46,12 @@ public class Login extends javax.swing.JFrame {
         SellerAccount sellerAccount = query.getSellerAcount(username, password);
 
         if (returnedValue == 1 && query.insertLog(sellerAccount) == 1) {
-            JOptionPane.showMessageDialog(Login.this, "Welcome " + sellerAccount.getFirstName()
-                    + " " + sellerAccount.getLastName() + "!\n"
-                    + "Have a good day!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
-            /*try {
-                UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-            } catch (Exception exc) {
-                exc.printStackTrace();
-            }*/
-
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     Login.this.setVisible(false);
+                    JOptionPane.showMessageDialog(Login.this, "<html><span style='font-size:16px'>Welcome " + sellerAccount.getFirstName()
+                        + " " + sellerAccount.getLastName() + "!\n"
+                        + "Have a good day!");
                     new App(Login.this, sellerAccount).setVisible(true);
                 }
             });

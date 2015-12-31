@@ -10,12 +10,6 @@ import project.addmoto.view.Login;
 public class Main {
     public static void main(String[] args) {
         Query query = new Query();
-        
-        /*try {
-            UIManager.setLookAndFeel("com.jtattoo.plaf.smart.SmartLookAndFeel");
-        } catch(Exception exc) {
-            exc.printStackTrace();
-        }*/
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
