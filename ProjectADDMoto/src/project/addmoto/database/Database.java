@@ -135,13 +135,19 @@ public class Database {
     public static final String SUPPLIER_SUPPLIER_ID_FK = "supplier_id";
     
     /*
-    SUPPLIER SUMMARY FIELDS
+    SUPPLIER SUMMARY fields
     */
     public static final String CONTACT_NAME = "contact_name";
     public static final String CONTACT_NO = "contact_no";
     public static final String CONTACT_EMAIL = "contact_email";
     public static final String CONTACT_POSITION = "contact_position";
     public static final String CONTACT_IS_MAIN = "is_main";
+    
+    /*
+    TOP SELLING fields
+    */
+    public static final String TQUANTITY = "total_quantity";
+    public static final String TITEM_NAME = "item_name";
     
     public Connection getConnection() {
         if(connection == null) {

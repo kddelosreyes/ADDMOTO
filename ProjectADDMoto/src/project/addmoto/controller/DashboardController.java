@@ -6,12 +6,16 @@ import java.awt.event.ItemEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import project.addmoto.data.TopSelling;
 import project.addmoto.model.DashboardModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.utilities.Formatter;
@@ -41,6 +45,7 @@ public final class DashboardController extends Controller {
     private final JLabel dBestMonth;
     private final JLabel dHighestMonthlySales;
     private final JLabel dInformation;
+    private final JTable dTopSelling;
     
     private final String FILTER_TODAY = "Today";
     private final String FILTER_THIS_WEEK = "This Week";
@@ -48,6 +53,8 @@ public final class DashboardController extends Controller {
     private final String FILTER_THIS_MONTH = "This Month";
     private final String FILTER_LAST_MONTH = "Last Month";
     private final String FILTER_CUSTOM = "Custom";
+    
+    private int selectedRow = -1;
     
     public DashboardController(App view, final Connection connection) {
         this.view = view;
@@ -68,6 +75,7 @@ public final class DashboardController extends Controller {
         dBestMonth = view.getdBestMonth();
         dHighestMonthlySales = view.getdHighestMonthlySales();
         dInformation = view.getdInformation();
+        dTopSelling = view.getdTopSelling();
         
         setDefaultViews();
         setListeners();
@@ -86,50 +94,77 @@ public final class DashboardController extends Controller {
         double lastMonthExpenses = model.getTotalExpensesLastMonth();
         double thisMonthExpenses = model.getTotalExpensesThisMonth();
         
+        ArrayList<TopSelling> topSelling = model.getTopSelling();
+        
         DefaultTableModel tableModel = (DefaultTableModel) dIndicatorTable.getModel();
+        DefaultTableModel tableModelTop = (DefaultTableModel) dTopSelling.getModel();
+        ListSelectionModel selectionModel = (ListSelectionModel) dTopSelling.getSelectionModel();
+        
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+            int row = dTopSelling.getSelectedRow();
+            String itemName = (String) tableModelTop.getValueAt(row, 0);
+            JOptionPane.showMessageDialog(view, "<html><span style='font-size:18px'>" + itemName);
+        });
         
         while (tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
         }
+        tableModel.addRow(new Object[] {"Sales", "This Month vs. Last Month", "Php " + thisMonthSales, "Php " + lastMonthSales});
+        tableModel.addRow(new Object[] {"Transactions", "This Month vs. Last Month", thisMonthTransactions, lastMonthTransactions});
+        tableModel.addRow(new Object[] {"Expenses", "This Month vs. Last Month", "Php " + thisMonthExpenses, "Php " + lastMonthExpenses});
         
-        tableModel.addRow(new Object[]{"Sales", "This Month vs. Last Month", "Php " + thisMonthSales, "Php " + lastMonthSales});
-        tableModel.addRow(new Object[]{"Transactions", "This Month vs. Last Month", thisMonthTransactions, lastMonthTransactions});
-        tableModel.addRow(new Object[]{"Expenses", "This Month vs. Last Month", "Php " + thisMonthExpenses, "Php " + lastMonthExpenses});
+        while(tableModelTop.getRowCount() > 0) {
+            tableModelTop.removeRow(0);
+        }
+        for(TopSelling tSelling : topSelling) {
+            tableModelTop.addRow(new Object[] {
+                tSelling.getProductName()
+            });
+        }
         
         if(lastMonthSales == 0) {
             dSalesPct.setText(thisMonthSales + "%");
+        } else if(thisMonthSales == 0) {
+            dSalesPct.setText(lastMonthSales + "%");
         } else {
-            if(thisMonthSales > lastMonthSales) {
-                dSalesPct.setForeground(new Color(0, 153, 0));
-            } else {
-                dSalesPct.setForeground(new Color(153, 0, 0));
-            }
-            double diff = (Math.abs(thisMonthSales - lastMonthSales) / lastMonthSales) * 100.00;
+            double diff = (Math.abs(thisMonthSales - lastMonthSales) * 100.0) / lastMonthSales;
             dSalesPct.setText(Formatter.format(diff) + "%");
+        }
+        if (thisMonthSales > lastMonthSales) {
+            dSalesPct.setForeground(new Color(0, 153, 0));
+        } else {
+            dSalesPct.setForeground(new Color(153, 0, 0));
         }
         
         if(lastMonthTransactions == 0) {
             dTransPct.setText(thisMonthTransactions + ".00%");
+        } else if(thisMonthTransactions == 0) {
+            dTransPct.setText(lastMonthTransactions + ".00%");
         } else {
-            if(thisMonthTransactions > lastMonthTransactions) {
-                dTransPct.setForeground(new Color(0, 153, 0));
-            } else {
-                dTransPct.setForeground(new Color(153, 0, 0));
-            }
-            double diff = (Math.abs(thisMonthTransactions - lastMonthTransactions) / lastMonthTransactions) * 100.00;
+            double diff = (Math.abs(thisMonthTransactions - lastMonthTransactions) * 100.00) / lastMonthTransactions;
             dTransPct.setText(Formatter.format(diff) + "%");
+        }
+        if (thisMonthTransactions > lastMonthTransactions) {
+            dTransPct.setForeground(new Color(0, 153, 0));
+        } else {
+            dTransPct.setForeground(new Color(153, 0, 0));
         }
         
         if(lastMonthExpenses == 0) {
             dExpensePct.setText(thisMonthExpenses + "%");
+        } else if(thisMonthExpenses == 0) {
+            dExpensePct.setText(lastMonthExpenses + "%");
         } else {
-            if(thisMonthExpenses > lastMonthExpenses) {
-                dExpensePct.setForeground(new Color(0, 153, 0));
-            } else {
-                dExpensePct.setForeground(new Color(153, 0, 0));
-            }
-            double diff = (Math.abs(thisMonthExpenses - lastMonthExpenses) / lastMonthExpenses) * 100.00;
+            double diff = (Math.abs(thisMonthExpenses - lastMonthExpenses) * 100.00) / lastMonthExpenses;
             dExpensePct.setText(Formatter.format(diff) + "%");
+        }
+        if (thisMonthExpenses > lastMonthExpenses) {
+            dExpensePct.setForeground(new Color(0, 153, 0));
+        } else {
+            dExpensePct.setForeground(new Color(153, 0, 0));
         }
         
         dTotalOrdersAmount.setText("PhP " + Formatter.format(totalAmountSold));

@@ -1,14 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package project.addmoto.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import project.addmoto.data.TopSelling;
 import project.addmoto.database.Database;
 
 /**
@@ -204,5 +201,44 @@ public class DashboardModel {
             exc.printStackTrace();
         }
         return 0.00;
+    }
+    
+    public double getOverallTotalSales() {
+        try {
+            query = "SELECT IFNULL(SUM(" + Database.SOLD_ITEM_TOTAL_PRICE + "), 0) FROM " + Database.SOLD_ITEMS_TABLE + ";";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                return resultSet.getDouble(1);
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        return 0.00;
+    }
+    
+    public ArrayList<TopSelling> getTopSelling() {
+        ArrayList<TopSelling> topSelling = new ArrayList<>();
+        try {
+            query = "SELECT IFNULL(SUM(S." + Database.SOLD_ITEM_QUANTITY + "), 0) as " + Database.TQUANTITY + ", " +
+                    "CONCAT(L." + Database.PRODUCT_LINE_NAME + ", ' ', P." + Database.PRODUCT_DESCRIPTION +
+                    ", ' ' , P." + Database.PRODUCT_CHARACTERISTICS + ", ' ' , P." + Database.PRODUCT_MOTORS + ") as " + Database.TITEM_NAME + " " +
+                    "FROM " + Database.SOLD_ITEMS_TABLE + " S JOIN " + Database.PRODUCTS_TABLE + " P ON S." + Database.PRODUCT_ID + " = P." + Database.PRODUCT_ID_FK + " " +
+                    "JOIN " + Database.PRODUCT_LINE_TABLE + " L on L." + Database.PRODUCT_LINE_ID + " = P." + Database.PRODUCT_LINE_ID_FK + " " +
+                    "group by P." + Database.PRODUCT_ID + " ORDER BY " + Database.TQUANTITY + " DESC";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                int quantity = resultSet.getInt(Database.TQUANTITY);
+                String itemName = resultSet.getString(Database.TITEM_NAME);
+                
+                topSelling.add(new TopSelling(itemName, quantity));
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        return topSelling;
     }
 }

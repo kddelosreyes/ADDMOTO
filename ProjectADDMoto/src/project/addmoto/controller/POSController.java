@@ -179,34 +179,36 @@ public final class POSController extends Controller {
                     if (quantity > 1) {
                         String result = JOptionPane.showInputDialog(view, "How many would you like to void?",
                                 "Void quantity", JOptionPane.QUESTION_MESSAGE);
-                        int quantityValue = -1;
-                        if (result.contains(".") || Integer.parseInt(result) > quantity) {
-                            quantityValue = -1;
-                        } else {
-                            quantityValue = Integer.parseInt(result);
-                        }
-                        if (quantityValue == -1) {
-                            JOptionPane.showMessageDialog(view, "Invalid quantity.", "Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                        } else {
-                            if (quantity - quantityValue == 0) {
-                                tableModel.removeRow(selectedRow);
-                                removeItem(selectedRow);
+                        if(result != null) {
+                            int quantityValue = -1;
+                            if (result.contains(".") || Integer.parseInt(result) > quantity) {
+                                quantityValue = -1;
                             } else {
-                                int newQuantity = quantity - quantityValue;
-                                itemSelected.setQuantity(newQuantity);
-                                itemSelected.setExtPrice(newQuantity * itemSelected.getSellingPrice());
-                                updateItem(itemSelected, selectedRow);
-                                
-                                tableModel.setValueAt(newQuantity, selectedRow, 2);
-                                tableModel.setValueAt(itemSelected.getExtPrice(), selectedRow, 4);
+                                quantityValue = Integer.parseInt(result);
                             }
-                            String xx = "";
-                            SalesItemsList sa = getSalesItemsList();
-                            for (SalesItems x : sa) {
-                                xx += x.getItemCode() + " " + x.getQuantity() + " " + x.getExtPrice() + "\n";
+                            if (quantityValue == -1) {
+                                JOptionPane.showMessageDialog(view, "Invalid quantity.", "Error",
+                                        JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                if (quantity - quantityValue == 0) {
+                                    tableModel.removeRow(selectedRow);
+                                    removeItem(selectedRow);
+                                } else {
+                                    int newQuantity = quantity - quantityValue;
+                                    itemSelected.setQuantity(newQuantity);
+                                    itemSelected.setExtPrice(newQuantity * itemSelected.getSellingPrice());
+                                    updateItem(itemSelected, selectedRow);
+
+                                    tableModel.setValueAt(newQuantity, selectedRow, 2);
+                                    tableModel.setValueAt(itemSelected.getExtPrice(), selectedRow, 4);
+                                }
+                                String xx = "";
+                                SalesItemsList sa = getSalesItemsList();
+                                for (SalesItems x : sa) {
+                                    xx += x.getItemCode() + " " + x.getQuantity() + " " + x.getExtPrice() + "\n";
+                                }
+                                System.out.println(xx);
                             }
-                            System.out.println(xx);
                         }
                     } else {
                         tableModel.removeRow(selectedRow);
