@@ -1,6 +1,5 @@
 package project.addmoto.controller;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -36,8 +35,6 @@ import project.addmoto.view.Payment;
  * @author Kim Howel delos Reyes
  */
 public final class POSController extends Controller {
-
-    private final Toolkit tk = Toolkit.getDefaultToolkit();
 
     private final String PHP = "PhP   ";
 

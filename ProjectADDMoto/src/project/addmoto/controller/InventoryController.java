@@ -3,6 +3,8 @@ package project.addmoto.controller;
 import java.awt.Color;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
@@ -49,6 +51,10 @@ public final class InventoryController extends Controller {
     private final JTextField iSellingPrice;
     private final JTextField iUnitCost;
     private final JTextField iQtyThreshold;
+    
+    private String sellingPriceValue;
+    private String unitCostValue;
+    private String qtyThresholdValue;
     
     public InventoryController(App view, final Connection connection) {
         this.view = view;
@@ -97,6 +103,26 @@ public final class InventoryController extends Controller {
             public void focusLost(FocusEvent e) {}
         });
         
+        iSellingPrice.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE)
+                        || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+        
         iUnitCost.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -105,6 +131,26 @@ public final class InventoryController extends Controller {
 
             @Override
             public void focusLost(FocusEvent e) {}
+        });
+        
+        iUnitCost.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE)
+                        || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
         });
         
         iQtyThreshold.addFocusListener(new FocusListener() {
@@ -117,10 +163,31 @@ public final class InventoryController extends Controller {
             public void focusLost(FocusEvent e) {}
         });
         
+        iQtyThreshold.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE)
+                        || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+        
         iEditUpdateRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(iEditUpdateRSP.getText().equals("Edit")) {
+                    sellingPriceValue = iSellingPrice.getText();
                     setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, false);
                 } else if(iEditUpdateRSP.getText().equals("Update")) {
                     setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
@@ -148,6 +215,7 @@ public final class InventoryController extends Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(iEditUpdateUC.getText().equals("Edit")) {
+                    unitCostValue = iUnitCost.getText();
                     setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, false);
                 } else if(iEditUpdateUC.getText().equals("Update")) {
                     setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
@@ -175,6 +243,7 @@ public final class InventoryController extends Controller {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(iEditUpdateQT.getText().equals("Edit")) {
+                    qtyThresholdValue = iQtyThreshold.getText();
                     setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, false);
                 } else if(iEditUpdateQT.getText().equals("Update")) {
                     setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
@@ -201,6 +270,7 @@ public final class InventoryController extends Controller {
         iCancelRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                iSellingPrice.setText(sellingPriceValue);
                 setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
             }
 
@@ -224,6 +294,7 @@ public final class InventoryController extends Controller {
         iCancelUC.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                iUnitCost.setText(unitCostValue);
                 setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
             }
 
@@ -247,6 +318,7 @@ public final class InventoryController extends Controller {
         iCancelQT.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                iQtyThreshold.setText(qtyThresholdValue);
                 setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
             }
 
