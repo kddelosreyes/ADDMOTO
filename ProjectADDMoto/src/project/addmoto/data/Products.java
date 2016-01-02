@@ -155,4 +155,9 @@ public class Products {
     public void setSupplierID(int supplierID) {
         this.supplierID = supplierID;
     }
+
+    @Override
+    public String toString() {
+        return "Products{" + "productID=" + productID + ", addmotoCode=" + addmotoCode + ", supplierCode=" + supplierCode + ", currentQuantity=" + currentQuantity + ", unitPrice=" + unitPrice + ", sellingPrice=" + sellingPrice + ", profitMargin=" + profitMargin + ", thresholdCount=" + thresholdCount + ", imagePicture=" + imagePicture + ", description=" + description + ", characteristics=" + characteristics + ", motors=" + motors + ", productLineID=" + productLineID + ", supplierID=" + supplierID + '}';
+    }
 }

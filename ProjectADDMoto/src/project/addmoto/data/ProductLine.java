@@ -29,4 +29,10 @@ public class ProductLine {
     public void setProductLineName(String productLineName) {
         this.productLineName = productLineName;
     }
+
+    @Override
+    public String toString() {
+        return productLineName;
+    }
+    
 }
