@@ -104,17 +104,12 @@ public class App extends javax.swing.JFrame {
                         clearPOS();
                         clearSupplier();
                         dashboardController.setDefaultViews();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
-                        inventoryController.isAddingRows = true;
-                        inventoryController.repopulateTable();
-                        inventoryController.isAddingRows = false;
+                        clearInventory();
                         break;
                     case 1:
                         clearDashboard();
                         clearSupplier();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                         break;
                     case 2:
                         clearDashboard();
@@ -125,42 +120,36 @@ public class App extends javax.swing.JFrame {
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                         break;
                     case 4:
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                         break;
                     case 5:
                         clearDashboard();
                         clearPOS();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                         break;
                     case 6:
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                         break;
                     case 7:
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                     default:
                         JOptionPane.showMessageDialog(App.this, "Something is wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
-                        inventoryController.setIndexZero();
-                        inventoryController.setDefaultViews();
+                        clearInventory();
                 }
             }
         });
@@ -168,6 +157,14 @@ public class App extends javax.swing.JFrame {
     
     private void clearDashboard() {
         
+    }
+    
+    private void clearInventory() {
+        inventoryController.setIndexZero();
+        inventoryController.setDefaultViews();
+        inventoryController.isAddingRows = true;
+        inventoryController.repopulateTable();
+        inventoryController.isAddingRows = false;
     }
     
     private void clearPOS() {
@@ -361,6 +358,8 @@ public class App extends javax.swing.JFrame {
         iSupplierFilter = new javax.swing.JComboBox<>();
         iSearchField = new org.jdesktop.swingx.JXSearchField();
         jLabel54 = new javax.swing.JLabel();
+        iInfo = new javax.swing.JLabel();
+        iAddNew = new javax.swing.JButton();
         purchasePanel = new javax.swing.JPanel();
         suppliersPanel = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
@@ -1882,6 +1881,14 @@ public class App extends javax.swing.JFrame {
         jLabel54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/inventory_logo.png"))); // NOI18N
         jLabel54.setText("Inventory");
 
+        iInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/info44.png"))); // NOI18N
+
+        iAddNew.setBackground(new java.awt.Color(0, 255, 102));
+        iAddNew.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        iAddNew.setMnemonic('N');
+        iAddNew.setText("New Product");
+
         javax.swing.GroupLayout inventoryPanelLayout = new javax.swing.GroupLayout(inventoryPanel);
         inventoryPanel.setLayout(inventoryPanelLayout);
         inventoryPanelLayout.setHorizontalGroup(
@@ -1901,21 +1908,30 @@ public class App extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel56)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(iStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(iStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(iInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                    .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(iSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iSearchField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(iAddNew, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         inventoryPanelLayout.setVerticalGroup(
             inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(inventoryPanelLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(inventoryPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(iAddNew, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(inventoryPanelLayout.createSequentialGroup()
                         .addGap(4, 4, 4)
@@ -1928,7 +1944,8 @@ public class App extends javax.swing.JFrame {
                             .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel58, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(iStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(iStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(iInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(iSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -2315,12 +2332,14 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel description;
     private javax.swing.JComboBox<String> filterType;
     private javax.swing.JLabel iAddMotoCode;
+    private javax.swing.JButton iAddNew;
     private javax.swing.JLabel iCancelQT;
     private javax.swing.JLabel iCancelRSP;
     private javax.swing.JLabel iCancelUC;
     private javax.swing.JLabel iEditUpdateQT;
     private javax.swing.JLabel iEditUpdateRSP;
     private javax.swing.JLabel iEditUpdateUC;
+    private javax.swing.JLabel iInfo;
     private javax.swing.JLabel iItemDescription;
     private javax.swing.JLabel iItemNo;
     private javax.swing.JLabel iOnHandQuantity;
@@ -2786,7 +2805,17 @@ public class App extends javax.swing.JFrame {
     public JTextField getiUnitCost() {
         return iUnitCost;
     }
+    
+    
     /*
     End of Inventory Components
     */
+
+    public JButton getiAddNew() {
+        return iAddNew;
+    }
+
+    public JLabel getiInfo() {
+        return iInfo;
+    }
 }

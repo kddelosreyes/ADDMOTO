@@ -1,6 +1,7 @@
 package project.addmoto.controller;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -62,9 +64,11 @@ public final class InventoryController extends Controller {
     private final JLabel iCancelRSP;
     private final JLabel iCancelUC;
     private final JLabel iCancelQT;
+    private final JLabel iInfo;
     private final JTextField iSellingPrice;
     private final JTextField iUnitCost;
     private final JTextField iQtyThreshold;
+    private final JButton iAddNew;
     
     private String sellingPriceValue;
     private String unitCostValue;
@@ -106,12 +110,14 @@ public final class InventoryController extends Controller {
         iCancelRSP = view.getiCancelRSP();
         iCancelUC = view.getiCancelUC();
         iCancelQT = view.getiCancelQT();
+        iInfo = view.getiInfo();
         iSellingPrice = view.getiSellingPrice();
         iSellingPrice.setDisabledTextColor(Color.BLACK);
         iUnitCost = view.getiUnitCost();
         iUnitCost.setDisabledTextColor(Color.BLACK);
         iQtyThreshold = view.getiThreshold();
         iQtyThreshold.setDisabledTextColor(Color.BLACK);
+        iAddNew = view.getiAddNew();
         
         setDefaultViews();
         populate();
@@ -400,6 +406,29 @@ public final class InventoryController extends Controller {
                 iProductsTable.scrollRowToVisible(row);
                 showProductDetails(ID);
             }
+        });
+        
+        iInfo.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JOptionPane.showMessageDialog(view, "Information");
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {}
+
+            @Override
+            public void mouseExited(MouseEvent e) {}
+        });
+        
+        iAddNew.addActionListener((ActionEvent e) -> {
+            JOptionPane.showMessageDialog(view, "Add New button clicked.");
         });
     }
     
