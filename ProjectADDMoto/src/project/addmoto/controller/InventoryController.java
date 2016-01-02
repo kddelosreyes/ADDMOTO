@@ -34,6 +34,7 @@ import project.addmoto.model.InventoryModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.utilities.Formatter;
 import project.addmoto.view.App;
+import project.addmoto.view.InventoryInfo;
 
 /**
  *
@@ -411,7 +412,8 @@ public final class InventoryController extends Controller {
         iInfo.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(view, "Information");
+                InventoryInfo inventoryInfo = new InventoryInfo();
+                JOptionPane.showMessageDialog(view, inventoryInfo, "Item Status Information", JOptionPane.PLAIN_MESSAGE);
             }
 
             @Override
