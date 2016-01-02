@@ -1738,7 +1738,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="18" style="3"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Enter &quot;ADDMoto Product Code&quot; or &quot;ADDMoto Product Code * Quantity&quot;"/>
+                    <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="posEnter">

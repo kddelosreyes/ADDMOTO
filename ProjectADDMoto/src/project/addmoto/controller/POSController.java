@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.prompt.PromptSupport;
 import project.addmoto.data.InventoryChange;
 import project.addmoto.data.ProductLine;
 import project.addmoto.model.POSModel;
@@ -80,6 +81,7 @@ public final class POSController extends Controller {
         salesItemsList = new SalesItemsList();
 
         addProduct = view.getPosAddProduct();
+        PromptSupport.setPrompt("Enter value with respect to filter", addProduct);
         enterProduct = view.getPosEnter();
         clearSales = view.getPosClear();
         creditSales = view.getPosCredit();

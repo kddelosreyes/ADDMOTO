@@ -1288,7 +1288,7 @@ public class App extends javax.swing.JFrame {
         jLabel6.setText("Filter Type:");
 
         posAddProduct.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
-        posAddProduct.setToolTipText("Enter \"ADDMoto Product Code\" or \"ADDMoto Product Code * Quantity\"");
+        posAddProduct.setToolTipText("");
 
         posEnter.setBackground(new java.awt.Color(0, 255, 102));
         posEnter.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

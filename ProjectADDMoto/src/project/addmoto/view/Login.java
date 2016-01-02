@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
     public Login(Query query) {
         this.query = query;
         initComponents();
+        UILogin_usernameTextField.requestFocusInWindow();
         setLocationRelativeTo(null);
     }
 
