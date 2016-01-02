@@ -305,7 +305,6 @@ public class App extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         iProductName = new javax.swing.JTextArea();
         jLabel55 = new javax.swing.JLabel();
-        iItemNo = new javax.swing.JLabel();
         jPanel27 = new javax.swing.JPanel();
         jLabel60 = new javax.swing.JLabel();
         jLabel62 = new javax.swing.JLabel();
@@ -325,10 +324,6 @@ public class App extends javax.swing.JFrame {
         iSellingPrice = new javax.swing.JTextField();
         iOnHandQuantity1 = new javax.swing.JLabel();
         iOnHandQuantity2 = new javax.swing.JLabel();
-        iThreshold = new javax.swing.JTextField();
-        iStatus = new javax.swing.JLabel();
-        iSupplier = new javax.swing.JLabel();
-        iSupplierCode = new javax.swing.JLabel();
         iEditUpdateRSP = new javax.swing.JLabel();
         iCancelRSP = new javax.swing.JLabel();
         iEditUpdateUC = new javax.swing.JLabel();
@@ -338,6 +333,11 @@ public class App extends javax.swing.JFrame {
         jLabel61 = new javax.swing.JLabel();
         iAddMotoCode = new javax.swing.JLabel();
         iUnitCost = new javax.swing.JTextField();
+        iThreshold = new javax.swing.JTextField();
+        iStatus = new javax.swing.JLabel();
+        iSupplierCode = new javax.swing.JLabel();
+        iSupplier = new javax.swing.JLabel();
+        iItemNo = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
         iProductsTable = new org.jdesktop.swingx.JXTable();
         jLabel58 = new javax.swing.JLabel();
@@ -1526,9 +1526,6 @@ public class App extends javax.swing.JFrame {
         jLabel55.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel55.setText("Item No.:");
 
-        iItemNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        iItemNo.setText("######");
-
         jPanel27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel60.setForeground(new java.awt.Color(0, 153, 153));
@@ -1613,19 +1610,6 @@ public class App extends javax.swing.JFrame {
 
         iOnHandQuantity2.setText("PhP");
 
-        iThreshold.setText("10");
-        iThreshold.setBorder(null);
-        iThreshold.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        iThreshold.setEnabled(false);
-        iThreshold.setOpaque(false);
-
-        iStatus.setText("Status");
-        iStatus.setOpaque(true);
-
-        iSupplier.setText("Supplier");
-
-        iSupplierCode.setText("Supplier Code");
-
         iEditUpdateRSP.setText("Edit");
 
         iCancelRSP.setText("Cancel");
@@ -1652,13 +1636,26 @@ public class App extends javax.swing.JFrame {
         iUnitCost.setEnabled(false);
         iUnitCost.setOpaque(false);
 
+        iThreshold.setText("10");
+        iThreshold.setBorder(null);
+        iThreshold.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        iThreshold.setEnabled(false);
+        iThreshold.setOpaque(false);
+
+        iStatus.setText("Status");
+        iStatus.setOpaque(true);
+
+        iSupplierCode.setText("Supplier Code");
+
+        iSupplier.setText("Supplier");
+
         javax.swing.GroupLayout jPanel27Layout = new javax.swing.GroupLayout(jPanel27);
         jPanel27.setLayout(jPanel27Layout);
         jPanel27Layout.setHorizontalGroup(
             jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel27Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel27Layout.createSequentialGroup()
                         .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel60, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1690,10 +1687,10 @@ public class App extends javax.swing.JFrame {
                             .addComponent(jLabel67, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                             .addComponent(jLabel68, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(iSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(iSupplierCode, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(iStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                        .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(iSupplierCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(iSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(iStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(iThreshold)))
                     .addComponent(iSellingPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1757,7 +1754,7 @@ public class App extends javax.swing.JFrame {
                 .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel68)
                     .addComponent(iStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel66)
                     .addComponent(iSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1765,8 +1762,11 @@ public class App extends javax.swing.JFrame {
                 .addGroup(jPanel27Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel69)
                     .addComponent(iSupplierCode, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap())
         );
+
+        iItemNo.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        iItemNo.setText("######");
 
         javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
         jPanel26.setLayout(jPanel26Layout);
@@ -1800,9 +1800,9 @@ public class App extends javax.swing.JFrame {
                             .addComponent(iItemNo)
                             .addComponent(jLabel55, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addComponent(jXImageView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(16, 16, 16))
         );
 
         jScrollPane5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

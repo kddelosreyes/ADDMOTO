@@ -2163,9 +2163,9 @@
                               </Group>
                               <Component id="jXImageView1" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jPanel27" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jPanel27" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2234,14 +2234,6 @@
                     <Property name="text" type="java.lang.String" value="Item No.:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="iItemNo">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="12" style="1"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="######"/>
-                  </Properties>
-                </Component>
                 <Container class="javax.swing.JPanel" name="jPanel27">
                   <Properties>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -2256,7 +2248,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="jLabel60" alignment="0" max="32767" attributes="0"/>
@@ -2297,11 +2289,11 @@
                                           <Component id="jLabel68" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="iSupplier" pref="180" max="32767" attributes="0"/>
-                                          <Component id="iSupplierCode" pref="180" max="32767" attributes="0"/>
-                                          <Component id="iStatus" alignment="0" pref="180" max="32767" attributes="0"/>
-                                          <Component id="iThreshold" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="iSupplierCode" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="iSupplier" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="iStatus" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="iThreshold" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="iSellingPrice" alignment="1" min="-2" pref="158" max="-2" attributes="0"/>
@@ -2318,7 +2310,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="iCancelUC" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="iEditUpdateQT" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="iCancelQT" min="-2" max="-2" attributes="0"/>
@@ -2381,7 +2373,7 @@
                                   <Component id="jLabel68" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="iStatus" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel66" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="iSupplier" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
@@ -2391,7 +2383,7 @@
                                   <Component id="jLabel69" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="iSupplierCode" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="17" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2570,35 +2562,6 @@
                         <Property name="text" type="java.lang.String" value="PhP"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="iThreshold">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="10"/>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Text Cursor"/>
-                        </Property>
-                        <Property name="enabled" type="boolean" value="false"/>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="iStatus">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Status"/>
-                        <Property name="opaque" type="boolean" value="true"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="iSupplier">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Supplier"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="iSupplierCode">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Supplier Code"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="iEditUpdateRSP">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Edit"/>
@@ -2656,8 +2619,45 @@
                         <Property name="opaque" type="boolean" value="false"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JTextField" name="iThreshold">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="10"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="null"/>
+                        </Property>
+                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                          <Color id="Text Cursor"/>
+                        </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
+                        <Property name="opaque" type="boolean" value="false"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="iStatus">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Status"/>
+                        <Property name="opaque" type="boolean" value="true"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="iSupplierCode">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Supplier Code"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="iSupplier">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Supplier"/>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JLabel" name="iItemNo">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="12" style="1"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="######"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JScrollPane" name="jScrollPane5">

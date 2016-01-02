@@ -97,20 +97,33 @@ public final class InventoryController extends Controller {
             public void focusLost(FocusEvent e) {}
         });
         
+        iUnitCost.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                iUnitCost.selectAll();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {}
+        });
+        
+        iQtyThreshold.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                iQtyThreshold.selectAll();
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {}
+        });
+        
         iEditUpdateRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(iEditUpdateRSP.getText().equals("Edit")) {
-                    iSellingPrice.requestFocus();
-                    iSellingPrice.setOpaque(true);
-                    iSellingPrice.setEnabled(true);
-                    iEditUpdateRSP.setText("Update");
-                    iCancelRSP.setEnabled(true);
+                    setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, false);
                 } else if(iEditUpdateRSP.getText().equals("Update")) {
-                    iSellingPrice.setOpaque(false);
-                    iSellingPrice.setEnabled(false);
-                    iEditUpdateRSP.setText("Edit");
-                    iCancelRSP.setEnabled(false);
+                    setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
                 }
             }
 
@@ -131,13 +144,64 @@ public final class InventoryController extends Controller {
             }
         });
         
+        iEditUpdateUC.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(iEditUpdateUC.getText().equals("Edit")) {
+                    setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, false);
+                } else if(iEditUpdateUC.getText().equals("Update")) {
+                    setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setRedForeground(iEditUpdateUC);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBlackForeground(iEditUpdateUC);
+            }
+        });
+        
+        iEditUpdateQT.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(iEditUpdateQT.getText().equals("Edit")) {
+                    setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, false);
+                } else if(iEditUpdateQT.getText().equals("Update")) {
+                    setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setRedForeground(iEditUpdateQT);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBlackForeground(iEditUpdateQT);
+            }
+        });
+        
         iCancelRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                iSellingPrice.setOpaque(false);
-                iSellingPrice.setEnabled(false);
-                iEditUpdateRSP.setText("Edit");
-                iCancelRSP.setEnabled(false);
+                setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
             }
 
             @Override
@@ -156,6 +220,52 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iCancelRSP);
             }
         });
+        
+        iCancelUC.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setRedForeground(iCancelUC);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBlackForeground(iCancelUC);
+            }
+        });
+        
+        iCancelQT.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setRedForeground(iCancelQT);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setBlackForeground(iCancelQT);
+            }
+        });
     }
     
     private void setRedForeground(JLabel label) {
@@ -164,5 +274,20 @@ public final class InventoryController extends Controller {
     
     private void setBlackForeground(JLabel label) {
         label.setForeground(Color.BLACK);
+    }
+    
+    private void setToDefault(JTextField lFunction, JLabel edit, JLabel cancel, boolean isToDefault) {
+        if (!isToDefault) {
+            lFunction.requestFocus();
+            lFunction.setOpaque(true);
+            lFunction.setEnabled(true);
+            edit.setText("Update");
+            cancel.setEnabled(true);
+        } else {
+            lFunction.setOpaque(false);
+            lFunction.setEnabled(false);
+            edit.setText("Edit");
+            cancel.setEnabled(false);
+        }
     }
 }
