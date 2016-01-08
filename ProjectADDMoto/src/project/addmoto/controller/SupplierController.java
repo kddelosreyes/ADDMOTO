@@ -24,6 +24,7 @@ public final class SupplierController extends Controller {
     
     private final App view;
     private final SupplierModel model;
+    private final Connection connection;
     
     private final JScrollPane supplierPane;
     private final JLabel sCompanyName;
@@ -41,9 +42,10 @@ public final class SupplierController extends Controller {
     
     private SupplierDetails[] sDetails;
     
-    public SupplierController(App view, final Connection connection) {
+    public SupplierController(App view, Connection connection) {
         this.view = view;
         this.model = new SupplierModel(connection);
+        this.connection = connection;
         
         sCompanyName = view.getsCompanyName();
         sContactName = view.getsContactName();
@@ -151,11 +153,12 @@ public final class SupplierController extends Controller {
         sProducts.addMouseListener(new MouseListener() {
             
             @Override
+            @SuppressWarnings("ResultOfObjectAllocationIgnored")
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(selectedSupplier == null) {
                     showSupplierError();
                 } else {
-                    JOptionPane.showMessageDialog(view, "Products is selected " + selectedSupplier.getSupplierID());
+                    new SupplierProductsController(view, connection, selectedSupplier.getSupplierID());
                 }
             }
             
