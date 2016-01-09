@@ -264,7 +264,7 @@ public class SupplierProduct implements Serializable,
                 return EQUAL;
             }
 
-            int comparison = (int)aThis.unitPrice - (int)aThat.unitPrice;
+            int comparison = (int)(aThis.unitPrice * 100) - (int)(aThat.unitPrice * 100);
             if (comparison != EQUAL) {
                 return comparison;
             }
@@ -280,15 +280,10 @@ public class SupplierProduct implements Serializable,
                 return EQUAL;
             }
 
-            int comparison = -1;
-            if(aThis.sellingPrice > aThis.sellingPrice) {
-                comparison = 1;
-            } else if(aThis.sellingPrice < aThis.sellingPrice) {
-                comparison = -1;
-            } else {
-                comparison = EQUAL;
+            int comparison = (int)(aThis.sellingPrice * 100) - (int)(aThat.sellingPrice * 100);
+            if (comparison != EQUAL) {
+                return comparison;
             }
-            
             return comparison;
         }
     };

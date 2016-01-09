@@ -6,7 +6,6 @@
 package project.addmoto.data;
 
 import java.awt.Color;
-import java.io.Serializable;
 
 /**
  *
@@ -16,10 +15,12 @@ public class ColorString {
     
     private Color color;
     private String status;
+    private String percentage;
     
-    public ColorString(Color color, String status) {
+    public ColorString(Color color, String status, String percentage) {
         this.color = color;
         this.status = status;
+        this.percentage = percentage;
     }
 
     public Color getColor() {
@@ -36,5 +37,18 @@ public class ColorString {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(String percentage) {
+        this.percentage = percentage;
+    }
+
+    @Override
+    public String toString() {
+        return "ColorString{" + "color=" + color + ", status=" + status + ", percentage=" + percentage + '}';
     }
 }

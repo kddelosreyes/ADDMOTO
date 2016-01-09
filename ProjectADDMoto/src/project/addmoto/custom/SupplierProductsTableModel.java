@@ -89,18 +89,18 @@ public class SupplierProductsTableModel extends AbstractTableModel {
         } else if(col == 4) {
             result = supplierProduct.getQuantity();
         } else if(col == 5) {
-            result = "PhP " + supplierProduct.getUnitPrice();
+            result = "PhP " + Formatter.format(supplierProduct.getUnitPrice());
         } else if(col == 6) {
-            result = "PhP " + supplierProduct.getSellingPrice();
+            result = "PhP " + Formatter.format(supplierProduct.getSellingPrice());
         } else if(col == 7) {
             int threshold = supplierProduct.getThreshold(), quantity = supplierProduct.getQuantity();
             ColorString colorString = null;
             if (quantity > threshold * 1.10) {
-                colorString = new ColorString(Color.GREEN, "Good");
+                colorString = new ColorString(Color.GREEN, "Good", Formatter.format(quantity * 1.0 / threshold * 100.0));
             } else if ((quantity >= threshold * 0.90) && (quantity <= threshold * 1.10)) {
-                colorString = new ColorString(Color.ORANGE, "Warning");
+                colorString = new ColorString(Color.ORANGE, "Warning", Formatter.format(quantity * 1.0 / threshold * 100.0));
             } else {
-                colorString = new ColorString(Color.RED, "Critical");
+                colorString = new ColorString(Color.RED, "Critical", Formatter.format(quantity * 1.0 / threshold * 100.0));
             }
             result = colorString;
         }
