@@ -6,6 +6,7 @@
 package project.addmoto.data;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import project.addmoto.annotation.Column;
 import project.addmoto.annotation.Table;
 
@@ -13,7 +14,8 @@ import project.addmoto.annotation.Table;
  *
  * @author Kim Howel delos Reyes
  */
-public class SupplierProduct implements Serializable {
+public class SupplierProduct implements Serializable,
+        Comparable<SupplierProduct> {
     
     @Column(columnName = "P.productID")
     private int productID;
@@ -140,5 +142,172 @@ public class SupplierProduct implements Serializable {
     @Override
     public String toString() {
         return "SupplierProduct{" + "productID=" + productID + ", supplierCode=" + supplierCode + ", addmotoCode=" + addmotoCode + ", productLine=" + productLine + ", description=" + description + ", quantity=" + quantity + ", threshold=" + threshold + ", unitPrice=" + unitPrice + ", sellingPrice=" + sellingPrice + '}';
+    }
+    
+    private static final int EQUAL = 0;
+    private static final int DESCENDING = -1;
+    
+    private boolean areEqual(Object o1, Object o2) {
+        return o1 == null ? o1 == null : o1.equals(o1);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(!(obj instanceof SupplierProduct)) return false;
+        SupplierProduct that = (SupplierProduct) obj;
+        
+        return areEqual(this.addmotoCode, that.addmotoCode)
+                && areEqual(this.supplierCode, that.supplierCode)
+                && areEqual(this.productID, that.productID)
+                && areEqual(this.productLine, that.productLine)
+                && areEqual(this.description, that.description)
+                && areEqual(this.quantity, that.quantity)
+                && areEqual(this.threshold, that.threshold)
+                && areEqual(this.unitPrice, that.unitPrice)
+                && areEqual(this.sellingPrice, that.sellingPrice);
+    }
+
+    @Override
+    public int compareTo(SupplierProduct that) {
+        if(this == that) return EQUAL;
+        int comparison = DESCENDING*comparePossiblyNull(this.productID, that.productID);
+        if ( comparison != EQUAL ) return comparison;
+        return EQUAL;
+    }
+    
+    public static Comparator<SupplierProduct> SUPPLIER_CODE_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("Supplier Code Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = aThis.supplierCode.compareTo(aThat.supplierCode);
+            if (comparison != EQUAL) {
+                return comparison;
+            }
+            return EQUAL;
+        }
+    };
+    
+    public static Comparator<SupplierProduct> ADDMOTO_CODE_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("ADD Moto Code Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = aThis.addmotoCode.compareTo(aThat.addmotoCode);
+            if (comparison != EQUAL) {
+                return comparison;
+            }
+            return EQUAL;
+        }
+    };
+    
+    public static Comparator<SupplierProduct> PRODUCT_LINE_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("Product Line Sort Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = aThis.productLine.compareTo(aThat.productLine);
+            if (comparison != EQUAL) {
+                return comparison;
+            }
+            return EQUAL;
+        }
+    };
+    
+    public static Comparator<SupplierProduct> DESCRIPTION_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("Description Sort Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = aThis.description.compareTo(aThat.description);
+            if (comparison != EQUAL) {
+                return comparison;
+            }
+            return EQUAL;
+        }
+    };
+    
+    public static Comparator<SupplierProduct> QUANTITY_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("Quantity Sort Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = aThis.quantity - aThat.quantity;
+            if (comparison != EQUAL) {
+                return comparison;
+            }
+            return EQUAL;
+        }
+    };
+    
+    public static Comparator<SupplierProduct> UNIT_PRICE_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("Unit Price Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = (int)aThis.unitPrice - (int)aThat.unitPrice;
+            if (comparison != EQUAL) {
+                return comparison;
+            }
+            return comparison;
+        }
+    };
+    
+    public static Comparator<SupplierProduct> SELLING_PRICE_SORT = new Comparator<SupplierProduct>() {
+        @Override
+        public int compare(SupplierProduct aThis, SupplierProduct aThat) {
+            System.out.println("Selling Price Comparator");
+            if (aThis == aThat) {
+                return EQUAL;
+            }
+
+            int comparison = -1;
+            if(aThis.sellingPrice > aThis.sellingPrice) {
+                comparison = 1;
+            } else if(aThis.sellingPrice < aThis.sellingPrice) {
+                comparison = -1;
+            } else {
+                comparison = EQUAL;
+            }
+            
+            return comparison;
+        }
+    };
+    
+    private static <T extends Comparable<T>> int comparePossiblyNull(T aThis, T aThat) {
+        int result = EQUAL;
+        int BEFORE = -1;
+        int AFTER = 1;
+
+        if (aThis != null && aThat != null) {
+            result = aThis.compareTo(aThat);
+        } else //at least one reference is null - special handling
+        if (aThis == null && aThat == null) {
+            //do nothing - they are not distinct 
+        } else if (aThis == null && aThat != null) {
+            result = BEFORE;
+        } else if (aThis != null && aThat == null) {
+            result = AFTER;
+        }
+        return result;
     }
 }

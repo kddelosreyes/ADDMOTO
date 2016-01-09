@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;
+import org.jdesktop.swingx.painter.AbstractLayoutPainter;
 import project.addmoto.data.ColorString;
 
 /**
@@ -42,6 +43,7 @@ public class LabelRenderer extends JLabel implements TableCellRenderer {
         ColorString newColorString = (ColorString) colorString;
         setText(newColorString.getStatus());
         setBackground(newColorString.getColor());
+        setHorizontalAlignment(CENTER);
         
         if (isBordered) {
             if (isSelected) {

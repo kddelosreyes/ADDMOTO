@@ -7,6 +7,8 @@ package project.addmoto.custom;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.table.AbstractTableModel;
 import project.addmoto.data.ColorString;
 import project.addmoto.data.SupplierProduct;
@@ -18,17 +20,21 @@ import project.addmoto.utilities.Formatter;
  */
 public class SupplierProductsTableModel extends AbstractTableModel {
 
+    private ArrayList<SupplierProduct> supplierProductsList;
+    
     private String[] columnNames = {
         "Supplier Code", "ADD Moto Code", "Product Line",
         "Description", "Qty", "Unit Price",
         "Selling Price", "Status"
     };
 
-    private Object[][] data;
+    //private Object[][] data;
 
     public SupplierProductsTableModel(ArrayList<SupplierProduct> supplierProductsList) {
+        
+        this.supplierProductsList = supplierProductsList;
 
-        data = new Object[supplierProductsList.size()][columnNames.length];
+        /*data = new Object[supplierProductsList.size()][columnNames.length];
 
         for (int i = 0; i < supplierProductsList.size(); i++) {
             SupplierProduct sProduct = supplierProductsList.get(i);
@@ -54,7 +60,7 @@ public class SupplierProductsTableModel extends AbstractTableModel {
                 colorString,
                 sProduct.getProductID()
             };
-        }
+        }*/
     }
 
     public int getColumnCount() {
@@ -62,7 +68,7 @@ public class SupplierProductsTableModel extends AbstractTableModel {
     }
 
     public int getRowCount() {
-        return data.length;
+        return supplierProductsList.size();
     }
 
     public String getColumnName(int col) {
@@ -70,7 +76,36 @@ public class SupplierProductsTableModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int row, int col) {
-        return data[row][col];
+        SupplierProduct supplierProduct = supplierProductsList.get(row);
+        Object result = null;
+        if(col == 0) {
+            result = supplierProduct.getSupplierCode();
+        } else if(col == 1) {
+            result = supplierProduct.getAddmotoCode();
+        } else if(col == 2) {
+            result = supplierProduct.getProductLine();
+        } else if(col == 3) {
+            result = supplierProduct.getDescription();
+        } else if(col == 4) {
+            result = supplierProduct.getQuantity();
+        } else if(col == 5) {
+            result = "PhP " + supplierProduct.getUnitPrice();
+        } else if(col == 6) {
+            result = "PhP " + supplierProduct.getSellingPrice();
+        } else if(col == 7) {
+            int threshold = supplierProduct.getThreshold(), quantity = supplierProduct.getQuantity();
+            ColorString colorString = null;
+            if (quantity > threshold * 1.10) {
+                colorString = new ColorString(Color.GREEN, "Good");
+            } else if ((quantity >= threshold * 0.90) && (quantity <= threshold * 1.10)) {
+                colorString = new ColorString(Color.ORANGE, "Warning");
+            } else {
+                colorString = new ColorString(Color.RED, "Critical");
+            }
+            result = colorString;
+        }
+        
+        return result;
     }
 
     /*
@@ -88,4 +123,42 @@ public class SupplierProductsTableModel extends AbstractTableModel {
         //no matter where the cell appears onscreen.
         return false;
     }
+    
+    public void sortByColumn(int columnIndex) {
+        System.out.println("This is called.");
+        fNumClicks++;
+        Comparator<SupplierProduct> comparator = null;
+        switch(columnIndex) {
+            case 0:
+                comparator = SupplierProduct.SUPPLIER_CODE_SORT;
+                break;
+            case 1:
+                comparator = SupplierProduct.ADDMOTO_CODE_SORT;
+                break;
+            case 2:
+                comparator = SupplierProduct.PRODUCT_LINE_SORT;
+                break;
+            case 3:
+                comparator = SupplierProduct.DESCRIPTION_SORT;
+                break;
+            case 4:
+                comparator = SupplierProduct.QUANTITY_SORT;
+                break;
+            case 5:
+                comparator = SupplierProduct.UNIT_PRICE_SORT;
+                break;
+            case 6:
+                comparator = SupplierProduct.SELLING_PRICE_SORT;
+                break;
+            case 7:
+                break;
+        }
+        Collections.sort(supplierProductsList, comparator);
+        if(fNumClicks % 2 == 0) {
+            Collections.reverse(supplierProductsList);
+        }
+        fireTableDataChanged();
+    }
+    
+    private int fNumClicks = 0;
 }

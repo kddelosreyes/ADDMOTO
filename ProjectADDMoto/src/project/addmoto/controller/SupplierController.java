@@ -158,7 +158,7 @@ public final class SupplierController extends Controller {
                 if(selectedSupplier == null) {
                     showSupplierError();
                 } else {
-                    new SupplierProductsController(view, connection, selectedSupplier.getSupplierID());
+                    new SupplierProductsController(view, connection, selectedSupplier);
                 }
             }
             

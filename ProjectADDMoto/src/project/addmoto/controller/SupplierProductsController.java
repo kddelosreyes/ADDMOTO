@@ -5,6 +5,8 @@
  */
 package project.addmoto.controller;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import project.addmoto.custom.LabelRenderer;
 import project.addmoto.custom.SupplierProductsTableModel;
 import project.addmoto.data.ColorString;
 import project.addmoto.data.SupplierProduct;
+import project.addmoto.data.SupplierSummary;
 import project.addmoto.model.SupplierProductsModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.view.App;
@@ -40,17 +43,18 @@ public final class SupplierProductsController extends Controller {
     private JTable spProductsTable;
     private JXSearchField spSearch;
     private DefaultTableModel tableModel;
+    private SupplierProductsTableModel supplierProductsTableModel;
     private ListSelectionModel selectionModel;
 
-    private final int supplierID;
+    private final SupplierSummary supplier;
 
     private final ArrayList<SupplierProduct> supplierProductsList;
 
-    public SupplierProductsController(final App view, final Connection connection, final int supplierID) {
+    public SupplierProductsController(final App view, final Connection connection, final SupplierSummary supplier) {
         this.view = view;
-        this.supplierID = supplierID;
+        this.supplier = supplier;
         supplierProductsModel = new SupplierProductsModel(connection);
-        supplierProductsList = supplierProductsModel.getSupplierProducts(this.supplierID);
+        supplierProductsList = supplierProductsModel.getSupplierProducts(this.supplier.getSupplierID());
 
         if (supplierProductsList.isEmpty()) {
             JOptionPane.showMessageDialog(
@@ -66,7 +70,7 @@ public final class SupplierProductsController extends Controller {
 
     @Override
     public void setListeners() {
-        selectionModel.addListSelectionListener(new ListSelectionListener() {
+        /*selectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if(e.getValueIsAdjusting()) {
@@ -78,7 +82,7 @@ public final class SupplierProductsController extends Controller {
                 
                 JOptionPane.showMessageDialog(view, productWithCode.get(0).toString());
             }
-        });
+        });*/
     }
 
     private void proceedToFunction() {
@@ -86,7 +90,8 @@ public final class SupplierProductsController extends Controller {
 
         spTitle = supplierProducts.getSupplierProductsTitle();
         spProductsTable = supplierProducts.getSupplierProductsTable();
-        spProductsTable.setModel(new SupplierProductsTableModel(supplierProductsList));
+        supplierProductsTableModel = new SupplierProductsTableModel(supplierProductsList);
+        spProductsTable.setModel(supplierProductsTableModel);
         for(int i = 0; i < 8; i++) {
             switch(i) {
                 case 0:
@@ -111,6 +116,9 @@ public final class SupplierProductsController extends Controller {
                     break;
             }
         }
+        
+        clickOnHeadersSortsTable();
+        
         spSearch = supplierProducts.getSearchField();
         selectionModel = (ListSelectionModel) spProductsTable.getSelectionModel();
         spProductsTable.setDefaultRenderer(ColorString.class, new LabelRenderer(true));
@@ -129,5 +137,18 @@ public final class SupplierProductsController extends Controller {
                 buttons,
                 buttons[0]
         );
+    }
+    
+    private void clickOnHeadersSortsTable() {
+        spProductsTable.getTableHeader().addMouseListener(new SortProductsTable());
+    }
+    
+    private final class SortProductsTable extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent aEvent) {
+            System.out.println("Header clicked.");
+            int columnIdx = spProductsTable.getColumnModel().getColumnIndexAtX(aEvent.getX());
+            supplierProductsTableModel.sortByColumn(columnIdx);
+        }
     }
 }

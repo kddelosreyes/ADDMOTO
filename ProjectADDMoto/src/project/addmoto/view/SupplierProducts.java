@@ -40,7 +40,6 @@ public class SupplierProducts extends javax.swing.JPanel {
         supplierProductsTitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/supplierproducts.png"))); // NOI18N
         supplierProductsTitle.setText("Products - ");
 
-        supplierProductsTable.setAutoCreateRowSorter(true);
         supplierProductsTable.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         supplierProductsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
