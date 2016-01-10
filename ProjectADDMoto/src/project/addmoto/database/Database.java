@@ -93,6 +93,7 @@ public class Database {
     public static final String SELLER_ID_FK = "seller_id";
     public static final String RECEIPT_PRICE_PAID = "receipt_price_paid";
     public static final String RECEIPT_IS_FULLY_PAID = "receipt_is_fully_paid";
+    public static final String RECEIPT_DISCOUNT = "receipt_discount";
     
     /*
     SELLER_ACCOUNT_TABLE columns
@@ -148,6 +149,29 @@ public class Database {
     */
     public static final String TQUANTITY = "total_quantity";
     public static final String TITEM_NAME = "item_name";
+    
+    /*
+    ORDERS TABLE fields
+    */
+    public static final String ORDER_ID = "order_id";
+    public static final String ORDER_NO = "order_no";
+    public static final String ORDER_TIMESTAMP = "order_timestamp";
+    public static final String ORDER_TOTAL_PRICE = "order_total_price";
+    public static final String ORDER_SUPPLIER_ID = "supplier_id";
+    public static final String ORDER_IS_PAID = "order_is_paid";
+    public static final String ORDER_SELLER_ID = "order_seller_id";
+    public static final String ORDER_STATUS = "order_status";
+    public static final String ORDER_TARGET_DATE = "order_target_date";
+    
+    /*
+    ORDER LINE TABLE
+    */
+    public static final String ORDER_LINE_ID = "order_line_id";
+    public static final String ORDER_LINE_PRODUCT_ID = "product_id";
+    public static final String ORDER_LINE_ORDER_ID = "order_id";
+    public static final String ORDER_LINE_QUANTITY = "order_quantity";
+    public static final String ORDER_LINE_UNIT_PRICE = "order_unit_price";
+    public static final String ORDER_LINE_TOTAL_PRICE = "order_total_price";
     
     public Connection getConnection() {
         if(connection == null) {

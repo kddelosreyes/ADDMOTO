@@ -6,22 +6,25 @@
 package project.addmoto.model;
 
 import java.sql.Connection;
-import project.addmoto.javasqlquerybuilder.Factory;
-import project.addmoto.javasqlquerybuilder.generic.FactoryImp;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  *
  * @author Kim Howel delos Reyes
  */
-public class AddEditSupplierModel {
-   
-    private final Connection connection;
-    private final Factory sqlFactory;
+public class PurchaseOrderModel {
     
-    public AddEditSupplierModel(final Connection connection) {
+    private final Connection connection;
+    private String query;
+    private Statement statement;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+    
+    public PurchaseOrderModel(final Connection connection) {
         this.connection = connection;
-        sqlFactory = new FactoryImp();
         
-        System.out.println("Add Edit Supplier Model called.");
+        System.out.println("Purchase Order Model is called.");
     }
 }

@@ -14,7 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -27,6 +29,7 @@ import org.jdesktop.swingx.JXTable;
 import project.addmoto.controller.DashboardController;
 import project.addmoto.controller.InventoryController;
 import project.addmoto.controller.POSController;
+import project.addmoto.controller.PurchaseOrderController;
 import project.addmoto.controller.SupplierController;
 import project.addmoto.data.SellerAccount;
 import project.addmoto.database.Database;
@@ -45,6 +48,7 @@ public class App extends javax.swing.JFrame {
     private POSController posController;
     private InventoryController inventoryController;
     private SupplierController supplierController;
+    private PurchaseOrderController purchaseOrderController;
     
     private final Connection connection;
     
@@ -60,10 +64,11 @@ public class App extends javax.swing.JFrame {
         
         connection = new Database().getConnection();
         
-        dashboardController = new DashboardController(App.this, connection);
-        posController = new POSController(App.this, connection);
-        inventoryController = new InventoryController(App.this, connection);
-        supplierController = new SupplierController(App.this, connection);
+        dashboardController = new DashboardController(this, connection);
+        posController = new POSController(this, connection);
+        inventoryController = new InventoryController(this, connection);
+        supplierController = new SupplierController(this, connection);
+        purchaseOrderController = new PurchaseOrderController(this, connection);
         
         appSellerName.setText("Hi, " + sellerAccount.getFirstName() + " " + sellerAccount.getLastName());
         appLogout.addMouseListener(new MouseListener() {
@@ -100,50 +105,51 @@ public class App extends javax.swing.JFrame {
                 int index = tabbedPane.getSelectedIndex();
                 System.out.println("Index: " + index);
                 switch(index) {
-                    case 0:
+                    case 0: // Dashboard
                         clearPOS();
                         clearSupplier();
                         dashboardController.setDefaultViews();
                         clearInventory();
                         break;
-                    case 1:
+                    case 1: // Point Of Sale
                         clearDashboard();
                         clearSupplier();
                         clearInventory();
                         break;
-                    case 2:
+                    case 2: // Inventory
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
                         break;
-                    case 3:
-                        clearDashboard();
-                        clearPOS();
-                        clearSupplier();
-                        clearInventory();
-                        break;
-                    case 4:
+                    case 3: // Purchase Order
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
                         clearInventory();
                         break;
-                    case 5:
+                    case 4: // Supplier
                         clearDashboard();
                         clearPOS();
                         clearInventory();
                         break;
-                    case 6:
+                    case 5: // Expenses
+                        clearDashboard();
+                        clearPOS();
+                        clearInventory();
+                        clearSupplier();
+                        break;
+                    case 6: // Returns
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
                         clearInventory();
                         break;
-                    case 7:
+                    case 7: // Reports
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
                         clearInventory();
+                        break;
                     default:
                         JOptionPane.showMessageDialog(App.this, "Something is wrong!", "Error!", JOptionPane.ERROR_MESSAGE);
                         clearDashboard();
@@ -153,6 +159,10 @@ public class App extends javax.swing.JFrame {
                 }
             }
         });
+    }
+    
+    private void clearPurchaseOrder() {
+        
     }
     
     private void clearDashboard() {
@@ -208,6 +218,10 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        poPopup = new javax.swing.JPopupMenu();
+        poTogglePaid = new javax.swing.JMenuItem();
+        poViewDetails = new javax.swing.JMenuItem();
+        poReceiveProducts = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -361,6 +375,13 @@ public class App extends javax.swing.JFrame {
         iInfo = new javax.swing.JLabel();
         iAddNew = new javax.swing.JButton();
         purchasePanel = new javax.swing.JPanel();
+        poCreate = new javax.swing.JButton();
+        poView = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        poTable = new javax.swing.JTable();
+        poSearch = new org.jdesktop.swingx.JXSearchField();
+        poReceive = new javax.swing.JButton();
+        jLabel57 = new javax.swing.JLabel();
         suppliersPanel = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
@@ -397,6 +418,16 @@ public class App extends javax.swing.JFrame {
         sProducts = new javax.swing.JLabel();
         reportsPanel = new javax.swing.JPanel();
         jPanel30 = new javax.swing.JPanel();
+        jPanel29 = new javax.swing.JPanel();
+
+        poTogglePaid.setText("Toggle Paid");
+        poPopup.add(poTogglePaid);
+
+        poViewDetails.setText("View Details");
+        poPopup.add(poViewDetails);
+
+        poReceiveProducts.setText("Receive Products");
+        poPopup.add(poReceiveProducts);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("ADD Moto - Motorcycle Parts and Accessories");
@@ -1958,18 +1989,122 @@ public class App extends javax.swing.JFrame {
 
         tabbedPane.addTab("Inventory", inventoryPanel);
 
+        poCreate.setBackground(new java.awt.Color(0, 255, 102));
+        poCreate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        poCreate.setText("Create New PO");
+
+        poView.setBackground(new java.awt.Color(0, 255, 102));
+        poView.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        poView.setText("View Details");
+
+        poTable.setAutoCreateRowSorter(true);
+        poTable.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        poTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Order No.", "Order Date/Time", "Supplier", "Invoice Total", "No. of Items", "Paid", "Status", "Target Receive Date", "Issuer"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        poTable.setGridColor(new java.awt.Color(204, 204, 204));
+        poTable.setRowHeight(20);
+        poTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        poTable.getTableHeader().setResizingAllowed(false);
+        poTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane6.setViewportView(poTable);
+        if (poTable.getColumnModel().getColumnCount() > 0) {
+            poTable.getColumnModel().getColumn(0).setMinWidth(75);
+            poTable.getColumnModel().getColumn(0).setPreferredWidth(75);
+            poTable.getColumnModel().getColumn(0).setMaxWidth(75);
+            poTable.getColumnModel().getColumn(1).setMinWidth(120);
+            poTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+            poTable.getColumnModel().getColumn(1).setMaxWidth(120);
+            poTable.getColumnModel().getColumn(4).setMinWidth(120);
+            poTable.getColumnModel().getColumn(4).setPreferredWidth(120);
+            poTable.getColumnModel().getColumn(4).setMaxWidth(120);
+            poTable.getColumnModel().getColumn(5).setMinWidth(70);
+            poTable.getColumnModel().getColumn(5).setPreferredWidth(70);
+            poTable.getColumnModel().getColumn(5).setMaxWidth(70);
+            poTable.getColumnModel().getColumn(6).setMinWidth(60);
+            poTable.getColumnModel().getColumn(6).setPreferredWidth(60);
+            poTable.getColumnModel().getColumn(6).setMaxWidth(60);
+            poTable.getColumnModel().getColumn(7).setMinWidth(60);
+            poTable.getColumnModel().getColumn(7).setPreferredWidth(60);
+            poTable.getColumnModel().getColumn(7).setMaxWidth(60);
+            poTable.getColumnModel().getColumn(9).setMinWidth(80);
+            poTable.getColumnModel().getColumn(9).setPreferredWidth(80);
+            poTable.getColumnModel().getColumn(9).setMaxWidth(80);
+        }
+
+        poSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        poReceive.setBackground(new java.awt.Color(0, 255, 102));
+        poReceive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        poReceive.setText("Receive Products");
+
+        jLabel57.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel57.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/purchaseorder.png"))); // NOI18N
+        jLabel57.setText("Purchase Order");
+
         javax.swing.GroupLayout purchasePanelLayout = new javax.swing.GroupLayout(purchasePanel);
         purchasePanel.setLayout(purchasePanelLayout);
         purchasePanelLayout.setHorizontalGroup(
             purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1117, Short.MAX_VALUE)
+            .addGroup(purchasePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6)
+                    .addGroup(purchasePanelLayout.createSequentialGroup()
+                        .addComponent(poSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                        .addComponent(poReceive)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(poView)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(poCreate))
+                    .addGroup(purchasePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel57)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         purchasePanelLayout.setVerticalGroup(
             purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
+            .addGroup(purchasePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(poCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(poView, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(poSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(poReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        tabbedPane.addTab("Returns", purchasePanel);
+        tabbedPane.addTab("Purchase Order", purchasePanel);
 
         jPanel22.setBackground(new java.awt.Color(0, 102, 153));
 
@@ -2280,7 +2415,20 @@ public class App extends javax.swing.JFrame {
             .addGap(0, 497, Short.MAX_VALUE)
         );
 
-        tabbedPane.addTab("Reports", jPanel30);
+        tabbedPane.addTab("Returns", jPanel30);
+
+        javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
+        jPanel29.setLayout(jPanel29Layout);
+        jPanel29Layout.setHorizontalGroup(
+            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1117, Short.MAX_VALUE)
+        );
+        jPanel29Layout.setVerticalGroup(
+            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 497, Short.MAX_VALUE)
+        );
+
+        tabbedPane.addTab("Reports", jPanel29);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -2412,6 +2560,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
+    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;
@@ -2448,6 +2597,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
+    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel4;
@@ -2461,6 +2611,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -2470,6 +2621,15 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JTable jTable1;
     private org.jdesktop.swingx.JXImageView jXImageView1;
+    private javax.swing.JButton poCreate;
+    private javax.swing.JPopupMenu poPopup;
+    private javax.swing.JButton poReceive;
+    private javax.swing.JMenuItem poReceiveProducts;
+    private org.jdesktop.swingx.JXSearchField poSearch;
+    private javax.swing.JTable poTable;
+    private javax.swing.JMenuItem poTogglePaid;
+    private javax.swing.JButton poView;
+    private javax.swing.JMenuItem poViewDetails;
     private javax.swing.JPanel pointOfSalePanel;
     private javax.swing.JTextField posAddProduct;
     private javax.swing.JLabel posAmountDue;
@@ -2806,7 +2966,6 @@ public class App extends javax.swing.JFrame {
         return iUnitCost;
     }
     
-    
     /*
     End of Inventory Components
     */
@@ -2818,4 +2977,46 @@ public class App extends javax.swing.JFrame {
     public JLabel getiInfo() {
         return iInfo;
     }
+    
+    /*
+    Start of PO Components
+    */
+    public JButton getPoCreate() {
+        return poCreate;
+    }
+
+    public JButton getPoReceive() {
+        return poReceive;
+    }
+
+    public JXSearchField getPoSearch() {
+        return poSearch;
+    }
+
+    public JTable getPoTable() {
+        return poTable;
+    }
+
+    public JButton getPoView() {
+        return poView;
+    }
+    
+    public JPopupMenu getPoPopup() {
+        return poPopup;
+    }
+
+    public JMenuItem getPoReceiveProducts() {
+        return poReceiveProducts;
+    }
+
+    public JMenuItem getPoTogglePaid() {
+        return poTogglePaid;
+    }
+
+    public JMenuItem getPoViewDetails() {
+        return poViewDetails;
+    }
+    /*
+    End of PO Components
+    */
 }

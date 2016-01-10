@@ -28,7 +28,7 @@ public class SupplierProductsModel {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     
-    private Factory sqlFactory;
+    private final Factory sqlFactory;
     
     public SupplierProductsModel(final Connection connection) {
         this.connection = connection;
