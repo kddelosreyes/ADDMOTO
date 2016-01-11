@@ -30,9 +30,11 @@ import org.jdesktop.swingx.JXTable;
 import project.addmoto.data.ProductLine;
 import project.addmoto.data.Products;
 import project.addmoto.data.Supplier;
+import project.addmoto.database.Query;
 import project.addmoto.model.InventoryModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.utilities.Formatter;
+import project.addmoto.view.AddItem;
 import project.addmoto.view.App;
 import project.addmoto.view.InventoryInfo;
 
@@ -43,8 +45,11 @@ import project.addmoto.view.InventoryInfo;
 public final class InventoryController extends Controller {
     
     private final App view;
+//    private final AddItem addProduct;
     private final InventoryModel model;
-    
+
+    private final JComboBox iSupplierList;
+    private final JComboBox iProductLineList;
     private final JComboBox iProductLineFilter;
     private final JComboBox iStatusFilter;
     private final JComboBox iSupplierFilter;
@@ -74,6 +79,14 @@ public final class InventoryController extends Controller {
     private String sellingPriceValue;
     private String unitCostValue;
     private String qtyThresholdValue;
+    private String prodSupplierCode;
+    private Double prodUnitPrice;
+    private Double prodSellingPrice;
+    private Integer prodCurrentQty;
+    private Integer prodThresCount;
+    private String prodCharacteristics;
+    private String prodMotors;
+    private String prodDescription;
     
     private DefaultTableModel tableModel;
     private ListSelectionModel selectionModel;
@@ -87,8 +100,11 @@ public final class InventoryController extends Controller {
     
     public InventoryController(App view, final Connection connection) {
         this.view = view;
+        AddItem addProduct = new AddItem();
         model = new InventoryModel(connection);
         
+        iSupplierList = addProduct.getiSupplierList();
+        iProductLineList = addProduct.getiProductLineList();
         iProductLineFilter = view.getiProductLineFilter();
         iStatusFilter = view.getiStatusFilter();
         iSupplierFilter = view.getiSupplierFilter();
@@ -430,8 +446,37 @@ public final class InventoryController extends Controller {
         });
         
         iAddNew.addActionListener((ActionEvent e) -> {
-            JOptionPane.showMessageDialog(view, "Add New button clicked.");
+            AddItem addItem = new AddItem();
+            iSupplierList.addItem("dsfsfsf");
+//            productLines = model.getProductLines();
+//            createMap();
+//            suppliers = model.getSuppliers();
+//            products = model.getProducts();
+//
+//            iProductLineList.addItem(" ");
+//            for(ProductLine productLine : productLines) {
+//                iProductLineList.addItem(productLine);
+//            }
+//
+//            iSupplierList.addItem(" ");
+//            for(Supplier supplier : suppliers) {
+//                iSupplierList.addItem(supplier);
+//            }
+            int choice = JOptionPane.showOptionDialog(view, addItem, "ADD Moto - Motorcycle Parts and Accessories", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);                 
+            if(choice == JOptionPane.OK_OPTION){
+                model.addNewProducts(prodSupplierCode, prodUnitPrice, prodSellingPrice, prodCurrentQty, prodThresCount, prodCharacteristics, prodMotors, prodDescription);
+
+            }
         });
+    }
+    
+    public boolean areAllNotEmpty() {
+        if(prodSupplierCode.isEmpty() || prodUnitPrice.toString().isEmpty() || prodSellingPrice.toString().isEmpty() || 
+           prodCurrentQty.toString().isEmpty() || prodThresCount.toString().isEmpty() || prodCharacteristics.isEmpty() ||
+           prodMotors.isEmpty() || prodDescription.isEmpty()) {
+            return false;
+        }
+        return true;
     }
     
     private void showProductDetails(int ID) {
