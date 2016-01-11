@@ -115,4 +115,26 @@ public class InventoryModel {
         
         return products;
     }
+    
+    public int addNewProducts(String prodSupplierCode, Double prodUnitPrice, Double prodSellingPrice, Integer prodCurrentQty, Integer prodThresCount, String prodCharacteristics, String prodMotors, String prodDescription) {
+        try {
+            query = "INSERT INTO " + Database.PRODUCTS_TABLE + " (" + Database.PRODUCT_SUPPLIER_CODE + ", "+ Database.PRODUCT_UNIT_PRICE + ", " + Database.PRODUCT_SELLING_PRICE + ", " 
+                    + Database.PRODUCT_CURRENT_QUANTITY + ", " +  Database.PRODUCT_THRESHOLD_COUNT + ", " +  Database.PRODUCT_CHARACTERISTICS + ", " +  Database.PRODUCT_MOTORS + ", " 
+                    +  Database.PRODUCT_DESCRIPTION + ")"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, prodSupplierCode);
+            preparedStatement.setDouble(2, prodUnitPrice);
+            preparedStatement.setDouble(3, prodSellingPrice);
+            preparedStatement.setInt(4, prodCurrentQty);
+            preparedStatement.setInt(5, prodThresCount);
+            preparedStatement.setString(6, prodCharacteristics);
+            preparedStatement.setString(7, prodMotors);
+            preparedStatement.setString(8, prodDescription);
+            return preparedStatement.executeUpdate();
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -465,7 +465,7 @@ public final class InventoryController extends Controller {
             int choice = JOptionPane.showOptionDialog(view, addItem, "ADD Moto - Motorcycle Parts and Accessories", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);                 
             if(choice == JOptionPane.OK_OPTION){
                 model.addNewProducts(prodSupplierCode, prodUnitPrice, prodSellingPrice, prodCurrentQty, prodThresCount, prodCharacteristics, prodMotors, prodDescription);
-
+                
             }
         });
     }
@@ -619,4 +619,70 @@ public final class InventoryController extends Controller {
             cancel.setEnabled(false);
         }
     }
+
+    public String getProdSupplierCode() {
+        return prodSupplierCode;
+    }
+
+    public void setProdSupplierCode(String prodSupplierCode) {
+        this.prodSupplierCode = prodSupplierCode;
+    }
+
+    public Double getProdUnitPrice() {
+        return prodUnitPrice;
+    }
+
+    public void setProdUnitPrice(Double prodUnitPrice) {
+        this.prodUnitPrice = prodUnitPrice;
+    }
+
+    public Double getProdSellingPrice() {
+        return prodSellingPrice;
+    }
+
+    public void setProdSellingPrice(Double prodSellingPrice) {
+        this.prodSellingPrice = prodSellingPrice;
+    }
+
+    public Integer getProdCurrentQty() {
+        return prodCurrentQty;
+    }
+
+    public void setProdCurrentQty(Integer prodCurrentQty) {
+        this.prodCurrentQty = prodCurrentQty;
+    }
+
+    public Integer getProdThresCount() {
+        return prodThresCount;
+    }
+
+    public void setProdThresCount(Integer prodThresCount) {
+        this.prodThresCount = prodThresCount;
+    }
+
+    public String getProdCharacteristics() {
+        return prodCharacteristics;
+    }
+
+    public void setProdCharacteristics(String prodCharacteristics) {
+        this.prodCharacteristics = prodCharacteristics;
+    }
+
+    public String getProdMotors() {
+        return prodMotors;
+    }
+
+    public void setProdMotors(String prodMotors) {
+        this.prodMotors = prodMotors;
+    }
+
+    public String getProdDescription() {
+        return prodDescription;
+    }
+
+    public void setProdDescription(String prodDescription) {
+        this.prodDescription = prodDescription;
+    }
+    
+    
 }
