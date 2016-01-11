@@ -1,5 +1,8 @@
 package project.addmoto.controller;
 
+import static java.lang.Integer.*;
+import static java.lang.Double.*;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -12,6 +15,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,7 +34,6 @@ import org.jdesktop.swingx.JXTable;
 import project.addmoto.data.ProductLine;
 import project.addmoto.data.Products;
 import project.addmoto.data.Supplier;
-import project.addmoto.database.Query;
 import project.addmoto.model.InventoryModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.utilities.Formatter;
@@ -45,11 +48,8 @@ import project.addmoto.view.InventoryInfo;
 public final class InventoryController extends Controller {
     
     private final App view;
-//    private final AddItem addProduct;
     private final InventoryModel model;
-
-    private final JComboBox iSupplierList;
-    private final JComboBox iProductLineList;
+    
     private final JComboBox iProductLineFilter;
     private final JComboBox iStatusFilter;
     private final JComboBox iSupplierFilter;
@@ -79,14 +79,6 @@ public final class InventoryController extends Controller {
     private String sellingPriceValue;
     private String unitCostValue;
     private String qtyThresholdValue;
-    private String prodSupplierCode;
-    private Double prodUnitPrice;
-    private Double prodSellingPrice;
-    private Integer prodCurrentQty;
-    private Integer prodThresCount;
-    private String prodCharacteristics;
-    private String prodMotors;
-    private String prodDescription;
     
     private DefaultTableModel tableModel;
     private ListSelectionModel selectionModel;
@@ -95,16 +87,38 @@ public final class InventoryController extends Controller {
     private ArrayList<Supplier> suppliers;
     private ArrayList<Products> products;
     private HashMap<Integer, String> productLineMap;
+    private HashMap<Integer, String> supplierMap;
     
     public boolean isAddingRows = false;
     
+    private final AddItem addItem;
+    private final JComboBox iSupplierList;
+    private final JComboBox iProductLineList;
+    private final JTextField iSupplierCodeText;
+    private final JTextField iUnitPriceText;
+    private final JTextField iSellingPriceText;
+    private final JTextField iQtyText;
+    private final JTextField iThresholdText;
+    private final JTextField iCharacteristics;
+    private final JTextField iModelText;
+    private final JTextField iDescriptionText;
+    
     public InventoryController(App view, final Connection connection) {
         this.view = view;
-        AddItem addProduct = new AddItem();
         model = new InventoryModel(connection);
+        addItem = new AddItem();
         
-        iSupplierList = addProduct.getiSupplierList();
-        iProductLineList = addProduct.getiProductLineList();
+        iSupplierList = addItem.getiSupplierList();
+        iProductLineList = addItem.getiProductLineList();
+        iSupplierCodeText = addItem.getiSupplierCodeText();
+        iUnitPriceText = addItem.getiUnitPriceText();
+        iSellingPriceText = addItem.getiSellingPriceText();
+        iQtyText = addItem.getiQtyText();
+        iThresholdText = addItem.getiThresholdText();
+        iCharacteristics = addItem.getiCharacteristicsText();
+        iModelText = addItem.getiModelText();
+        iDescriptionText = addItem.getiDescriptionText();
+        
         iProductLineFilter = view.getiProductLineFilter();
         iStatusFilter = view.getiStatusFilter();
         iSupplierFilter = view.getiSupplierFilter();
@@ -446,8 +460,6 @@ public final class InventoryController extends Controller {
         });
         
         iAddNew.addActionListener((ActionEvent e) -> {
-            AddItem addItem = new AddItem();
-            iSupplierList.addItem("dsfsfsf");
 //            productLines = model.getProductLines();
 //            createMap();
 //            suppliers = model.getSuppliers();
@@ -464,19 +476,77 @@ public final class InventoryController extends Controller {
 //            }
             int choice = JOptionPane.showOptionDialog(view, addItem, "ADD Moto - Motorcycle Parts and Accessories", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);                 
             if(choice == JOptionPane.OK_OPTION){
-                model.addNewProducts(prodSupplierCode, prodUnitPrice, prodSellingPrice, prodCurrentQty, prodThresCount, prodCharacteristics, prodMotors, prodDescription);
+                String supplierName = getFormattedString((String) iSupplierList.getSelectedItem());
+                String productLine = getFormattedString((String) iProductLineList.getSelectedItem());
+                String supplierCode = getFormattedString(iSupplierCodeText.getText());
+                String unitPrice = getFormattedString(iUnitPriceText.getText());
+                String sellingPrice = getFormattedString(iSellingPriceText.getText());
+                String qtyOnHand = getFormattedString(iQtyText.getText());
+                String threshold = getFormattedString(iThresholdText.getText());
+                String characteristics = getFormattedString(iCharacteristics.getText());
+                String _model = getFormattedString(iModelText.getText());
+                String description = getFormattedString(iDescriptionText.getText());
                 
+                if(supplierName.isEmpty() || productLine.isEmpty() || supplierCode.isEmpty()
+                        || unitPrice.isEmpty() || sellingPrice.isEmpty() || qtyOnHand.isEmpty()
+                        || threshold.isEmpty() || characteristics.isEmpty() || _model.isEmpty()
+                        || description.isEmpty()) {
+                    JOptionPane.showMessageDialog(view, "All fields must not be empty!", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    Products product = new Products(
+                            productLine.toUpperCase().substring(0, 2) + "AD" + supplierCode,
+                            supplierCode,
+                            parseInt(qtyOnHand),
+                            parseDouble(unitPrice),
+                            parseDouble(sellingPrice),
+                            parseDouble(sellingPrice) - parseDouble(unitPrice),
+                            parseInt(threshold),
+                            null,
+                            description,
+                            characteristics,
+                            _model,
+                            getKeybyValue_p(productLine),
+                            getKeybyValue_s(supplierName)
+                    );
+                    System.out.println(product.toString());
+                    int returnValue = model.addNewProduct(product);
+                    if(returnValue == 0) {
+                        JOptionPane.showMessageDialog(view, "There must be some kind of error.", "Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(view, "Successfully added new product!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                        setIndexZero();
+                        setDefaultViews();
+                        isAddingRows = true;
+                        repopulateTable();
+                        isAddingRows = false;
+                    }
+                }
             }
         });
     }
     
-    public boolean areAllNotEmpty() {
-        if(prodSupplierCode.isEmpty() || prodUnitPrice.toString().isEmpty() || prodSellingPrice.toString().isEmpty() || 
-           prodCurrentQty.toString().isEmpty() || prodThresCount.toString().isEmpty() || prodCharacteristics.isEmpty() ||
-           prodMotors.isEmpty() || prodDescription.isEmpty()) {
-            return false;
+    private int getKeybyValue_p(String productLine) {
+        Set<Integer> keys = productLineMap.keySet();
+        for(Integer key : keys) {
+            if(productLineMap.get(key).equals(productLine)) {
+                return key;
+            }
         }
-        return true;
+        return -1;
+    }
+    
+    private int getKeybyValue_s(String supplierName) {
+        Set<Integer> keys = supplierMap.keySet();
+        for(Integer key : keys) {
+            if(supplierMap.get(key).equals(supplierName)) {
+                return key;
+            }
+        }
+        return -1;
+    }
+    
+    private String getFormattedString(String value) {
+        return value.replaceAll("\\s+", " ").trim();
     }
     
     private void showProductDetails(int ID) {
@@ -514,18 +584,22 @@ public final class InventoryController extends Controller {
     
     public void populate() {
         productLines = model.getProductLines();
-        createMap();
         suppliers = model.getSuppliers();
+        createMap();
         products = model.getProducts();
         
         iProductLineFilter.addItem(" ");
+        iProductLineList.addItem(" ");
         for(ProductLine productLine : productLines) {
-            iProductLineFilter.addItem(productLine);
+            iProductLineFilter.addItem(productLine.getProductLineName());
+            iProductLineList.addItem(productLine.getProductLineName());
         }
         
         iSupplierFilter.addItem(" ");
+        iSupplierList.addItem(" ");
         for(Supplier supplier : suppliers) {
-            iSupplierFilter.addItem(supplier);
+            iSupplierFilter.addItem(supplier.getSupplierName());
+            iSupplierList.addItem(supplier.getSupplierName());
         }
         
         populateTable();
@@ -535,6 +609,7 @@ public final class InventoryController extends Controller {
         while(tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
         }
+        products = model.getProducts();
         for(Products product : products) {
             tableModel.addRow(
                     new Object[] {
@@ -588,8 +663,12 @@ public final class InventoryController extends Controller {
     
     private void createMap() {
         productLineMap = new HashMap<Integer, String>();
+        supplierMap = new HashMap<Integer, String>();
         for(ProductLine productLine : productLines) {
             productLineMap.put(productLine.getProductLineID(), productLine.getProductLineName());
+        }
+        for(Supplier supplier : suppliers) {
+            supplierMap.put(supplier.getSupplierID(), supplier.getSupplierName());
         }
     }
     
@@ -619,70 +698,4 @@ public final class InventoryController extends Controller {
             cancel.setEnabled(false);
         }
     }
-
-    public String getProdSupplierCode() {
-        return prodSupplierCode;
-    }
-
-    public void setProdSupplierCode(String prodSupplierCode) {
-        this.prodSupplierCode = prodSupplierCode;
-    }
-
-    public Double getProdUnitPrice() {
-        return prodUnitPrice;
-    }
-
-    public void setProdUnitPrice(Double prodUnitPrice) {
-        this.prodUnitPrice = prodUnitPrice;
-    }
-
-    public Double getProdSellingPrice() {
-        return prodSellingPrice;
-    }
-
-    public void setProdSellingPrice(Double prodSellingPrice) {
-        this.prodSellingPrice = prodSellingPrice;
-    }
-
-    public Integer getProdCurrentQty() {
-        return prodCurrentQty;
-    }
-
-    public void setProdCurrentQty(Integer prodCurrentQty) {
-        this.prodCurrentQty = prodCurrentQty;
-    }
-
-    public Integer getProdThresCount() {
-        return prodThresCount;
-    }
-
-    public void setProdThresCount(Integer prodThresCount) {
-        this.prodThresCount = prodThresCount;
-    }
-
-    public String getProdCharacteristics() {
-        return prodCharacteristics;
-    }
-
-    public void setProdCharacteristics(String prodCharacteristics) {
-        this.prodCharacteristics = prodCharacteristics;
-    }
-
-    public String getProdMotors() {
-        return prodMotors;
-    }
-
-    public void setProdMotors(String prodMotors) {
-        this.prodMotors = prodMotors;
-    }
-
-    public String getProdDescription() {
-        return prodDescription;
-    }
-
-    public void setProdDescription(String prodDescription) {
-        this.prodDescription = prodDescription;
-    }
-    
-    
 }

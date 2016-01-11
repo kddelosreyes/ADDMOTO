@@ -233,7 +233,7 @@ public class App extends javax.swing.JFrame {
         tabbedPane = new javax.swing.JTabbedPane();
         dashboardPanel = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        dFilterDateType = new javax.swing.JComboBox<String>();
+        dFilterDateType = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         dFromDate = new com.toedter.calendar.JDateChooser();
         jLabel16 = new javax.swing.JLabel();
@@ -306,7 +306,7 @@ public class App extends javax.swing.JFrame {
         posCredit = new javax.swing.JButton();
         posClear = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        filterType = new javax.swing.JComboBox<String>();
+        filterType = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         posAddProduct = new javax.swing.JTextField();
         posEnter = new javax.swing.JButton();
@@ -327,9 +327,9 @@ public class App extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         inventoryPanel = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        iProductLineFilter = new javax.swing.JComboBox<String>();
+        iProductLineFilter = new javax.swing.JComboBox<>();
         jLabel56 = new javax.swing.JLabel();
-        iStatusFilter = new javax.swing.JComboBox<String>();
+        iStatusFilter = new javax.swing.JComboBox<>();
         jPanel26 = new javax.swing.JPanel();
         jXImageView1 = new org.jdesktop.swingx.JXImageView();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -369,7 +369,7 @@ public class App extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         iProductsTable = new org.jdesktop.swingx.JXTable();
         jLabel58 = new javax.swing.JLabel();
-        iSupplierFilter = new javax.swing.JComboBox<String>();
+        iSupplierFilter = new javax.swing.JComboBox<>();
         iSearchField = new org.jdesktop.swingx.JXSearchField();
         jLabel54 = new javax.swing.JLabel();
         iInfo = new javax.swing.JLabel();
@@ -515,7 +515,7 @@ public class App extends javax.swing.JFrame {
         jLabel10.setText("Period:");
 
         dFilterDateType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        dFilterDateType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Today", "This Week", "Last Week", "This Month", "Last Month", "Custom" }));
+        dFilterDateType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Today", "This Week", "Last Week", "This Month", "Last Month", "Custom" }));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel15.setText("From:");
@@ -1329,7 +1329,7 @@ public class App extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(0, 0, 0), null));
 
         filterType.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        filterType.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Product Code", "Product Line", "Item Name", "Description", "None" }));
+        filterType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Product Code", "Product Line", "Item Name", "Description", "None" }));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Filter Type:");
@@ -1541,7 +1541,7 @@ public class App extends javax.swing.JFrame {
         jLabel56.setText("Status:");
 
         iStatusFilter.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        iStatusFilter.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " ", "Good", "Warning", "Critical" }));
+        iStatusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Good", "Warning", "Critical" }));
 
         jPanel26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -1753,7 +1753,7 @@ public class App extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(iCancelQT)
                                 .addGap(0, 2, Short.MAX_VALUE)))))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
             .addComponent(jPanel28, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel27Layout.setVerticalGroup(
@@ -1942,15 +1942,12 @@ public class App extends javax.swing.JFrame {
                         .addComponent(iStatusFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(iInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 657, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 698, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inventoryPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(inventoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(iSearchField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(iAddNew, javax.swing.GroupLayout.Alignment.TRAILING))))
+                    .addComponent(iSearchField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(iAddNew, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel26, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         inventoryPanelLayout.setVerticalGroup(

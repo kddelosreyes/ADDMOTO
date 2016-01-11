@@ -2051,18 +2051,13 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="iInfo" min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane5" min="-2" pref="657" max="-2" attributes="0"/>
+                          <Component id="jScrollPane5" alignment="0" pref="698" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel26" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="iSearchField" alignment="1" min="-2" pref="217" max="-2" attributes="0"/>
-                                  <Component id="iAddNew" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="iSearchField" alignment="1" min="-2" pref="217" max="-2" attributes="0"/>
+                          <Component id="iAddNew" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jPanel26" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -2366,7 +2361,7 @@
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="66" max="32767" attributes="0"/>
+                              <EmptySpace pref="25" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jPanel28" alignment="0" max="32767" attributes="0"/>
                       </Group>

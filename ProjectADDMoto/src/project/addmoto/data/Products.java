@@ -43,6 +43,26 @@ public class Products {
         this.motors = motors;
         this.supplierID = supplierID;
     }
+    
+    public Products(String addmotoCode, String supplierCode,
+            int currentQuantity, double unitPrice, double sellingPrice,
+            double profitMargin, int thresholdCount, Image imagePicture,
+            String description, String characteristics, String motors,
+            int productLineID, int supplierID) {
+        this.addmotoCode = addmotoCode;
+        this.supplierCode = supplierCode;
+        this.currentQuantity = currentQuantity;
+        this.unitPrice = unitPrice;
+        this.sellingPrice = sellingPrice;
+        this.profitMargin = profitMargin;
+        this.thresholdCount = thresholdCount;
+        this.imagePicture = imagePicture;
+        this.description = description;
+        this.characteristics = characteristics;
+        this.productLineID = productLineID;
+        this.motors = motors;
+        this.supplierID = supplierID;
+    }
 
     public int getProductID() {
         return productID;

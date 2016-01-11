@@ -116,21 +116,27 @@ public class InventoryModel {
         return products;
     }
     
-    public int addNewProducts(String prodSupplierCode, Double prodUnitPrice, Double prodSellingPrice, Integer prodCurrentQty, Integer prodThresCount, String prodCharacteristics, String prodMotors, String prodDescription) {
+    public int addNewProduct(Products product) {
         try {
-            query = "INSERT INTO " + Database.PRODUCTS_TABLE + " (" + Database.PRODUCT_SUPPLIER_CODE + ", "+ Database.PRODUCT_UNIT_PRICE + ", " + Database.PRODUCT_SELLING_PRICE + ", " 
-                    + Database.PRODUCT_CURRENT_QUANTITY + ", " +  Database.PRODUCT_THRESHOLD_COUNT + ", " +  Database.PRODUCT_CHARACTERISTICS + ", " +  Database.PRODUCT_MOTORS + ", " 
-                    +  Database.PRODUCT_DESCRIPTION + ")"
-                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            query = "INSERT INTO " + Database.PRODUCTS_TABLE + " ("
+                    + Database.PRODUCT_ADDMOTO_CODE + ", " + Database.PRODUCT_SUPPLIER_CODE + ", "+ Database.PRODUCT_CURRENT_QUANTITY + ", "
+                    + Database.PRODUCT_UNIT_PRICE + ", " + Database.PRODUCT_SELLING_PRICE + ", " + Database.PRODUCT_PROFIT_MARGIN + ", "
+                    + Database.PRODUCT_THRESHOLD_COUNT + ", " +  Database.PRODUCT_DESCRIPTION + ", " +  Database.PRODUCT_CHARACTERISTICS + ", "
+                    + Database.PRODUCT_MOTORS + ", " + Database.PRODUCT_LINE_ID_FK + ", " + Database.PRODUCT_SUPPLIER_ID_FK
+                    + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, prodSupplierCode);
-            preparedStatement.setDouble(2, prodUnitPrice);
-            preparedStatement.setDouble(3, prodSellingPrice);
-            preparedStatement.setInt(4, prodCurrentQty);
-            preparedStatement.setInt(5, prodThresCount);
-            preparedStatement.setString(6, prodCharacteristics);
-            preparedStatement.setString(7, prodMotors);
-            preparedStatement.setString(8, prodDescription);
+            preparedStatement.setString(1, product.getAddmotoCode());
+            preparedStatement.setString(2, product.getSupplierCode());
+            preparedStatement.setInt(3, product.getCurrentQuantity());
+            preparedStatement.setDouble(4, product.getUnitPrice());
+            preparedStatement.setDouble(5, product.getSellingPrice());
+            preparedStatement.setDouble(6, product.getProfitMargin());
+            preparedStatement.setInt(7, product.getThresholdCount());
+            preparedStatement.setString(8, product.getDescription());
+            preparedStatement.setString(9, product.getCharacteristics());
+            preparedStatement.setString(10, product.getMotors());
+            preparedStatement.setInt(11, product.getProductLineID());
+            preparedStatement.setInt(12, product.getSupplierID());
             return preparedStatement.executeUpdate();
         } catch(Exception exc) {
             exc.printStackTrace();
