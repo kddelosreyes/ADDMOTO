@@ -172,7 +172,7 @@ public class App extends javax.swing.JFrame {
                         clearSupplier();
                         clearInventory();
                         break;
-                    case 8:
+                    case 8: // Accounts
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
@@ -404,11 +404,9 @@ public class App extends javax.swing.JFrame {
         iAddNew = new javax.swing.JButton();
         purchasePanel = new javax.swing.JPanel();
         poCreate = new javax.swing.JButton();
-        poView = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
         poTable = new javax.swing.JTable();
         poSearch = new org.jdesktop.swingx.JXSearchField();
-        poReceive = new javax.swing.JButton();
         jLabel57 = new javax.swing.JLabel();
         suppliersPanel = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
@@ -2016,30 +2014,22 @@ public class App extends javax.swing.JFrame {
         tabbedPane.addTab("Inventory", inventoryPanel);
 
         poCreate.setBackground(new java.awt.Color(0, 255, 102));
-        poCreate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        poCreate.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        poCreate.setMnemonic('C');
         poCreate.setText("Create New PO");
 
-        poView.setBackground(new java.awt.Color(0, 255, 102));
-        poView.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        poView.setText("View Details");
-
         poTable.setAutoCreateRowSorter(true);
-        poTable.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        poTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         poTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Order No.", "Order Date/Time", "Supplier", "Invoice Total", "No. of Items", "Paid", "Status", "Target Receive Date", "Issuer"
+                "ID", "Order No.", "Order Date/Time", "Supplier", "Invoice Total (PhP)", "No. of Items", "Paid", "Status", "Target Receive Date", "Issuer"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false
@@ -2069,25 +2059,24 @@ public class App extends javax.swing.JFrame {
             poTable.getColumnModel().getColumn(4).setMinWidth(120);
             poTable.getColumnModel().getColumn(4).setPreferredWidth(120);
             poTable.getColumnModel().getColumn(4).setMaxWidth(120);
-            poTable.getColumnModel().getColumn(5).setMinWidth(70);
-            poTable.getColumnModel().getColumn(5).setPreferredWidth(70);
-            poTable.getColumnModel().getColumn(5).setMaxWidth(70);
-            poTable.getColumnModel().getColumn(6).setMinWidth(60);
-            poTable.getColumnModel().getColumn(6).setPreferredWidth(60);
-            poTable.getColumnModel().getColumn(6).setMaxWidth(60);
-            poTable.getColumnModel().getColumn(7).setMinWidth(60);
-            poTable.getColumnModel().getColumn(7).setPreferredWidth(60);
-            poTable.getColumnModel().getColumn(7).setMaxWidth(60);
+            poTable.getColumnModel().getColumn(5).setMinWidth(75);
+            poTable.getColumnModel().getColumn(5).setPreferredWidth(75);
+            poTable.getColumnModel().getColumn(5).setMaxWidth(75);
+            poTable.getColumnModel().getColumn(6).setMinWidth(50);
+            poTable.getColumnModel().getColumn(6).setPreferredWidth(50);
+            poTable.getColumnModel().getColumn(6).setMaxWidth(50);
+            poTable.getColumnModel().getColumn(7).setMinWidth(75);
+            poTable.getColumnModel().getColumn(7).setPreferredWidth(75);
+            poTable.getColumnModel().getColumn(7).setMaxWidth(75);
+            poTable.getColumnModel().getColumn(8).setMinWidth(125);
+            poTable.getColumnModel().getColumn(8).setPreferredWidth(125);
+            poTable.getColumnModel().getColumn(8).setMaxWidth(125);
             poTable.getColumnModel().getColumn(9).setMinWidth(80);
             poTable.getColumnModel().getColumn(9).setPreferredWidth(80);
             poTable.getColumnModel().getColumn(9).setMaxWidth(80);
         }
 
         poSearch.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        poReceive.setBackground(new java.awt.Color(0, 255, 102));
-        poReceive.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        poReceive.setText("Receive Products");
 
         jLabel57.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel57.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/purchaseorder.png"))); // NOI18N
@@ -2100,32 +2089,24 @@ public class App extends javax.swing.JFrame {
             .addGroup(purchasePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)
                     .addGroup(purchasePanelLayout.createSequentialGroup()
-                        .addComponent(poSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
-                        .addComponent(poReceive)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(poView)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(poCreate))
-                    .addGroup(purchasePanelLayout.createSequentialGroup()
-                        .addComponent(jLabel57)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(poSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel57))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(poCreate)))
                 .addContainerGap())
         );
         purchasePanelLayout.setVerticalGroup(
             purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(purchasePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel57)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(poSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(purchasePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(poCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(poView, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(poReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel57)
+                    .addComponent(poCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(poSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -2663,12 +2644,10 @@ public class App extends javax.swing.JFrame {
     private org.jdesktop.swingx.JXImageView jXImageView1;
     private javax.swing.JButton poCreate;
     private javax.swing.JPopupMenu poPopup;
-    private javax.swing.JButton poReceive;
     private javax.swing.JMenuItem poReceiveProducts;
     private org.jdesktop.swingx.JXSearchField poSearch;
     private javax.swing.JTable poTable;
     private javax.swing.JMenuItem poTogglePaid;
-    private javax.swing.JButton poView;
     private javax.swing.JMenuItem poViewDetails;
     private javax.swing.JPanel pointOfSalePanel;
     private javax.swing.JTextField posAddProduct;
@@ -3026,20 +3005,12 @@ public class App extends javax.swing.JFrame {
         return poCreate;
     }
 
-    public JButton getPoReceive() {
-        return poReceive;
-    }
-
     public JXSearchField getPoSearch() {
         return poSearch;
     }
 
     public JTable getPoTable() {
         return poTable;
-    }
-
-    public JButton getPoView() {
-        return poView;
     }
     
     public JPopupMenu getPoPopup() {

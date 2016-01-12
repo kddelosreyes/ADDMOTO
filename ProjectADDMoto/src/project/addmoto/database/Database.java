@@ -170,7 +170,7 @@ public class Database {
     public static final String ORDER_TARGET_DATE = "order_target_date";
     
     /*
-    ORDER LINE TABLE
+    ORDER LINE TABLE fields
     */
     public static final String ORDER_LINE_ID = "order_line_id";
     public static final String ORDER_LINE_PRODUCT_ID = "product_id";
@@ -178,6 +178,11 @@ public class Database {
     public static final String ORDER_LINE_QUANTITY = "order_quantity";
     public static final String ORDER_LINE_UNIT_PRICE = "order_unit_price";
     public static final String ORDER_LINE_TOTAL_PRICE = "order_total_price";
+    
+    /*
+    ORDERS TABLE added fields
+    */
+    public static final String ORDER_TOTAL_QUANTITY = "total_quantity";
     
     public Connection getConnection() {
         if(connection == null) {

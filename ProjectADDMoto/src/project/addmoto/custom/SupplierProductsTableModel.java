@@ -31,36 +31,7 @@ public class SupplierProductsTableModel extends AbstractTableModel {
     //private Object[][] data;
 
     public SupplierProductsTableModel(ArrayList<SupplierProduct> supplierProductsList) {
-        
         this.supplierProductsList = supplierProductsList;
-
-        /*data = new Object[supplierProductsList.size()][columnNames.length];
-
-        for (int i = 0; i < supplierProductsList.size(); i++) {
-            SupplierProduct sProduct = supplierProductsList.get(i);
-
-            int threshold = sProduct.getThreshold(), quantity = sProduct.getQuantity();
-            ColorString colorString = null;
-            if (quantity > threshold * 1.10) {
-                colorString = new ColorString(Color.GREEN, "Good");
-            } else if ((quantity >= threshold * 0.90) && (quantity <= threshold * 1.10)) {
-                colorString = new ColorString(Color.ORANGE, "Warning");
-            } else {
-                colorString = new ColorString(Color.RED, "Critical");
-            }
-
-            data[i] = new Object[]{
-                sProduct.getSupplierCode(),
-                sProduct.getAddmotoCode(),
-                sProduct.getProductLine(),
-                sProduct.getDescription(),
-                sProduct.getQuantity(),
-                "PhP " + Formatter.format(sProduct.getUnitPrice()),
-                "PhP " + Formatter.format(sProduct.getSellingPrice()),
-                colorString,
-                sProduct.getProductID()
-            };
-        }*/
     }
 
     public int getColumnCount() {

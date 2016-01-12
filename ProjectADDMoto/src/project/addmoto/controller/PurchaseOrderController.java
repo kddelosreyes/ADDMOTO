@@ -10,13 +10,16 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXSearchField;
+import project.addmoto.data.OrderLineData;
 import project.addmoto.model.PurchaseOrderModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.view.App;
@@ -31,33 +34,58 @@ public final class PurchaseOrderController extends Controller {
     private PurchaseOrderModel model;
     
     private final JButton poCreate;
-    private final JButton poReceive;
-    private final JButton poView;
     private final JXSearchField poSearch;
     private final JTable poTable;
     private final JPopupMenu poPopup;
     private final JMenuItem poTogglePaid;
     private final JMenuItem poViewDetails;
     private final JMenuItem poReceiveProducts;
+    private final DefaultTableModel tableModel;
     
     private int selectedRow;
     
+    private ArrayList<OrderLineData> orderLineList;
     
     public PurchaseOrderController(final App view, final Connection connection) {
         this.view = view;
         model = new PurchaseOrderModel(connection);
         
         poCreate = view.getPoCreate();
-        poReceive = view.getPoReceive();
-        poView = view.getPoView();
         poSearch = view.getPoSearch();
         poTable = view.getPoTable();
         poPopup = view.getPoPopup();
         poTogglePaid = view.getPoTogglePaid();
         poViewDetails = view.getPoViewDetails();
         poReceiveProducts = view.getPoReceiveProducts();
+        tableModel = (DefaultTableModel) poTable.getModel();
+        
+        populate();
         
         setListeners();
+    }
+    
+    private void populate() {
+        orderLineList = model.getOrderLineList();
+        
+        while(tableModel.getRowCount() > 0) {
+            tableModel.removeRow(0);
+        }
+        for(OrderLineData oLData : orderLineList) {
+            tableModel.addRow(
+                    new Object[] {
+                        oLData.getOrderID(),
+                        oLData.getOrderNo(),
+                        oLData.getTimestamp(),
+                        oLData.getSupplier(),
+                        oLData.getOrderTotalPrice(),
+                        oLData.getTotalQuantity(),
+                        oLData.isIsPaid() ? "YES" : "NO",
+                        oLData.getStatus(),
+                        oLData.getTargetDate(),
+                        oLData.getSellerID()
+                    }
+            );
+        }
     }
 
     @Override
