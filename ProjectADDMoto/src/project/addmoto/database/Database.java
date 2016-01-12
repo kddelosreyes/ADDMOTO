@@ -103,6 +103,12 @@ public class Database {
     public static final String SELLER_ACCOUNT_LAST_NAME = "seller_account_last_name";
     public static final String SELLER_ACCOUNT_USERNAME = "seller_account_username";
     public static final String SELLER_ACCOUNT_PASSWORD = "seller_account_password";
+    public static final String SELLER_USER_TYPE = "seller_user_type";
+    
+    public static final String USERTYPE_SUPERADMIN = "SuperAdmin";
+    public static final String USERTYPE_REPORTMANAGER = "ReportManager";
+    public static final String USERTYPE_INVENTORYMANAGER = "InventoryManager";
+    public static final String USERTYPE_STORESELLER = "StoreSeller";
     
     /*
     SOLD_ITEMS_TABLE columns

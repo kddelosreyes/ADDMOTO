@@ -62,6 +62,28 @@ public class App extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         TimerUtilities.runTime(UIDashboard_dateTimeLabel);
         
+        String userType = sellerAccount.getUserType();
+        if(userType.equals("ReportManager")) {
+            tabbedPane.setEnabledAt(1, false);
+            tabbedPane.setEnabledAt(2, false);
+            tabbedPane.setEnabledAt(3, false);
+            tabbedPane.setEnabledAt(4, false);
+            tabbedPane.setEnabledAt(5, false);
+            tabbedPane.setEnabledAt(6, false);
+            tabbedPane.setEnabledAt(8, false);
+        } else if(userType.equals("InventoryManager")) {
+            tabbedPane.setEnabledAt(1, false);
+            tabbedPane.setEnabledAt(5, false);
+            tabbedPane.setEnabledAt(6, false);
+            tabbedPane.setEnabledAt(7, false);
+            tabbedPane.setEnabledAt(8, false);
+        } else if(userType.equals("StoreSeller")) {
+            tabbedPane.setEnabledAt(2, false);
+            tabbedPane.setEnabledAt(3, false);
+            tabbedPane.setEnabledAt(4, false);
+            tabbedPane.setEnabledAt(8, false);
+        }
+        
         connection = new Database().getConnection();
         
         dashboardController = new DashboardController(this, connection);
@@ -145,6 +167,12 @@ public class App extends javax.swing.JFrame {
                         clearInventory();
                         break;
                     case 7: // Reports
+                        clearDashboard();
+                        clearPOS();
+                        clearSupplier();
+                        clearInventory();
+                        break;
+                    case 8:
                         clearDashboard();
                         clearPOS();
                         clearSupplier();
@@ -416,9 +444,10 @@ public class App extends javax.swing.JFrame {
         sDelete = new javax.swing.JLabel();
         sManageContacts = new javax.swing.JLabel();
         sProducts = new javax.swing.JLabel();
+        expensesPanel = new javax.swing.JPanel();
+        returnsPanel = new javax.swing.JPanel();
         reportsPanel = new javax.swing.JPanel();
-        jPanel30 = new javax.swing.JPanel();
-        jPanel29 = new javax.swing.JPanel();
+        accountsPanel = new javax.swing.JPanel();
 
         poTogglePaid.setText("Toggle Paid");
         poPopup.add(poTogglePaid);
@@ -2389,6 +2418,32 @@ public class App extends javax.swing.JFrame {
 
         tabbedPane.addTab("Suppliers", suppliersPanel);
 
+        javax.swing.GroupLayout expensesPanelLayout = new javax.swing.GroupLayout(expensesPanel);
+        expensesPanel.setLayout(expensesPanelLayout);
+        expensesPanelLayout.setHorizontalGroup(
+            expensesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1117, Short.MAX_VALUE)
+        );
+        expensesPanelLayout.setVerticalGroup(
+            expensesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 497, Short.MAX_VALUE)
+        );
+
+        tabbedPane.addTab("Expenses", expensesPanel);
+
+        javax.swing.GroupLayout returnsPanelLayout = new javax.swing.GroupLayout(returnsPanel);
+        returnsPanel.setLayout(returnsPanelLayout);
+        returnsPanelLayout.setHorizontalGroup(
+            returnsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1117, Short.MAX_VALUE)
+        );
+        returnsPanelLayout.setVerticalGroup(
+            returnsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 497, Short.MAX_VALUE)
+        );
+
+        tabbedPane.addTab("Returns", returnsPanel);
+
         javax.swing.GroupLayout reportsPanelLayout = new javax.swing.GroupLayout(reportsPanel);
         reportsPanel.setLayout(reportsPanelLayout);
         reportsPanelLayout.setHorizontalGroup(
@@ -2400,33 +2455,20 @@ public class App extends javax.swing.JFrame {
             .addGap(0, 497, Short.MAX_VALUE)
         );
 
-        tabbedPane.addTab("Expenses", reportsPanel);
+        tabbedPane.addTab("Reports", reportsPanel);
 
-        javax.swing.GroupLayout jPanel30Layout = new javax.swing.GroupLayout(jPanel30);
-        jPanel30.setLayout(jPanel30Layout);
-        jPanel30Layout.setHorizontalGroup(
-            jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout accountsPanelLayout = new javax.swing.GroupLayout(accountsPanel);
+        accountsPanel.setLayout(accountsPanelLayout);
+        accountsPanelLayout.setHorizontalGroup(
+            accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1117, Short.MAX_VALUE)
         );
-        jPanel30Layout.setVerticalGroup(
-            jPanel30Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        accountsPanelLayout.setVerticalGroup(
+            accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 497, Short.MAX_VALUE)
         );
 
-        tabbedPane.addTab("Returns", jPanel30);
-
-        javax.swing.GroupLayout jPanel29Layout = new javax.swing.GroupLayout(jPanel29);
-        jPanel29.setLayout(jPanel29Layout);
-        jPanel29Layout.setHorizontalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1117, Short.MAX_VALUE)
-        );
-        jPanel29Layout.setVerticalGroup(
-            jPanel29Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
-        );
-
-        tabbedPane.addTab("Reports", jPanel29);
+        tabbedPane.addTab("Accounts", accountsPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -2460,6 +2502,7 @@ public class App extends javax.swing.JFrame {
 /**/
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel UIDashboard_dateTimeLabel;
+    private javax.swing.JPanel accountsPanel;
     private javax.swing.JButton addItem;
     private javax.swing.JLabel appLogout;
     private javax.swing.JLabel appSellerName;
@@ -2476,6 +2519,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel dTotalOrdersAmount;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JLabel description;
+    private javax.swing.JPanel expensesPanel;
     private javax.swing.JComboBox<String> filterType;
     private javax.swing.JLabel iAddMotoCode;
     private javax.swing.JButton iAddNew;
@@ -2595,9 +2639,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
-    private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -2646,6 +2688,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTextField quantityField;
     private javax.swing.JLabel quantityOnHand;
     private javax.swing.JPanel reportsPanel;
+    private javax.swing.JPanel returnsPanel;
     private javax.swing.JLabel sAddress;
     private javax.swing.JLabel sCityCountry;
     private javax.swing.JLabel sCompanyName;

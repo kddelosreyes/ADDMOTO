@@ -74,9 +74,10 @@ public class Query {
                 String lastName = resultSet.getString(Database.SELLER_ACCOUNT_LAST_NAME);
                 String userName = resultSet.getString(Database.SELLER_ACCOUNT_USERNAME);
                 String passsword = resultSet.getString(Database.SELLER_ACCOUNT_PASSWORD);
+                String userType = resultSet.getString(Database.SELLER_USER_TYPE);
                 
                 sellerAccount = new SellerAccount(id, firstName, lastName,
-                        userName, password);
+                        userName, password, userType);
             }
         } catch(Exception exc) {
             exc.printStackTrace();
