@@ -33,6 +33,7 @@ public final class SupplierController extends Controller {
     private final JLabel sAddress;
     private final JLabel sCityCountry;
     private final JLabel sContactNo;
+    private final JLabel sView;
     private final JLabel sEdit;
     private final JLabel sDelete;
     private final JLabel sManageContacts;
@@ -53,6 +54,7 @@ public final class SupplierController extends Controller {
         sAddress = view.getsAddress();
         sCityCountry = view.getsCityCountry();
         sContactNo = view.getsContactNo();
+        sView = view.getsView();
         sEdit = view.getsEdit();
         sDelete = view.getsDelete();
         sManageContacts = view.getsManageContacts();
@@ -67,6 +69,34 @@ public final class SupplierController extends Controller {
 
     @Override
     public void setListeners() {
+        sView.addMouseListener(new MouseListener() {
+            
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                if(selectedSupplier == null) {
+                    showSupplierError();
+                } else {
+                    JOptionPane.showMessageDialog(view, "View is selected " + selectedSupplier.getSupplierID());
+                }
+            }
+            
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                setRedForeground(sView);
+            }
+            
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                setBlackForeground(sView);
+            }
+            
+            @Override
+            public void mousePressed(MouseEvent e) {}
+
+            @Override
+            public void mouseReleased(MouseEvent e) {}
+        });
+        
         sEdit.addMouseListener(new MouseListener() {
             
             @Override
