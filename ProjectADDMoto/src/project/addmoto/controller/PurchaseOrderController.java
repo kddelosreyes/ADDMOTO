@@ -19,6 +19,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXSearchField;
+import project.addmoto.custom.OvalBorder;
+import project.addmoto.custom.RoundedBorder;
 import project.addmoto.data.OrderLineData;
 import project.addmoto.model.PurchaseOrderModel;
 import project.addmoto.mvc.Controller;
@@ -54,6 +56,7 @@ public final class PurchaseOrderController extends Controller {
         model = new PurchaseOrderModel(connection);
         
         poCreate = view.getPoCreate();
+        poCreate.setBorder(new RoundedBorder(12));
         poSearch = view.getPoSearch();
         poTable = view.getPoTable();
         poPopup = view.getPoPopup();

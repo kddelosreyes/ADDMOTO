@@ -7,6 +7,7 @@ package project.addmoto.view;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import project.addmoto.custom.RoundedBorder;
 
 /**
  *
@@ -85,7 +86,7 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
         vpPending.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         vpPending.setForeground(new java.awt.Color(255, 255, 255));
         vpPending.setText("  Pending  ");
-        vpPending.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        vpPending.setBorder(new RoundedBorder(10));
         vpPending.setOpaque(true);
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
