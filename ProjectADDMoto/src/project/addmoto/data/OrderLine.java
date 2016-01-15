@@ -12,15 +12,18 @@ public class OrderLine {
     private int orderQuantity;
     private double unitPrice;
     private double totalPrice;
+    private String productName;
     
     public OrderLine(int orderLineID, int productID, int orderID,
-            int orderQuantity, double unitPrice, double totalPrice) {
+            int orderQuantity, double unitPrice, double totalPrice,
+            String productName) {
         this.orderLineID = orderLineID;
         this.productID = productID;
         this.orderID = orderID;
         this.orderQuantity = orderQuantity;
         this.unitPrice = unitPrice;
         this.totalPrice = totalPrice;
+        this.productName = productName;
     }
 
     public int getOrderLineID() {
@@ -69,5 +72,18 @@ public class OrderLine {
 
     public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderLine{" + "orderLineID=" + orderLineID + ", productID=" + productID + ", orderID=" + orderID + ", orderQuantity=" + orderQuantity + ", unitPrice=" + unitPrice + ", totalPrice=" + totalPrice + ", productName=" + productName + '}';
     }
 }

@@ -31,7 +31,8 @@ import project.addmoto.view.App;
 public final class PurchaseOrderController extends Controller {
     
     private final App view;
-    private PurchaseOrderModel model;
+    private final PurchaseOrderModel model;
+    private final Connection connection;
     
     private final JButton poCreate;
     private final JXSearchField poSearch;
@@ -45,9 +46,11 @@ public final class PurchaseOrderController extends Controller {
     private int selectedRow;
     
     private ArrayList<OrderLineData> orderLineList;
+    private OrderLineData selectedOrder;
     
     public PurchaseOrderController(final App view, final Connection connection) {
         this.view = view;
+        this.connection = connection;
         model = new PurchaseOrderModel(connection);
         
         poCreate = view.getPoCreate();
@@ -107,7 +110,7 @@ public final class PurchaseOrderController extends Controller {
         poViewDetails.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(poTogglePaid, "View Details on Row: " + selectedRow);
+                new ViewPurchaseOrderController(connection, selectedOrder);
             }
         });
         
@@ -117,6 +120,18 @@ public final class PurchaseOrderController extends Controller {
                 if(SwingUtilities.isRightMouseButton(e)) {
                     int row = poTable.rowAtPoint(e.getPoint());
                     selectedRow = row;
+                    
+                    selectedOrder = new OrderLineData(
+                            (int) tableModel.getValueAt(row, 0),
+                            (String) tableModel.getValueAt(row, 1),
+                            (String) tableModel.getValueAt(row, 2),
+                            (String) tableModel.getValueAt(row, 3),
+                            (double) tableModel.getValueAt(row, 4),
+                            (int) tableModel.getValueAt(row, 5),
+                            ((((String) tableModel.getValueAt(row, 6)).equals("YES"))),
+                            (String) tableModel.getValueAt(row, 7),
+                            (String) tableModel.getValueAt(row, 8),
+                            (int) tableModel.getValueAt(row, 9));
                     
                     poTable.clearSelection();
                     poTable.addRowSelectionInterval(row, row);

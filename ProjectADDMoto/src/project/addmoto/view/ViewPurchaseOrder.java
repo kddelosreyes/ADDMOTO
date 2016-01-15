@@ -5,6 +5,9 @@
  */
 package project.addmoto.view;
 
+import javax.swing.JLabel;
+import javax.swing.JTable;
+
 /**
  *
  * @author Kim Howel delos Reyes
@@ -27,51 +30,136 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        vpLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        vpExport = new javax.swing.JLabel();
+        vpEdit = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        vpDelete = new javax.swing.JLabel();
+        vpReceived = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
+        vpPending = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        vpDeliveryDate = new javax.swing.JLabel();
+        vpDateIssued = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        vpSupplier = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        vpOrderTable = new javax.swing.JTable();
+        vpItems = new javax.swing.JLabel();
+        vpTotal = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/purchaseorder.png"))); // NOI18N
-        jLabel1.setText("PO#10000");
+        vpLabel.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        vpLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/purchaseorder.png"))); // NOI18N
+        vpLabel.setText("PO#10000");
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 102, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_export.png"))); // NOI18N
-        jLabel2.setText("Export");
+        vpExport.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpExport.setForeground(new java.awt.Color(0, 102, 255));
+        vpExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_export.png"))); // NOI18N
+        vpExport.setText("Export");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 102, 255));
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_edit.png"))); // NOI18N
-        jLabel3.setText("Edit");
+        vpEdit.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpEdit.setForeground(new java.awt.Color(0, 102, 255));
+        vpEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_edit.png"))); // NOI18N
+        vpEdit.setText("Edit");
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 102, 255));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_delete.png"))); // NOI18N
-        jLabel4.setText("Delete");
+        vpDelete.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpDelete.setForeground(new java.awt.Color(0, 102, 255));
+        vpDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_delete.png"))); // NOI18N
+        vpDelete.setText("Delete");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 102, 255));
-        jLabel5.setText("  Received  ");
+        vpReceived.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpReceived.setForeground(new java.awt.Color(0, 102, 255));
+        vpReceived.setText("  Received  ");
+        vpReceived.setOpaque(true);
 
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel6.setBackground(new java.awt.Color(255, 204, 51));
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("  Pending  ");
-        jLabel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel6.setOpaque(true);
+        vpPending.setBackground(new java.awt.Color(255, 204, 51));
+        vpPending.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpPending.setForeground(new java.awt.Color(255, 255, 255));
+        vpPending.setText("  Pending  ");
+        vpPending.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        vpPending.setOpaque(true);
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel7.setText("Date Issued:");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel8.setText("Target Delivery Date:");
+
+        vpDeliveryDate.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpDeliveryDate.setText("Dec 01, 2016");
+
+        vpDateIssued.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpDateIssued.setText("Dec 01, 2016, 23:33 AM");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel11.setText("Supplier:");
+
+        vpSupplier.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        vpSupplier.setText("ADD Moto");
+
+        vpOrderTable.setAutoCreateRowSorter(true);
+        vpOrderTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        vpOrderTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Item Name", "Unit Price (PhP)", "Qty", "Subtotal Price (PhP)"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Double.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        vpOrderTable.setRowHeight(22);
+        vpOrderTable.setShowHorizontalLines(false);
+        vpOrderTable.setShowVerticalLines(false);
+        vpOrderTable.getTableHeader().setResizingAllowed(false);
+        vpOrderTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(vpOrderTable);
+        if (vpOrderTable.getColumnModel().getColumnCount() > 0) {
+            vpOrderTable.getColumnModel().getColumn(1).setMinWidth(130);
+            vpOrderTable.getColumnModel().getColumn(1).setPreferredWidth(130);
+            vpOrderTable.getColumnModel().getColumn(1).setMaxWidth(130);
+            vpOrderTable.getColumnModel().getColumn(2).setMinWidth(40);
+            vpOrderTable.getColumnModel().getColumn(2).setPreferredWidth(40);
+            vpOrderTable.getColumnModel().getColumn(2).setMaxWidth(40);
+            vpOrderTable.getColumnModel().getColumn(3).setMinWidth(130);
+            vpOrderTable.getColumnModel().getColumn(3).setPreferredWidth(130);
+            vpOrderTable.getColumnModel().getColumn(3).setMaxWidth(130);
+        }
+
+        vpItems.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        vpItems.setForeground(new java.awt.Color(102, 102, 102));
+        vpItems.setText("n items");
+
+        vpTotal.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        vpTotal.setForeground(new java.awt.Color(102, 102, 102));
+        vpTotal.setText("PhP 100.000");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel15.setText("Total:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -80,55 +168,151 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addComponent(vpLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(vpExport)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(vpEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
+                        .addComponent(vpDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(vpPending)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)))
+                        .addComponent(vpReceived))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vpSupplier)
+                        .addGap(0, 503, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(vpItems)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vpTotal))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vpDateIssued)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(vpDeliveryDate)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(vpLabel)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(jSeparator2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(vpReceived, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(vpPending, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(273, Short.MAX_VALUE))
+                    .addComponent(vpDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(vpEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(vpDeliveryDate)
+                    .addComponent(vpDateIssued))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(vpSupplier))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(vpItems, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(vpTotal)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JLabel vpDateIssued;
+    private javax.swing.JLabel vpDelete;
+    private javax.swing.JLabel vpDeliveryDate;
+    private javax.swing.JLabel vpEdit;
+    private javax.swing.JLabel vpExport;
+    private javax.swing.JLabel vpItems;
+    private javax.swing.JLabel vpLabel;
+    private javax.swing.JTable vpOrderTable;
+    private javax.swing.JLabel vpPending;
+    private javax.swing.JLabel vpReceived;
+    private javax.swing.JLabel vpSupplier;
+    private javax.swing.JLabel vpTotal;
     // End of variables declaration//GEN-END:variables
+
+    public JLabel getVpDateIssued() {
+        return vpDateIssued;
+    }
+
+    public JLabel getVpDelete() {
+        return vpDelete;
+    }
+
+    public JLabel getVpDeliveryDate() {
+        return vpDeliveryDate;
+    }
+
+    public JLabel getVpEdit() {
+        return vpEdit;
+    }
+
+    public JLabel getVpExport() {
+        return vpExport;
+    }
+
+    public JLabel getVpItems() {
+        return vpItems;
+    }
+
+    public JLabel getVpLabel() {
+        return vpLabel;
+    }
+
+    public JTable getVpOrderTable() {
+        return vpOrderTable;
+    }
+
+    public JLabel getVpPending() {
+        return vpPending;
+    }
+
+    public JLabel getVpReceived() {
+        return vpReceived;
+    }
+
+    public JLabel getVpSupplier() {
+        return vpSupplier;
+    }
+
+    public JLabel getVpTotal() {
+        return vpTotal;
+    }
 }

@@ -42,16 +42,25 @@ public class Login extends javax.swing.JFrame {
         SellerAccount sellerAccount = query.getSellerAcount(username, password);
 
         if (returnedValue == 1 && query.insertLog(sellerAccount) == 1) {
+            UILogin_usernameTextField.setText("");
+            UILogin_usernameTextField.requestFocusInWindow();
+            UILogin_passwordPasswordField.setText("");
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
+                    
                     Login.this.setVisible(false);
                     JOptionPane.showMessageDialog(Login.this, "<html><span style='font-size:16px'>Welcome " + sellerAccount.getFirstName()
                         + " " + sellerAccount.getLastName() + "!\n"
-                        + "Have a good day!");
+                        + "<html><span style='font-size:14px'>Have a good day!",
+                            "Login Success",
+                            JOptionPane.PLAIN_MESSAGE);
                     new App(Login.this, sellerAccount).setVisible(true);
                 }
             });
         } else {
+            UILogin_usernameTextField.selectAll();
+            UILogin_usernameTextField.requestFocusInWindow();
+            UILogin_passwordPasswordField.setText("");
             JOptionPane.showMessageDialog(Login.this, "Login credentials does not exist.", "Login Error", JOptionPane.ERROR_MESSAGE);
         }
     }

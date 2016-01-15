@@ -178,6 +178,7 @@ public class Database {
     public static final String ORDER_LINE_QUANTITY = "order_quantity";
     public static final String ORDER_LINE_UNIT_PRICE = "order_unit_price";
     public static final String ORDER_LINE_TOTAL_PRICE = "order_total_price";
+    public static final String ORDER_LINE_PRODUCT_NAME = "product_name";
     
     /*
     ORDERS TABLE added fields
