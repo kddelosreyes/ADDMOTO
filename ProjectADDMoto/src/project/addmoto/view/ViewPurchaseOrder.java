@@ -32,11 +32,7 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
     private void initComponents() {
 
         vpLabel = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         vpExport = new javax.swing.JLabel();
-        vpEdit = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        vpDelete = new javax.swing.JLabel();
         vpReceived = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         vpPending = new javax.swing.JLabel();
@@ -56,24 +52,10 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
         vpLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/purchaseorder.png"))); // NOI18N
         vpLabel.setText("PO#10000");
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
         vpExport.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         vpExport.setForeground(new java.awt.Color(0, 102, 255));
         vpExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_export.png"))); // NOI18N
         vpExport.setText("Export");
-
-        vpEdit.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        vpEdit.setForeground(new java.awt.Color(0, 102, 255));
-        vpEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_edit.png"))); // NOI18N
-        vpEdit.setText("Edit");
-
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        vpDelete.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        vpDelete.setForeground(new java.awt.Color(0, 102, 255));
-        vpDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/po_delete.png"))); // NOI18N
-        vpDelete.setText("Delete");
 
         vpReceived.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         vpReceived.setForeground(new java.awt.Color(0, 102, 255));
@@ -108,7 +90,7 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
         vpSupplier.setText("ADD Moto");
 
         vpOrderTable.setAutoCreateRowSorter(true);
-        vpOrderTable.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        vpOrderTable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vpOrderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -173,14 +155,6 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
                     .addComponent(vpLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(vpExport)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(vpEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(vpDelete)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(vpPending)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -216,14 +190,10 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(vpExport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1)
-                    .addComponent(jSeparator2)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(vpReceived, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(vpPending, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator3)
-                    .addComponent(vpDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(vpEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jSeparator3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -252,13 +222,9 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JLabel vpDateIssued;
-    private javax.swing.JLabel vpDelete;
     private javax.swing.JLabel vpDeliveryDate;
-    private javax.swing.JLabel vpEdit;
     private javax.swing.JLabel vpExport;
     private javax.swing.JLabel vpItems;
     private javax.swing.JLabel vpLabel;
@@ -273,16 +239,8 @@ public class ViewPurchaseOrder extends javax.swing.JPanel {
         return vpDateIssued;
     }
 
-    public JLabel getVpDelete() {
-        return vpDelete;
-    }
-
     public JLabel getVpDeliveryDate() {
         return vpDeliveryDate;
-    }
-
-    public JLabel getVpEdit() {
-        return vpEdit;
     }
 
     public JLabel getVpExport() {

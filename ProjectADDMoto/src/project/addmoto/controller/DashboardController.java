@@ -55,6 +55,8 @@ public final class DashboardController extends Controller {
     private final String FILTER_CUSTOM = "Custom";
     
     private int selectedRow = -1;
+    private ListSelectionModel selectionModel;
+    private DefaultTableModel tableModelTop;
     
     public DashboardController(App view, final Connection connection) {
         this.view = view;
@@ -77,6 +79,9 @@ public final class DashboardController extends Controller {
         dInformation = view.getdInformation();
         dTopSelling = view.getdTopSelling();
         
+        selectionModel = (ListSelectionModel) dTopSelling.getSelectionModel();
+        tableModelTop = (DefaultTableModel) dTopSelling.getModel();
+        
         setDefaultViews();
         setListeners();
     }
@@ -97,17 +102,6 @@ public final class DashboardController extends Controller {
         ArrayList<TopSelling> topSelling = model.getTopSelling();
         
         DefaultTableModel tableModel = (DefaultTableModel) dIndicatorTable.getModel();
-        DefaultTableModel tableModelTop = (DefaultTableModel) dTopSelling.getModel();
-        ListSelectionModel selectionModel = (ListSelectionModel) dTopSelling.getSelectionModel();
-        
-        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
-            if (e.getValueIsAdjusting()) {
-                return;
-            }
-            int row = dTopSelling.getSelectedRow();
-            String itemName = (String) tableModelTop.getValueAt(row, 0);
-            JOptionPane.showMessageDialog(view, "<html><span style='font-size:18px'>" + itemName);
-        });
         
         while (tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
@@ -175,6 +169,15 @@ public final class DashboardController extends Controller {
     
     @Override
     public void setListeners() {
+        selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
+            if (e.getValueIsAdjusting()) {
+                return;
+            }
+            int row = dTopSelling.getSelectedRow();
+            String itemName = (String) tableModelTop.getValueAt(row, 0);
+            JOptionPane.showMessageDialog(view, "<html><span style='font-size:18px'>" + itemName);
+        });
+        
         dFilterType.addItemListener((ItemEvent e) -> {
             if(e.getStateChange() == ItemEvent.SELECTED) {
                 String selected = e.getItem().toString();

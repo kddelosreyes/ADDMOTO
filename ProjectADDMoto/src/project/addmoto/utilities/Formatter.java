@@ -13,6 +13,7 @@ public class Formatter {
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
     private static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd, yyyy, HH:mm:ss");
     private static SimpleDateFormat dFormat = new SimpleDateFormat("yyyy MM dd HH mm ss");
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
     
     public static String format(double value) {
         return decimalFormat.format(value);
@@ -28,5 +29,9 @@ public class Formatter {
     
     public static String formatReceipt(Date date) {
         return dFormat.format(date);
+    }
+    
+    public static String formatOrderDate(Date date) {
+        return dateFormat.format(date);
     }
 }

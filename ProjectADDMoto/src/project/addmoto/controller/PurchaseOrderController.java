@@ -19,9 +19,8 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXSearchField;
-import project.addmoto.custom.OvalBorder;
-import project.addmoto.custom.RoundedBorder;
 import project.addmoto.data.OrderLineData;
+import project.addmoto.data.SellerAccount;
 import project.addmoto.model.PurchaseOrderModel;
 import project.addmoto.mvc.Controller;
 import project.addmoto.view.App;
@@ -35,6 +34,7 @@ public final class PurchaseOrderController extends Controller {
     private final App view;
     private final PurchaseOrderModel model;
     private final Connection connection;
+    private final SellerAccount sellerAccount;
     
     private final JButton poCreate;
     private final JXSearchField poSearch;
@@ -50,13 +50,13 @@ public final class PurchaseOrderController extends Controller {
     private ArrayList<OrderLineData> orderLineList;
     private OrderLineData selectedOrder;
     
-    public PurchaseOrderController(final App view, final Connection connection) {
+    public PurchaseOrderController(final App view, final Connection connection, final SellerAccount sellerAccount) {
+        this.sellerAccount = sellerAccount;
         this.view = view;
         this.connection = connection;
         model = new PurchaseOrderModel(connection);
         
         poCreate = view.getPoCreate();
-        poCreate.setBorder(new RoundedBorder(12));
         poSearch = view.getPoSearch();
         poTable = view.getPoTable();
         poPopup = view.getPoPopup();
@@ -71,6 +71,7 @@ public final class PurchaseOrderController extends Controller {
     }
     
     private void populate() {
+        System.out.println("LOG: POPULATE IS RUNNING");
         orderLineList = model.getOrderLineList();
         
         while(tableModel.getRowCount() > 0) {
@@ -96,6 +97,17 @@ public final class PurchaseOrderController extends Controller {
 
     @Override
     public void setListeners() {
+        poCreate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new NewPurchaseOrderController(
+                        connection,
+                        sellerAccount
+                );
+                populate();
+            }
+        });
+        
         poTogglePaid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -38,7 +38,7 @@ public class ViewPurchaseOrderModel {
                     Database.ORDER_LINE_PRODUCT_NAME + "' FROM " + Database.ORDER_LINE_TABLE + " O JOIN " +
                     Database.PRODUCTS_TABLE + " P ON O." + Database.ORDER_LINE_PRODUCT_ID + " = P." + Database.PRODUCT_ID +
                     " JOIN " + Database.PRODUCT_LINE_TABLE + " PL ON P." + Database.PRODUCT_LINE_ID_FK + " = PL." +
-                    Database.PRODUCT_LINE_ID + ";";
+                    Database.PRODUCT_LINE_ID + " WHERE " + Database.ORDER_ID + " = " + orderID + ";";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
             

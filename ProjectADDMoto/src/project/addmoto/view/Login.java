@@ -3,6 +3,7 @@ package project.addmoto.view;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import project.addmoto.data.SellerAccount;
 import project.addmoto.database.Query;
 
@@ -54,6 +55,7 @@ public class Login extends javax.swing.JFrame {
                         + "<html><span style='font-size:14px'>Have a good day!",
                             "Login Success",
                             JOptionPane.PLAIN_MESSAGE);
+
                     new App(Login.this, sellerAccount).setVisible(true);
                 }
             });

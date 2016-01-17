@@ -5,6 +5,7 @@ import static java.lang.Double.*;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -75,6 +76,7 @@ public final class InventoryController extends Controller {
     private final JTextField iUnitCost;
     private final JTextField iQtyThreshold;
     private final JButton iAddNew;
+    private final JButton iAddNewPLine;
     
     private String sellingPriceValue;
     private String unitCostValue;
@@ -149,6 +151,7 @@ public final class InventoryController extends Controller {
         iQtyThreshold = view.getiThreshold();
         iQtyThreshold.setDisabledTextColor(Color.BLACK);
         iAddNew = view.getiAddNew();
+        iAddNewPLine = view.getiAddNewPLine();
         
         setDefaultViews();
         populate();
@@ -157,6 +160,13 @@ public final class InventoryController extends Controller {
 
     @Override
     public void setListeners() {
+        iAddNewPLine.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Clicked.");
+            }
+        });
+        
         iShowHistory.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

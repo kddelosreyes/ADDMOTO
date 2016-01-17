@@ -13,6 +13,11 @@ public class Supplier {
     private String supplierAddress;
     private int supplierPostal;
     
+    public Supplier(int supplierID, String supplierName) {
+        this.supplierID = supplierID;
+        this.supplierName = supplierName;
+    }
+    
     public Supplier(int supplierID, String supplierName, String supplierCity,
             String supplierCountry, String supplierAddress, int supplierPostal) {
         this.supplierID = supplierID;

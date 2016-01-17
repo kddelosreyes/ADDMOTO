@@ -35,7 +35,6 @@ public final class SupplierController extends Controller {
     private final JLabel sContactNo;
     private final JLabel sView;
     private final JLabel sEdit;
-    private final JLabel sDelete;
     private final JLabel sManageContacts;
     private final JLabel sProducts;
     
@@ -54,9 +53,8 @@ public final class SupplierController extends Controller {
         sAddress = view.getsAddress();
         sCityCountry = view.getsCityCountry();
         sContactNo = view.getsContactNo();
-        sView = view.getsView();
-        sEdit = view.getsEdit();
-        sDelete = view.getsDelete();
+        sView = view.getsEdit();
+        sEdit = view.getsDelete();
         sManageContacts = view.getsManageContacts();
         sProducts = view.getsProducts();
         supplierPane = view.getsSupplierPane();
@@ -68,7 +66,7 @@ public final class SupplierController extends Controller {
     }
 
     @Override
-    public void setListeners() {
+    public void setListeners() {        
         sView.addMouseListener(new MouseListener() {
             
             @Override
@@ -116,34 +114,6 @@ public final class SupplierController extends Controller {
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 setBlackForeground(sEdit);
-            }
-            
-            @Override
-            public void mousePressed(MouseEvent e) {}
-
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-        });
-        
-        sDelete.addMouseListener(new MouseListener() {
-            
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                if(selectedSupplier == null) {
-                    showSupplierError();
-                } else {
-                    JOptionPane.showMessageDialog(view, "Delete is selected " + selectedSupplier.getSupplierID());
-                }
-            }
-            
-            @Override
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                setRedForeground(sDelete);
-            }
-            
-            @Override
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                setBlackForeground(sDelete);
             }
             
             @Override

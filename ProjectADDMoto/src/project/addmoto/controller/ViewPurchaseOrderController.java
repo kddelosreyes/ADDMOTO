@@ -33,8 +33,6 @@ public final class ViewPurchaseOrderController extends Controller {
     
     private final JLabel vpLabel;
     private final JLabel vpExport;
-    private final JLabel vpEdit;
-    private final JLabel vpDelete;
     private final JLabel vpPending;
     private final JLabel vpReceived;
     private final JLabel vpDateIssued;
@@ -56,8 +54,6 @@ public final class ViewPurchaseOrderController extends Controller {
         
         vpLabel = view.getVpLabel();
         vpExport = view.getVpExport();
-        vpEdit = view.getVpEdit();
-        vpDelete = view.getVpDelete();
         vpPending = view.getVpPending();
         vpReceived = view.getVpReceived();
         vpDateIssued = view.getVpDateIssued();
@@ -135,52 +131,6 @@ public final class ViewPurchaseOrderController extends Controller {
             @Override
             public void mouseExited(MouseEvent e) {
                 setForeground(vpExport, true);
-            }
-        });
-        
-        vpEdit.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {}
-
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setForeground(vpEdit, false);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setForeground(vpEdit, true);
-            }
-        });
-        
-        vpDelete.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {}
-
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                setForeground(vpDelete, false);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setForeground(vpDelete, true);
             }
         });
     }
