@@ -1,5 +1,6 @@
 package project.addmoto.view;
 
+import com.alee.laf.WebLookAndFeel;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -47,8 +48,7 @@ public class Login extends javax.swing.JFrame {
             UILogin_usernameTextField.requestFocusInWindow();
             UILogin_passwordPasswordField.setText("");
             java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    
+                public void run() {                    
                     Login.this.setVisible(false);
                     JOptionPane.showMessageDialog(Login.this, "<html><span style='font-size:16px'>Welcome " + sellerAccount.getFirstName()
                         + " " + sellerAccount.getLastName() + "!\n"
