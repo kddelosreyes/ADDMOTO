@@ -154,8 +154,9 @@ public class POSModel {
     public int insertReceipt(Receipt receiptDetails) {
         try {
             query = "INSERT INTO " + Database.RECEIPTS_TABLE + " (" + Database.RECEIPT_NO + ", " +  Database.RECEIPT_TRANSACTION_TIMESTAMP + ", "
-                    + Database.RECEIPT_TOTAL_PRICE + ", " + Database.SELLER_ID_FK + ", " + Database.RECEIPT_PRICE_PAID + ", " + Database.RECEIPT_IS_FULLY_PAID + ")"
-                    + " VALUES (?, ?, ?, ?, ?, ?)";
+                    + Database.RECEIPT_TOTAL_PRICE + ", " + Database.SELLER_ID_FK + ", " + Database.RECEIPT_PRICE_PAID + ", " + Database.RECEIPT_IS_FULLY_PAID + ", "
+                    + Database.RECEIPT_DISCOUNT + ")"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, receiptDetails.getReceiptNo());
             preparedStatement.setString(2, receiptDetails.getTransactionTimeStamp());
@@ -163,6 +164,7 @@ public class POSModel {
             preparedStatement.setInt(4, receiptDetails.getSellerID());
             preparedStatement.setDouble(5, receiptDetails.getPricePaid());
             preparedStatement.setBoolean(6, receiptDetails.isIsFullyPaid());
+            preparedStatement.setDouble(7, receiptDetails.getDiscount());
 
             return preparedStatement.executeUpdate();
         } catch(Exception exc) {
@@ -300,6 +302,28 @@ public class POSModel {
                         description, characteristics, motors,
                         productLineID, supplierID);
                 productsList.add(product);
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        
+        return productsList;
+    }
+    
+    public ArrayList<ProductLine> getProductLines() {
+        ArrayList<ProductLine> productsList = new ArrayList<>();
+        
+        try {
+            query = "SELECT * FROM " + Database.PRODUCT_LINE_TABLE + ";";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                int id = resultSet.getInt(Database.PRODUCT_LINE_ID);
+                String productLine = resultSet.getString(Database.PRODUCT_LINE_NAME);
+                
+                ProductLine pLine = new ProductLine(id, productLine);
+                productsList.add(pLine);
             }
         } catch(Exception exc) {
             exc.printStackTrace();

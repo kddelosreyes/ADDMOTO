@@ -47,13 +47,10 @@ import project.addmoto.view.InventoryInfo;
  * @author Kim Howel delos Reyes
  */
 public final class InventoryController extends Controller {
-    
+
     private final App view;
     private final InventoryModel model;
-    
-    private final JComboBox iProductLineFilter;
-    private final JComboBox iStatusFilter;
-    private final JComboBox iSupplierFilter;
+
     private final JXSearchField iSearchField;
     private final JXTable iProductsTable;
     private final JTextArea iProductName;
@@ -71,28 +68,27 @@ public final class InventoryController extends Controller {
     private final JLabel iCancelRSP;
     private final JLabel iCancelUC;
     private final JLabel iCancelQT;
-    private final JLabel iInfo;
     private final JTextField iSellingPrice;
     private final JTextField iUnitCost;
     private final JTextField iQtyThreshold;
     private final JButton iAddNew;
     private final JButton iAddNewPLine;
-    
+
     private String sellingPriceValue;
     private String unitCostValue;
     private String qtyThresholdValue;
-    
+
     private DefaultTableModel tableModel;
     private ListSelectionModel selectionModel;
-    
+
     private ArrayList<ProductLine> productLines;
     private ArrayList<Supplier> suppliers;
     private ArrayList<Products> products;
     private HashMap<Integer, String> productLineMap;
     private HashMap<Integer, String> supplierMap;
-    
+
     public boolean isAddingRows = false;
-    
+
     private final AddItem addItem;
     private final JComboBox iSupplierList;
     private final JComboBox iProductLineList;
@@ -104,12 +100,12 @@ public final class InventoryController extends Controller {
     private final JTextField iCharacteristics;
     private final JTextField iModelText;
     private final JTextField iDescriptionText;
-    
+
     public InventoryController(App view, final Connection connection) {
         this.view = view;
         model = new InventoryModel(connection);
         addItem = new AddItem();
-        
+
         iSupplierList = addItem.getiSupplierList();
         iProductLineList = addItem.getiProductLineList();
         iSupplierCodeText = addItem.getiSupplierCodeText();
@@ -120,10 +116,6 @@ public final class InventoryController extends Controller {
         iCharacteristics = addItem.getiCharacteristicsText();
         iModelText = addItem.getiModelText();
         iDescriptionText = addItem.getiDescriptionText();
-        
-        iProductLineFilter = view.getiProductLineFilter();
-        iStatusFilter = view.getiStatusFilter();
-        iSupplierFilter = view.getiSupplierFilter();
         iSearchField = view.getiSearchField();
         iProductsTable = view.getiProductsTable();
         tableModel = (DefaultTableModel) iProductsTable.getModel();
@@ -143,7 +135,6 @@ public final class InventoryController extends Controller {
         iCancelRSP = view.getiCancelRSP();
         iCancelUC = view.getiCancelUC();
         iCancelQT = view.getiCancelQT();
-        iInfo = view.getiInfo();
         iSellingPrice = view.getiSellingPrice();
         iSellingPrice.setDisabledTextColor(Color.BLACK);
         iUnitCost = view.getiUnitCost();
@@ -152,7 +143,7 @@ public final class InventoryController extends Controller {
         iQtyThreshold.setDisabledTextColor(Color.BLACK);
         iAddNew = view.getiAddNew();
         iAddNewPLine = view.getiAddNewPLine();
-        
+
         setDefaultViews();
         populate();
         setListeners();
@@ -160,13 +151,87 @@ public final class InventoryController extends Controller {
 
     @Override
     public void setListeners() {
+        iSearchField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                isAddingRows = true;
+                iSearchField.setText(Formatter.makeUpperCase(iSearchField.getText()));
+                String input = iSearchField.getText();
+                List<Products> productWithID = products.stream()
+                        .filter((p) -> (p.getAddmotoCode().toUpperCase().contains(input.toUpperCase())
+                                || (p.getDescription() + " " + p.getCharacteristics() + p.getMotors()).replaceAll("\\s+", " ").trim().toUpperCase().contains(input.toUpperCase()))
+                                || getProductLineName(p.getProductLineID()).toUpperCase().contains(input.toUpperCase())
+                        )
+                        .collect(Collectors.toList());
+
+                while (tableModel.getRowCount() > 0) {
+                    tableModel.removeRow(0);
+                }
+                for (Products product : productWithID) {
+                    tableModel.addRow(
+                            new Object[]{
+                                String.valueOf(product.getProductID()),
+                                product.getAddmotoCode(),
+                                productLineMap.get(product.getProductLineID()),
+                                (product.getDescription() + " " + product.getCharacteristics() + " " + product.getMotors()).replaceAll("\\s+", " ").trim(),
+                                "PhP " + Formatter.format(product.getUnitPrice()),
+                                "PhP " + Formatter.format(product.getSellingPrice())
+                            });
+                }
+                isAddingRows = false;
+            }
+        });
+
         iAddNewPLine.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Clicked.");
+                String newProductLine = JOptionPane.showInputDialog(
+                        null,
+                        "Product Line Name:",
+                        "New Product Line",
+                        JOptionPane.QUESTION_MESSAGE);
+
+                try {
+                    if (newProductLine.equals("")) {
+                        JOptionPane.showMessageDialog(
+                                null,
+                                "You cannot create an empty product line name.",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    } else {
+                        int rows = model.insertNewProductLine(newProductLine);
+                        if (rows != 0) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Product Line list updated.",
+                                    "Success",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                            populate();
+                        } else {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Product Line may be existing already!",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                        }
+                    }
+                } catch (Exception ex) {
+
+                }
             }
         });
-        
+
         iShowHistory.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -174,10 +239,12 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -189,7 +256,7 @@ public final class InventoryController extends Controller {
                 setWhiteForeground(iShowHistory);
             }
         });
-        
+
         iSellingPrice.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -197,9 +264,10 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void focusLost(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+            }
         });
-        
+
         iSellingPrice.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -214,12 +282,14 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
-        
+
         iUnitCost.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -227,9 +297,10 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void focusLost(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+            }
         });
-        
+
         iUnitCost.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -244,12 +315,14 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
-        
+
         iQtyThreshold.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -257,9 +330,10 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void focusLost(FocusEvent e) {}
+            public void focusLost(FocusEvent e) {
+            }
         });
-        
+
         iQtyThreshold.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -274,28 +348,32 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+            }
 
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
-        
+
         iEditUpdateRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(iEditUpdateRSP.getText().equals("Edit")) {
+                if (iEditUpdateRSP.getText().equals("Edit")) {
                     sellingPriceValue = iSellingPrice.getText();
                     setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, false);
-                } else if(iEditUpdateRSP.getText().equals("Update")) {
+                } else if (iEditUpdateRSP.getText().equals("Update")) {
                     setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
                 }
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -307,23 +385,25 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iEditUpdateRSP);
             }
         });
-        
+
         iEditUpdateUC.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(iEditUpdateUC.getText().equals("Edit")) {
+                if (iEditUpdateUC.getText().equals("Edit")) {
                     unitCostValue = iUnitCost.getText();
                     setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, false);
-                } else if(iEditUpdateUC.getText().equals("Update")) {
+                } else if (iEditUpdateUC.getText().equals("Update")) {
                     setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
                 }
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -335,23 +415,25 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iEditUpdateUC);
             }
         });
-        
+
         iEditUpdateQT.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(iEditUpdateQT.getText().equals("Edit")) {
+                if (iEditUpdateQT.getText().equals("Edit")) {
                     qtyThresholdValue = iQtyThreshold.getText();
                     setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, false);
-                } else if(iEditUpdateQT.getText().equals("Update")) {
+                } else if (iEditUpdateQT.getText().equals("Update")) {
                     setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
                 }
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -363,7 +445,7 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iEditUpdateQT);
             }
         });
-        
+
         iCancelRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -372,10 +454,12 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -387,7 +471,7 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iCancelRSP);
             }
         });
-        
+
         iCancelUC.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -396,10 +480,12 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -411,7 +497,7 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iCancelUC);
             }
         });
-        
+
         iCancelQT.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -420,10 +506,12 @@ public final class InventoryController extends Controller {
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {}
+            public void mousePressed(MouseEvent e) {
+            }
 
             @Override
-            public void mouseReleased(MouseEvent e) {}
+            public void mouseReleased(MouseEvent e) {
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -435,12 +523,12 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iCancelQT);
             }
         });
-        
+
         selectionModel.addListSelectionListener((ListSelectionEvent e) -> {
-            if(e.getValueIsAdjusting()) {
+            if (e.getValueIsAdjusting()) {
                 return;
             }
-            if(!isAddingRows) {
+            if (!isAddingRows) {
                 int row = iProductsTable.getSelectedRow();
                 int ID = Integer.parseInt((String) iProductsTable.getValueAt(row, 0));
                 System.out.println("ID -> " + ID);
@@ -448,44 +536,10 @@ public final class InventoryController extends Controller {
                 showProductDetails(ID);
             }
         });
-        
-        iInfo.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                InventoryInfo inventoryInfo = new InventoryInfo();
-                JOptionPane.showMessageDialog(view, inventoryInfo, "Item Status Information", JOptionPane.PLAIN_MESSAGE);
-            }
 
-            @Override
-            public void mousePressed(MouseEvent e) {}
-
-            @Override
-            public void mouseReleased(MouseEvent e) {}
-
-            @Override
-            public void mouseEntered(MouseEvent e) {}
-
-            @Override
-            public void mouseExited(MouseEvent e) {}
-        });
-        
         iAddNew.addActionListener((ActionEvent e) -> {
-//            productLines = model.getProductLines();
-//            createMap();
-//            suppliers = model.getSuppliers();
-//            products = model.getProducts();
-//
-//            iProductLineList.addItem(" ");
-//            for(ProductLine productLine : productLines) {
-//                iProductLineList.addItem(productLine);
-//            }
-//
-//            iSupplierList.addItem(" ");
-//            for(Supplier supplier : suppliers) {
-//                iSupplierList.addItem(supplier);
-//            }
-            int choice = JOptionPane.showOptionDialog(view, addItem, "ADD Moto - Motorcycle Parts and Accessories", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);                 
-            if(choice == JOptionPane.OK_OPTION){
+            int choice = JOptionPane.showOptionDialog(view, addItem, "ADD Moto - Motorcycle Parts and Accessories", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, null, null);
+            if (choice == JOptionPane.OK_OPTION) {
                 String supplierName = getFormattedString((String) iSupplierList.getSelectedItem());
                 String productLine = getFormattedString((String) iProductLineList.getSelectedItem());
                 String supplierCode = getFormattedString(iSupplierCodeText.getText());
@@ -496,8 +550,8 @@ public final class InventoryController extends Controller {
                 String characteristics = getFormattedString(iCharacteristics.getText());
                 String _model = getFormattedString(iModelText.getText());
                 String description = getFormattedString(iDescriptionText.getText());
-                
-                if(supplierName.isEmpty() || productLine.isEmpty() || supplierCode.isEmpty()
+
+                if (supplierName.isEmpty() || productLine.isEmpty() || supplierCode.isEmpty()
                         || unitPrice.isEmpty() || sellingPrice.isEmpty() || qtyOnHand.isEmpty()
                         || threshold.isEmpty() || characteristics.isEmpty() || _model.isEmpty()
                         || description.isEmpty()) {
@@ -520,7 +574,7 @@ public final class InventoryController extends Controller {
                     );
                     System.out.println(product.toString());
                     int returnValue = model.addNewProduct(product);
-                    if(returnValue == 0) {
+                    if (returnValue == 0) {
                         JOptionPane.showMessageDialog(view, "There must be some kind of error.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(view, "Successfully added new product!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -534,31 +588,38 @@ public final class InventoryController extends Controller {
             }
         });
     }
-    
+
+    private String getProductLineName(int productLineID) {
+        List<ProductLine> productLine = productLines.stream()
+                .filter((p) -> p.getProductLineID() == productLineID)
+                .collect(Collectors.toList());
+        return productLine.get(0).getProductLineName();
+    }
+
     private int getKeybyValue_p(String productLine) {
         Set<Integer> keys = productLineMap.keySet();
-        for(Integer key : keys) {
-            if(productLineMap.get(key).equals(productLine)) {
+        for (Integer key : keys) {
+            if (productLineMap.get(key).equals(productLine)) {
                 return key;
             }
         }
         return -1;
     }
-    
+
     private int getKeybyValue_s(String supplierName) {
         Set<Integer> keys = supplierMap.keySet();
-        for(Integer key : keys) {
-            if(supplierMap.get(key).equals(supplierName)) {
+        for (Integer key : keys) {
+            if (supplierMap.get(key).equals(supplierName)) {
                 return key;
             }
         }
         return -1;
     }
-    
+
     private String getFormattedString(String value) {
         return value.replaceAll("\\s+", " ").trim();
     }
-    
+
     private void showProductDetails(int ID) {
         List<Products> productWithID = products.stream()
                 .filter((p) -> p.getProductID() == ID)
@@ -566,23 +627,23 @@ public final class InventoryController extends Controller {
         List<Supplier> supplierWithID = suppliers.stream()
                 .filter((p) -> p.getSupplierID() == p.getSupplierID())
                 .collect(Collectors.toList());
-        
+
         Products product = productWithID.get(0);
         Supplier supplier = supplierWithID.get(0);
-        
-        String productName_ = (productLineMap.get(product.getProductLineID()) + " " +
-                product.getDescription() + " " + product.getCharacteristics() + " " +
-                product.getMotors()).replaceAll("\\s+", " ");
-        String productDescription_ = (product.getDescription() + " " + product.getCharacteristics() +
-                " " + product.getMotors()).replaceAll("\\s+", " ");
-        
+
+        String productName_ = (productLineMap.get(product.getProductLineID()) + " "
+                + product.getDescription() + " " + product.getCharacteristics() + " "
+                + product.getMotors()).replaceAll("\\s+", " ");
+        String productDescription_ = (product.getDescription() + " " + product.getCharacteristics()
+                + " " + product.getMotors()).replaceAll("\\s+", " ");
+
         iProductName.setText(productName_);
         iItemNumber.setText(String.valueOf(product.getProductID()));
         iAddMotoCode.setText(product.getAddmotoCode());
         iProductLine.setText(productLineMap.get(product.getProductLineID()));
         iItemDescription.setText(productDescription_);
-        iSellingPrice.setText(String.valueOf(product.getSellingPrice()));
-        iUnitCost.setText(String.valueOf(product.getUnitPrice()));
+        iSellingPrice.setText(Formatter.format(product.getSellingPrice()));
+        iUnitCost.setText(Formatter.format(product.getUnitPrice()));
         iOnHandQuantity.setText(String.valueOf(product.getCurrentQuantity()));
         iQtyThreshold.setText(String.valueOf(product.getThresholdCount()));
         iStatus.setText("Not Yet Implemented");
@@ -591,48 +652,52 @@ public final class InventoryController extends Controller {
         iEditUpdateUC.setEnabled(true);
         iEditUpdateQT.setEnabled(true);
     }
-    
+
     public void populate() {
         productLines = model.getProductLines();
         suppliers = model.getSuppliers();
         createMap();
         products = model.getProducts();
-        
-        iProductLineFilter.addItem(" ");
+
+        if (iProductLineList.getItemCount() != 0) {
+            iProductLineList.removeAllItems();
+        }
+
         iProductLineList.addItem(" ");
-        for(ProductLine productLine : productLines) {
-            iProductLineFilter.addItem(productLine.getProductLineName());
+        for (ProductLine productLine : productLines) {
             iProductLineList.addItem(productLine.getProductLineName());
         }
-        
-        iSupplierFilter.addItem(" ");
+
+        if (iSupplierList.getItemCount() != 0) {
+            iSupplierList.removeAllItems();
+        }
+
         iSupplierList.addItem(" ");
-        for(Supplier supplier : suppliers) {
-            iSupplierFilter.addItem(supplier.getSupplierName());
+        for (Supplier supplier : suppliers) {
             iSupplierList.addItem(supplier.getSupplierName());
         }
-        
+
         populateTable();
     }
-    
+
     private void populateTable() {
-        while(tableModel.getRowCount() > 0) {
+        while (tableModel.getRowCount() > 0) {
             tableModel.removeRow(0);
         }
         products = model.getProducts();
-        for(Products product : products) {
+        for (Products product : products) {
             tableModel.addRow(
-                    new Object[] {
+                    new Object[]{
                         String.valueOf(product.getProductID()),
                         product.getAddmotoCode(),
                         productLineMap.get(product.getProductLineID()),
-                        (product.getDescription() + " " + product.getCharacteristics() + " " + product.getMotors()).replaceAll("\\s+", " "),
+                        (product.getDescription() + " " + product.getCharacteristics() + " " + product.getMotors()).replaceAll("\\s+", " ").trim(),
                         "PhP " + Formatter.format(product.getUnitPrice()),
                         "PhP " + Formatter.format(product.getSellingPrice())
-            });
+                    });
         }
     }
-    
+
     public void repopulateTable() {
         populateTable();
         iProductsTable.scrollRowToVisible(0);
@@ -646,13 +711,11 @@ public final class InventoryController extends Controller {
         sorter.setSortKeys(sortKeys);
         sorter.sort();
     }
-    
+
     public void setIndexZero() {
-        iProductLineFilter.setSelectedIndex(0);
-        iStatusFilter.setSelectedIndex(0);
-        iSupplierFilter.setSelectedIndex(0);
+        iSearchField.setText("");
     }
-    
+
     public void setDefaultViews() {
         iSearchField.setText("");
         iProductName.setText("");
@@ -670,30 +733,30 @@ public final class InventoryController extends Controller {
         setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
         setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
     }
-    
+
     private void createMap() {
         productLineMap = new HashMap<Integer, String>();
         supplierMap = new HashMap<Integer, String>();
-        for(ProductLine productLine : productLines) {
+        for (ProductLine productLine : productLines) {
             productLineMap.put(productLine.getProductLineID(), productLine.getProductLineName());
         }
-        for(Supplier supplier : suppliers) {
+        for (Supplier supplier : suppliers) {
             supplierMap.put(supplier.getSupplierID(), supplier.getSupplierName());
         }
     }
-    
+
     private void setRedForeground(JLabel label) {
         label.setForeground(Color.RED);
     }
-    
+
     private void setBlackForeground(JLabel label) {
         label.setForeground(Color.BLACK);
     }
-    
+
     private void setWhiteForeground(JLabel label) {
         label.setForeground(Color.WHITE);
     }
-    
+
     private void setToDefault(JTextField lFunction, JLabel edit, JLabel cancel, boolean isToDefault) {
         if (!isToDefault) {
             lFunction.requestFocus();

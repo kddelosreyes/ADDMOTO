@@ -23,6 +23,7 @@ import project.addmoto.data.OrderLineData;
 import project.addmoto.data.SellerAccount;
 import project.addmoto.model.PurchaseOrderModel;
 import project.addmoto.mvc.Controller;
+import project.addmoto.utilities.Formatter;
 import project.addmoto.view.App;
 
 /**
@@ -84,7 +85,7 @@ public final class PurchaseOrderController extends Controller {
                         oLData.getOrderNo(),
                         oLData.getTimestamp(),
                         oLData.getSupplier(),
-                        oLData.getOrderTotalPrice(),
+                        Double.parseDouble(Formatter.format(oLData.getOrderTotalPrice())),
                         oLData.getTotalQuantity(),
                         oLData.isIsPaid() ? "YES" : "NO",
                         oLData.getStatus(),

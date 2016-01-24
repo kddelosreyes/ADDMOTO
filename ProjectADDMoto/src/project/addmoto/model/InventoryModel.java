@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import project.addmoto.custom.ExceptionDialog;
 import project.addmoto.data.ProductLine;
 import project.addmoto.data.Products;
 import project.addmoto.data.Supplier;
@@ -49,6 +50,20 @@ public class InventoryModel {
         }
         
         return productLines;
+    }
+    
+    public int insertNewProductLine(String productLine) {
+        try {
+            query = "INSERT INTO " + Database.PRODUCT_LINE_TABLE +
+                    " (" + Database.PRODUCT_LINE_NAME + ") VALUES(?);";
+            
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, productLine);
+            
+            return preparedStatement.executeUpdate();
+        } catch(Exception e) {
+            return 0;
+        }
     }
     
     public ArrayList<Supplier> getSuppliers() {
