@@ -64,7 +64,7 @@ public class ViewPurchaseOrderModel {
                 );
             }
         } catch(Exception exc) {
-            
+            exc.printStackTrace();
         }
         
         return orderProducts;

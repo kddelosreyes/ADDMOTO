@@ -40,7 +40,6 @@ import project.addmoto.mvc.Controller;
 import project.addmoto.utilities.Formatter;
 import project.addmoto.view.AddItem;
 import project.addmoto.view.App;
-import project.addmoto.view.InventoryInfo;
 
 /**
  *
@@ -334,7 +333,7 @@ public final class InventoryController extends Controller {
             }
         });
 
-        iQtyThreshold.addKeyListener(new KeyListener() {
+        iSellingPrice.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char ch = e.getKeyChar();
@@ -342,6 +341,31 @@ public final class InventoryController extends Controller {
                         || (ch == KeyEvent.VK_BACK_SPACE)
                         || (ch == KeyEvent.VK_DELETE)
                         || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                } else if ((ch == '.' && iSellingPrice.getText().contains("."))
+                        || (ch == '.' && iSellingPrice.getText().equals(""))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+        
+        iQtyThreshold.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE))) {
                     tk.beep();
                     e.consume();
                 }
@@ -359,11 +383,67 @@ public final class InventoryController extends Controller {
         iEditUpdateRSP.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (iEditUpdateRSP.getText().equals("Edit")) {
-                    sellingPriceValue = iSellingPrice.getText();
-                    setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, false);
-                } else if (iEditUpdateRSP.getText().equals("Update")) {
-                    setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
+                if(!iAddMotoCode.getText().equals("")) {
+                    if (iEditUpdateRSP.getText().equals("Edit")) {
+                        sellingPriceValue = iSellingPrice.getText();
+                        setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, false);
+                    } else if (iEditUpdateRSP.getText().equals("Update")) {
+                        if(iSellingPrice.getText().equals("") || iUnitCost.getText().equals("") ||
+                                iSellingPrice.getText().split("\\.")[1].length() > 2 || iUnitCost.getText().split("\\.")[1].length() > 2) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "There are empty fields or number format is invalid",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            iSellingPrice.setText(String.valueOf(sellingPriceValue));
+                        } else {
+                            double sellingPrice = Double.parseDouble(iSellingPrice.getText());
+                            double unitPrice = Double.parseDouble(iUnitCost.getText());
+
+                            if(sellingPrice >= unitPrice * 1.30) {
+                                int option = JOptionPane.showConfirmDialog(
+                                        null,
+                                        "Are you sure you want to proceed with the update?",
+                                        "Confirm",
+                                        JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE
+                                );
+                                if(option == JOptionPane.YES_OPTION) {
+                                    int itemID = Integer.parseInt(iItemNumber.getText());
+                                    int updatedRow = model.updateSellingPrice(itemID, sellingPrice);
+                                    if(updatedRow != 0) {
+                                        JOptionPane.showMessageDialog(
+                                                null,
+                                                "Product selling price updated!",
+                                                "Success",
+                                                JOptionPane.INFORMATION_MESSAGE
+                                        );
+                                        setIndexZero();
+                                        setDefaultViews();
+                                        isAddingRows = true;
+                                        populate();
+                                        isAddingRows = false;
+                                    } else {
+                                        JOptionPane.showMessageDialog(
+                                                null,
+                                                "There is an error while updating item selling price.",
+                                                "Error",
+                                                JOptionPane.ERROR_MESSAGE
+                                        );
+                                    }
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        "You must have atleast 30% profit for this item.",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        }
+                        setToDefault(iSellingPrice, iEditUpdateRSP, iCancelRSP, true);
+                    }
                 }
             }
 
@@ -385,15 +465,96 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iEditUpdateRSP);
             }
         });
+        
+        iUnitCost.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE))) {
+                    tk.beep();
+                    e.consume();
+                } else if ((ch == '.' && iUnitCost.getText().contains("."))
+                        || (ch == '.' && iUnitCost.getText().equals(""))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         iEditUpdateUC.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (iEditUpdateUC.getText().equals("Edit")) {
-                    unitCostValue = iUnitCost.getText();
-                    setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, false);
-                } else if (iEditUpdateUC.getText().equals("Update")) {
-                    setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
+                if(!iAddMotoCode.getText().equals("")) {
+                    if (iEditUpdateUC.getText().equals("Edit")) {
+                        unitCostValue = iUnitCost.getText();
+                        setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, false);
+                    } else if (iEditUpdateUC.getText().equals("Update")) {
+                        if(iSellingPrice.getText().equals("") || iUnitCost.getText().equals("") ||
+                                iSellingPrice.getText().split("\\.")[1].length() > 2 || iUnitCost.getText().split("\\.")[1].length() > 2) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "There are empty fields or number format is invalid",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            iUnitCost.setText(String.valueOf(unitCostValue));
+                        } else {
+                            double sellingPrice = Double.parseDouble(iSellingPrice.getText());
+                            double unitPrice = Double.parseDouble(iUnitCost.getText());
+
+                            if(sellingPrice >= unitPrice * 1.30) {
+                                int option = JOptionPane.showConfirmDialog(
+                                        null,
+                                        "Are you sure you want to proceed with the update?",
+                                        "Confirm",
+                                        JOptionPane.YES_NO_OPTION,
+                                        JOptionPane.QUESTION_MESSAGE
+                                );
+                                if(option == JOptionPane.YES_OPTION) {
+                                    int itemID = Integer.parseInt(iItemNumber.getText());
+                                    int updatedRow = model.updateUnitPrice(itemID, unitPrice);
+                                    if(updatedRow != 0) {
+                                        JOptionPane.showMessageDialog(
+                                                null,
+                                                "Product unit price updated!",
+                                                "Success",
+                                                JOptionPane.INFORMATION_MESSAGE
+                                        );
+                                        setIndexZero();
+                                        setDefaultViews();
+                                        isAddingRows = true;
+                                        populate();
+                                        isAddingRows = false;
+                                    } else {
+                                        JOptionPane.showMessageDialog(
+                                                null,
+                                                "There is an error while updating item unit price.",
+                                                "Error",
+                                                JOptionPane.ERROR_MESSAGE
+                                        );
+                                    }
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        "You must have atleast 30% profit for this item.",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                            }
+                        }
+                        setToDefault(iUnitCost, iEditUpdateUC, iCancelUC, true);
+                    }
                 }
             }
 
@@ -415,15 +576,80 @@ public final class InventoryController extends Controller {
                 setBlackForeground(iEditUpdateUC);
             }
         });
+        
+        iQtyThreshold.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
 
         iEditUpdateQT.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (iEditUpdateQT.getText().equals("Edit")) {
-                    qtyThresholdValue = iQtyThreshold.getText();
-                    setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, false);
-                } else if (iEditUpdateQT.getText().equals("Update")) {
-                    setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
+                if(!iAddMotoCode.getText().equals("")) {
+                    if (iEditUpdateQT.getText().equals("Edit")) {
+                        qtyThresholdValue = iQtyThreshold.getText();
+                        setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, false);
+                    } else if (iEditUpdateQT.getText().equals("Update")) {
+                        if(iQtyThreshold.getText().equals("")) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "There are empty fields or number format is invalid",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                            iQtyThreshold.setText(String.valueOf(qtyThresholdValue));
+                        } else {
+                            int threshold = Integer.parseInt(iQtyThreshold.getText());
+                            int option = JOptionPane.showConfirmDialog(
+                                    null,
+                                    "Are you sure you want to proceed with the update?",
+                                    "Confirm",
+                                    JOptionPane.YES_NO_OPTION,
+                                    JOptionPane.QUESTION_MESSAGE
+                            );
+                            if (option == JOptionPane.YES_OPTION) {
+                                int itemID = Integer.parseInt(iItemNumber.getText());
+                                int updatedRow = model.updateThreshold(itemID, threshold);
+                                if (updatedRow != 0) {
+                                    JOptionPane.showMessageDialog(
+                                            null,
+                                            "Product threshold count updated!",
+                                            "Success",
+                                            JOptionPane.INFORMATION_MESSAGE
+                                    );
+                                    setIndexZero();
+                                    setDefaultViews();
+                                    isAddingRows = true;
+                                    populate();
+                                    isAddingRows = false;
+                                } else {
+                                    JOptionPane.showMessageDialog(
+                                            null,
+                                            "There is an error while updating item threshold count.",
+                                            "Error",
+                                            JOptionPane.ERROR_MESSAGE
+                                    );
+                                }
+                            }
+                        }
+                        setToDefault(iQtyThreshold, iEditUpdateQT, iCancelQT, true);
+                    }
                 }
             }
 
@@ -535,6 +761,92 @@ public final class InventoryController extends Controller {
                 iProductsTable.scrollRowToVisible(row);
                 showProductDetails(ID);
             }
+        });
+        
+        iSellingPriceText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE)
+                        || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                } else if ((ch == '.' && iSellingPriceText.getText().contains("."))
+                        || (ch == '.' && iSellingPriceText.getText().equals(""))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+        
+        iUnitPriceText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE)
+                        || (ch == '.'))) {
+                    tk.beep();
+                    e.consume();
+                } else if ((ch == '.' && iUnitPriceText.getText().contains("."))
+                        || (ch == '.' && iUnitPriceText.getText().equals(""))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+        
+        iQtyText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
+        });
+        
+        iThresholdText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char ch = e.getKeyChar();
+                if (!((ch >= '0') && (ch <= '9')
+                        || (ch == KeyEvent.VK_BACK_SPACE)
+                        || (ch == KeyEvent.VK_DELETE))) {
+                    tk.beep();
+                    e.consume();
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {}
+
+            @Override
+            public void keyReleased(KeyEvent e) {}
         });
 
         iAddNew.addActionListener((ActionEvent e) -> {

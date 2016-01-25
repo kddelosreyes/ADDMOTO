@@ -158,4 +158,49 @@ public class InventoryModel {
         }
         return 0;
     }
+    
+    public int updateSellingPrice(int itemID, double sellingPrice) {
+        try {
+            query = "UPDATE " + Database.PRODUCTS_TABLE + " SET " + Database.PRODUCT_SELLING_PRICE +
+                    " = ? WHERE " + Database.PRODUCT_ID + " = ?;";
+            
+            preparedStatement = connection.prepareCall(query);
+            preparedStatement.setDouble(1, sellingPrice);
+            preparedStatement.setInt(2, itemID);
+            
+            return preparedStatement.executeUpdate();
+        } catch(Exception exc) {
+            return 0;
+        }
+    }
+    
+    public int updateUnitPrice(int itemID, double unitPrice) {
+        try {
+            query = "UPDATE " + Database.PRODUCTS_TABLE + " SET " + Database.PRODUCT_UNIT_PRICE +
+                    " = ? WHERE " + Database.PRODUCT_ID + " = ?;";
+            
+            preparedStatement = connection.prepareCall(query);
+            preparedStatement.setDouble(1, unitPrice);
+            preparedStatement.setInt(2, itemID);
+            
+            return preparedStatement.executeUpdate();
+        } catch(Exception exc) {
+            return 0;
+        }
+    }
+    
+    public int updateThreshold(int itemID, int threshold) {
+        try {
+            query = "UPDATE " + Database.PRODUCTS_TABLE + " SET " + Database.PRODUCT_THRESHOLD_COUNT +
+                    " = ? WHERE " + Database.PRODUCT_ID + " = ?;";
+            
+            preparedStatement = connection.prepareCall(query);
+            preparedStatement.setDouble(1, threshold);
+            preparedStatement.setInt(2, itemID);
+            
+            return preparedStatement.executeUpdate();
+        } catch(Exception exc) {
+            return 0;
+        }
+    }
 }

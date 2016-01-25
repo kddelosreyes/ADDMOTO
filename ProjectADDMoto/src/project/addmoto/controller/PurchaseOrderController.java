@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -19,7 +20,10 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXSearchField;
+import project.addmoto.data.InventoryChange;
+import project.addmoto.data.OrderLine;
 import project.addmoto.data.OrderLineData;
+import project.addmoto.data.Products;
 import project.addmoto.data.SellerAccount;
 import project.addmoto.model.PurchaseOrderModel;
 import project.addmoto.mvc.Controller;
@@ -47,6 +51,7 @@ public final class PurchaseOrderController extends Controller {
     private final DefaultTableModel tableModel;
     
     private int selectedRow;
+    private int selectedPON;
     
     private ArrayList<OrderLineData> orderLineList;
     private OrderLineData selectedOrder;
@@ -112,14 +117,128 @@ public final class PurchaseOrderController extends Controller {
         poTogglePaid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(poTogglePaid, "Toggle Paid on Row: " + selectedRow);
+                if(((String)tableModel.getValueAt(selectedRow, 6)).equalsIgnoreCase("YES")) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Purchase Order is already paid. Cannot toggle payment.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else {
+                    int option = JOptionPane.showConfirmDialog(
+                            null,
+                            "Are you sure you want to toggle payment as paid?",
+                            "Confirm",
+                            JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE
+                    );
+                    if(option == JOptionPane.YES_OPTION) {
+                        int row = model.updatePaid(selectedPON, true);
+                        if(row == 0) {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "There is a problem while toggling purchase order payment.",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE
+                            );
+                        } else {
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    "Purchase Order now set as PAID",
+                                    "Success",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                            populate();
+                        }
+                    }
+                }
             }
         });
 
         poReceiveProducts.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(poTogglePaid, "Receive Products on Row: " + selectedRow);
+                if(((String)tableModel.getValueAt(selectedRow, 7)).equalsIgnoreCase("RECEIVED")) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Purchase Order is already received. Cannot toggle receiving.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                } else {
+                    if(((String)tableModel.getValueAt(selectedRow, 6)).equalsIgnoreCase("NO")) {
+                            JOptionPane.showMessageDialog(
+                                null,
+                                "Pay first Purchase Order before receiving.",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    } else {
+                        int option = JOptionPane.showConfirmDialog(
+                                null,
+                                "Are you sure you want to toggle status as received?",
+                                "Confirm",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE
+                        );
+                        if(option == JOptionPane.YES_OPTION) {
+                            int row = model.updateReceived(selectedPON, "RECEIVED");
+                            if(row == 0) {
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        "There is a problem while toggling purchase order receive.",
+                                        "Error",
+                                        JOptionPane.ERROR_MESSAGE
+                                );
+                            } else {
+                                JOptionPane.showMessageDialog(
+                                        null,
+                                        "Purchase Order now set as RECEIVED",
+                                        "Success",
+                                        JOptionPane.INFORMATION_MESSAGE
+                                );
+                                
+                                ArrayList<OrderLine> oLine = model.getOrderProducts(selectedPON);
+                                ArrayList<InventoryChange> iChange = new ArrayList<>();
+
+                                String currDate = Formatter.formatDate(new Date());
+
+                                for(OrderLine o : oLine) {
+                                    Products p = model.getProduct(o.getProductID());
+                                    int currQty = p.getCurrentQuantity();
+                                    int change = o.getOrderQuantity();
+                                    iChange.add(
+                                            new InventoryChange(
+                                                    currDate,
+                                                    currQty,
+                                                    currQty + change,
+                                                    change,
+                                                    o.getProductID()
+                                            )
+                                    );
+                                }
+                                System.out.println(iChange);
+                                int rowCount = model.insertChangeItems(iChange);
+                                if(rowCount == oLine.size()) {
+                                    JOptionPane.showMessageDialog(
+                                            null,
+                                            "Inventory logs updated due to product item quantity changes.",
+                                            "Success",
+                                            JOptionPane.INFORMATION_MESSAGE
+                                    );
+                                } else {
+                                    JOptionPane.showMessageDialog(
+                                            null,
+                                            "There is some kind of error.",
+                                            "Error",
+                                            JOptionPane.INFORMATION_MESSAGE
+                                    );
+                                }
+                                populate();
+                            }
+                        }
+                    }
+                }
             }
         });
 
@@ -136,6 +255,7 @@ public final class PurchaseOrderController extends Controller {
                 if(SwingUtilities.isRightMouseButton(e)) {
                     int row = poTable.rowAtPoint(e.getPoint());
                     selectedRow = row;
+                    selectedPON = (int) tableModel.getValueAt(row, 0);
                     
                     selectedOrder = new OrderLineData(
                             (int) tableModel.getValueAt(row, 0),

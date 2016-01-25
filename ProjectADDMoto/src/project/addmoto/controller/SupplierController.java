@@ -2,13 +2,16 @@ package project.addmoto.controller;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import project.addmoto.data.Supplier;
 import project.addmoto.data.SupplierSummary;
 import project.addmoto.datacollections.SupplierSummaryList;
 import project.addmoto.model.SupplierModel;
@@ -37,6 +40,7 @@ public final class SupplierController extends Controller {
     private final JLabel sEdit;
     private final JLabel sManageContacts;
     private final JLabel sProducts;
+    private final JButton newSupplier;
     
     private SupplierSummary selectedSupplier = null;
     
@@ -59,6 +63,7 @@ public final class SupplierController extends Controller {
         sProducts = view.getsProducts();
         supplierPane = view.getsSupplierPane();
         supplierPane.getVerticalScrollBar().setUnitIncrement(20);
+        newSupplier = view.getNewSupplier();
         
         addSuppliersToPane();
         
@@ -66,7 +71,11 @@ public final class SupplierController extends Controller {
     }
 
     @Override
-    public void setListeners() {        
+    public void setListeners() {
+        newSupplier.addActionListener((ActionEvent e) -> {
+            new AddEditSupplierController(connection, true, null);
+        });
+        
         sView.addMouseListener(new MouseListener() {
             
             @Override
@@ -96,13 +105,20 @@ public final class SupplierController extends Controller {
         });
         
         sEdit.addMouseListener(new MouseListener() {
-            
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 if(selectedSupplier == null) {
                     showSupplierError();
                 } else {
-                    JOptionPane.showMessageDialog(view, "Edit is selected " + selectedSupplier.getSupplierID());
+                    Supplier supplier = new Supplier(
+                            selectedSupplier.getSupplierID(),
+                            selectedSupplier.getSupplierName(),
+                            selectedSupplier.getSupplierCity(),
+                            selectedSupplier.getSupplierCountry(),
+                            selectedSupplier.getSupplierAddress(),
+                            selectedSupplier.getSupplierPostal()
+                    );
+                    new AddEditSupplierController(connection, false, supplier);
                 }
             }
             
