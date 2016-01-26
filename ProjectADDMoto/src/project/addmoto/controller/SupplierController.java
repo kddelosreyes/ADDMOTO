@@ -74,6 +74,9 @@ public final class SupplierController extends Controller {
     public void setListeners() {
         newSupplier.addActionListener((ActionEvent e) -> {
             new AddEditSupplierController(connection, true, null);
+            supplierPane.setViewportView(null);
+            addSuppliersToPane();
+            default_();
         });
         
         sView.addMouseListener(new MouseListener() {
@@ -119,6 +122,9 @@ public final class SupplierController extends Controller {
                             selectedSupplier.getSupplierPostal()
                     );
                     new AddEditSupplierController(connection, false, supplier);
+                    supplierPane.setViewportView(null);
+                    addSuppliersToPane();
+                    default_();
                 }
             }
             
@@ -194,6 +200,15 @@ public final class SupplierController extends Controller {
             @Override
             public void mouseReleased(MouseEvent e) {}
         });
+    }
+    
+    private void default_() {
+        sCompanyName.setText(" ");
+        sContactName.setText(" ");
+        sContactNo.setText(" ");
+        sContactTitle.setText(" ");
+        sAddress.setText(" ");
+        sCityCountry.setText(" ");
     }
     
     private void addSuppliersToPane() {

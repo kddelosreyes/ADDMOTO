@@ -44,7 +44,7 @@ public class DashboardModel {
     
     public double getTotalAmountToday() {
         try {
-            query = "SELECT SUM(" + Database.RECEIPT_TOTAL_PRICE + ") FROM " + Database.RECEIPTS_TABLE +
+            query = "SELECT IFNULL(SUM(" + Database.RECEIPT_TOTAL_PRICE + "), 0) FROM " + Database.RECEIPTS_TABLE +
                     " WHERE STR_TO_DATE(" + Database.RECEIPT_TRANSACTION_TIMESTAMP + ", '%b %d, %Y') = CURDATE()" +
                     " GROUP BY STR_TO_DATE(" + Database.RECEIPT_TRANSACTION_TIMESTAMP + ", '%b %d, %Y');";
             
@@ -61,7 +61,7 @@ public class DashboardModel {
     
     public double getAmountAverageToday() {
         try {
-            query = "SELECT AVG(" + Database.RECEIPT_TOTAL_PRICE + ") FROM " + Database.RECEIPTS_TABLE +
+            query = "SELECT IFNULL(AVG(" + Database.RECEIPT_TOTAL_PRICE + "),0) FROM " + Database.RECEIPTS_TABLE +
                     " WHERE STR_TO_DATE(" + Database.RECEIPT_TRANSACTION_TIMESTAMP + ", '%b %d, %Y') = CURDATE()" +
                     " GROUP BY STR_TO_DATE(" + Database.RECEIPT_TRANSACTION_TIMESTAMP + ", '%b %d, %Y');";
             
@@ -78,8 +78,8 @@ public class DashboardModel {
     
     public double getGoodCostToday() {
         try {
-            query = "SELECT SUM(S." + Database.SOLD_ITEM_TOTAL_PRICE + " - S." + Database.SOLD_ITEM_TOTAL_PROFIT +
-                    ") FROM " + Database.RECEIPTS_TABLE + " R JOIN " + Database.SOLD_ITEMS_TABLE + " S " +
+            query = "SELECT IFNULL(SUM(S." + Database.SOLD_ITEM_TOTAL_PRICE + " - S." + Database.SOLD_ITEM_TOTAL_PROFIT +
+                    "),0) FROM " + Database.RECEIPTS_TABLE + " R JOIN " + Database.SOLD_ITEMS_TABLE + " S " +
                     " WHERE R." + Database.RECEIPT_ID + " = S." + Database.RECEIPT_ID_FK + 
                     " AND STR_TO_DATE(R." + Database.RECEIPT_TRANSACTION_TIMESTAMP + ", '%b %d, %Y') = CURDATE()" +
                     " GROUP BY STR_TO_DATE(R." + Database.RECEIPT_TRANSACTION_TIMESTAMP + ", '%b %d, %Y');";

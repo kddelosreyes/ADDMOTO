@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -27,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXSearchField;
 import org.jdesktop.swingx.JXTable;
 import project.addmoto.controller.DashboardController;
+import project.addmoto.controller.ExpenseController;
 import project.addmoto.controller.InventoryController;
 import project.addmoto.controller.POSController;
 import project.addmoto.controller.PurchaseOrderController;
@@ -49,6 +51,7 @@ public class App extends javax.swing.JFrame {
     private InventoryController inventoryController;
     private SupplierController supplierController;
     private PurchaseOrderController purchaseOrderController;
+    private ExpenseController expenseController;
     
     private final Connection connection;
     
@@ -91,6 +94,7 @@ public class App extends javax.swing.JFrame {
         inventoryController = new InventoryController(this, connection);
         supplierController = new SupplierController(this, connection);
         purchaseOrderController = new PurchaseOrderController(this, connection, sellerAccount);
+        expenseController = new ExpenseController(this, connection, sellerAccount);
         
         appSellerName.setText("Hi, " + sellerAccount.getFirstName() + " " + sellerAccount.getLastName());
         appLogout.addMouseListener(new MouseListener() {
@@ -433,32 +437,32 @@ public class App extends javax.swing.JFrame {
         jPanel34 = new javax.swing.JPanel();
         jLabel73 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jLabel87 = new javax.swing.JLabel();
+        eMonthlyTable = new javax.swing.JTable();
+        eMonthlyTotal = new javax.swing.JLabel();
         jLabel74 = new javax.swing.JLabel();
         jPanel35 = new javax.swing.JPanel();
         jLabel76 = new javax.swing.JLabel();
-        jLabel77 = new javax.swing.JLabel();
+        eTodayTotal = new javax.swing.JLabel();
         jLabel78 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        eTodayTable = new javax.swing.JTable();
         jPanel36 = new javax.swing.JPanel();
         jLabel79 = new javax.swing.JLabel();
-        jPanel37 = new javax.swing.JPanel();
+        eExpensePanel = new javax.swing.JPanel();
         jPanel38 = new javax.swing.JPanel();
         jLabel80 = new javax.swing.JLabel();
         jLabel81 = new javax.swing.JLabel();
-        jLabel82 = new javax.swing.JLabel();
+        eAverageMonthly = new javax.swing.JLabel();
         jLabel83 = new javax.swing.JLabel();
-        jLabel84 = new javax.swing.JLabel();
+        eHighestMonthly = new javax.swing.JLabel();
         jLabel85 = new javax.swing.JLabel();
-        jLabel86 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        eLowestMonthly = new javax.swing.JLabel();
+        eAverageLabel = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
+        eHighestLabel = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
-        jLabel17 = new javax.swing.JLabel();
-        poCreate2 = new javax.swing.JButton();
+        eLowestLabel = new javax.swing.JLabel();
+        eAdd = new javax.swing.JButton();
         returnsPanel = new javax.swing.JPanel();
         jLabel70 = new javax.swing.JLabel();
         reportsPanel = new javax.swing.JPanel();
@@ -1560,8 +1564,6 @@ public class App extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jScrollPane4.setBorder(null);
-
         iProductName.setEditable(false);
         iProductName.setBackground(new java.awt.Color(240, 240, 240));
         iProductName.setColumns(20);
@@ -1570,7 +1572,6 @@ public class App extends javax.swing.JFrame {
         iProductName.setRows(2);
         iProductName.setText("Hello world! Hello world! Hello world! Hello world!");
         iProductName.setWrapStyleWord(true);
-        iProductName.setBorder(null);
         jScrollPane4.setViewportView(iProductName);
 
         jLabel55.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1660,7 +1661,6 @@ public class App extends javax.swing.JFrame {
 
         iSellingPrice.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         iSellingPrice.setText("10");
-        iSellingPrice.setBorder(null);
         iSellingPrice.setEnabled(false);
         iSellingPrice.setOpaque(false);
 
@@ -1707,13 +1707,11 @@ public class App extends javax.swing.JFrame {
 
         iUnitCost.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         iUnitCost.setText("10");
-        iUnitCost.setBorder(null);
         iUnitCost.setEnabled(false);
         iUnitCost.setOpaque(false);
 
         iThreshold.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
         iThreshold.setText("10");
-        iThreshold.setBorder(null);
         iThreshold.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         iThreshold.setEnabled(false);
         iThreshold.setOpaque(false);
@@ -2400,23 +2398,43 @@ public class App extends javax.swing.JFrame {
         jLabel73.setText("   This Month's Expenses");
         jLabel73.setOpaque(true);
 
-        jTable2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        eMonthlyTable.setAutoCreateRowSorter(true);
+        eMonthlyTable.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        eMonthlyTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Date", "Reason", "Amount", "ID"
             }
-        ));
-        jTable2.setRowHeight(22);
-        jTable2.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable2.getTableHeader().setResizingAllowed(false);
-        jTable2.getTableHeader().setReorderingAllowed(false);
-        jScrollPane7.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
-        jLabel87.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel87.setText("PhP 10,000.00");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        eMonthlyTable.setRowHeight(24);
+        eMonthlyTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        eMonthlyTable.getTableHeader().setResizingAllowed(false);
+        eMonthlyTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane7.setViewportView(eMonthlyTable);
+        if (eMonthlyTable.getColumnModel().getColumnCount() > 0) {
+            eMonthlyTable.getColumnModel().getColumn(1).setMinWidth(100);
+            eMonthlyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
+            eMonthlyTable.getColumnModel().getColumn(1).setMaxWidth(100);
+            eMonthlyTable.getColumnModel().getColumn(2).setMinWidth(80);
+            eMonthlyTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+            eMonthlyTable.getColumnModel().getColumn(2).setMaxWidth(80);
+            eMonthlyTable.getColumnModel().getColumn(3).setMinWidth(0);
+            eMonthlyTable.getColumnModel().getColumn(3).setPreferredWidth(0);
+            eMonthlyTable.getColumnModel().getColumn(3).setMaxWidth(0);
+        }
+
+        eMonthlyTotal.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        eMonthlyTotal.setText("PhP 10,000.00");
 
         jLabel74.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel74.setForeground(new java.awt.Color(102, 102, 102));
@@ -2434,7 +2452,7 @@ public class App extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel34Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel34Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel87, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(eMonthlyTotal, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel74, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
@@ -2447,7 +2465,7 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel74)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel87)
+                .addComponent(eMonthlyTotal)
                 .addContainerGap())
         );
 
@@ -2459,28 +2477,48 @@ public class App extends javax.swing.JFrame {
         jLabel76.setText("   Today's Expenses");
         jLabel76.setOpaque(true);
 
-        jLabel77.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel77.setText("PhP 10,000.00");
-        jLabel77.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        eTodayTotal.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        eTodayTotal.setText("PhP 10,000.00");
+        eTodayTotal.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         jLabel78.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel78.setText("Total:");
         jLabel78.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        jTable4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        eTodayTable.setAutoCreateRowSorter(true);
+        eTodayTable.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        eTodayTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Reason", "Detail", "Amount", "ID"
             }
-        ));
-        jTable4.setRowHeight(22);
-        jTable4.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable4.getTableHeader().setResizingAllowed(false);
-        jTable4.getTableHeader().setReorderingAllowed(false);
-        jScrollPane9.setViewportView(jTable4);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        eTodayTable.setRowHeight(24);
+        eTodayTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        eTodayTable.getTableHeader().setResizingAllowed(false);
+        eTodayTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane9.setViewportView(eTodayTable);
+        if (eTodayTable.getColumnModel().getColumnCount() > 0) {
+            eTodayTable.getColumnModel().getColumn(0).setMinWidth(100);
+            eTodayTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            eTodayTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            eTodayTable.getColumnModel().getColumn(2).setMinWidth(80);
+            eTodayTable.getColumnModel().getColumn(2).setPreferredWidth(80);
+            eTodayTable.getColumnModel().getColumn(2).setMaxWidth(80);
+            eTodayTable.getColumnModel().getColumn(3).setMinWidth(0);
+            eTodayTable.getColumnModel().getColumn(3).setPreferredWidth(0);
+            eTodayTable.getColumnModel().getColumn(3).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel35Layout = new javax.swing.GroupLayout(jPanel35);
         jPanel35.setLayout(jPanel35Layout);
@@ -2494,7 +2532,7 @@ public class App extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel78)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel77))
+                        .addComponent(eTodayTotal))
                     .addComponent(jScrollPane9))
                 .addContainerGap())
         );
@@ -2506,7 +2544,7 @@ public class App extends javax.swing.JFrame {
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addGroup(jPanel35Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel77)
+                    .addComponent(eTodayTotal)
                     .addComponent(jLabel78, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -2519,17 +2557,17 @@ public class App extends javax.swing.JFrame {
         jLabel79.setText("   Monthly Expense Statistics and Comparison");
         jLabel79.setOpaque(true);
 
-        jPanel37.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel37.setToolTipText("Graph here");
+        eExpensePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        eExpensePanel.setToolTipText("Graph here");
 
-        javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
-        jPanel37.setLayout(jPanel37Layout);
-        jPanel37Layout.setHorizontalGroup(
-            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout eExpensePanelLayout = new javax.swing.GroupLayout(eExpensePanel);
+        eExpensePanel.setLayout(eExpensePanelLayout);
+        eExpensePanelLayout.setHorizontalGroup(
+            eExpensePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
-        jPanel37Layout.setVerticalGroup(
-            jPanel37Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        eExpensePanelLayout.setVerticalGroup(
+            eExpensePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -2540,7 +2578,7 @@ public class App extends javax.swing.JFrame {
             .addComponent(jLabel79, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel36Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(eExpensePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel36Layout.setVerticalGroup(
@@ -2548,7 +2586,7 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel36Layout.createSequentialGroup()
                 .addComponent(jLabel79, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel37, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(eExpensePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2563,26 +2601,26 @@ public class App extends javax.swing.JFrame {
         jLabel81.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel81.setText("Average Monthly Expense:");
 
-        jLabel82.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel82.setText("PhP 1,000.00");
+        eAverageMonthly.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        eAverageMonthly.setText("PhP 1,000.00");
 
         jLabel83.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel83.setText("Highest Monthly Expense:");
 
-        jLabel84.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel84.setText("PhP 1,000.00");
+        eHighestMonthly.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        eHighestMonthly.setText("PhP 1,000.00");
 
         jLabel85.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel85.setText("Lowest Monthly Expense:");
 
-        jLabel86.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel86.setText("PhP 1,000.00");
+        eLowestMonthly.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        eLowestMonthly.setText("PhP 1,000.00");
 
-        jLabel6.setText("Month");
+        eAverageLabel.setText("Month");
 
-        jLabel9.setText("Month");
+        eHighestLabel.setText("Month");
 
-        jLabel17.setText("Month");
+        eLowestLabel.setText("Month");
 
         javax.swing.GroupLayout jPanel38Layout = new javax.swing.GroupLayout(jPanel38);
         jPanel38.setLayout(jPanel38Layout);
@@ -2597,14 +2635,14 @@ public class App extends javax.swing.JFrame {
                     .addGroup(jPanel38Layout.createSequentialGroup()
                         .addGroup(jPanel38Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel81)
-                            .addComponent(jLabel82)
+                            .addComponent(eAverageMonthly)
                             .addComponent(jLabel83)
-                            .addComponent(jLabel84)
+                            .addComponent(eHighestMonthly)
                             .addComponent(jLabel85)
-                            .addComponent(jLabel86)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel17))
+                            .addComponent(eLowestMonthly)
+                            .addComponent(eAverageLabel)
+                            .addComponent(eHighestLabel)
+                            .addComponent(eLowestLabel))
                         .addGap(0, 78, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -2615,32 +2653,32 @@ public class App extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel81)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel82)
+                .addComponent(eAverageMonthly)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
+                .addComponent(eAverageLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel83)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel84)
+                .addComponent(eHighestMonthly)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+                .addComponent(eHighestLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel85)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel86)
+                .addComponent(eLowestMonthly)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17)
+                .addComponent(eLowestLabel)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        poCreate2.setBackground(new java.awt.Color(0, 255, 102));
-        poCreate2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        poCreate2.setMnemonic('C');
-        poCreate2.setText("Add Expense");
+        eAdd.setBackground(new java.awt.Color(0, 255, 102));
+        eAdd.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        eAdd.setMnemonic('C');
+        eAdd.setText("Add Expense");
 
         javax.swing.GroupLayout expensesPanelLayout = new javax.swing.GroupLayout(expensesPanel);
         expensesPanel.setLayout(expensesPanelLayout);
@@ -2652,7 +2690,7 @@ public class App extends javax.swing.JFrame {
                     .addGroup(expensesPanelLayout.createSequentialGroup()
                         .addComponent(jLabel69)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(poCreate2))
+                        .addComponent(eAdd))
                     .addGroup(expensesPanelLayout.createSequentialGroup()
                         .addComponent(jPanel34, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2669,7 +2707,7 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(expensesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel69)
-                    .addComponent(poCreate2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(expensesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2922,9 +2960,9 @@ public class App extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -2953,6 +2991,18 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel dTotalOrdersAmount;
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JLabel description;
+    private javax.swing.JButton eAdd;
+    private javax.swing.JLabel eAverageLabel;
+    private javax.swing.JLabel eAverageMonthly;
+    private javax.swing.JPanel eExpensePanel;
+    private javax.swing.JLabel eHighestLabel;
+    private javax.swing.JLabel eHighestMonthly;
+    private javax.swing.JLabel eLowestLabel;
+    private javax.swing.JLabel eLowestMonthly;
+    private javax.swing.JTable eMonthlyTable;
+    private javax.swing.JLabel eMonthlyTotal;
+    private javax.swing.JTable eTodayTable;
+    private javax.swing.JLabel eTodayTotal;
     private javax.swing.JPanel expensesPanel;
     private javax.swing.JLabel iAddMotoCode;
     private javax.swing.JButton iAddNew;
@@ -2989,7 +3039,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -3034,7 +3083,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel59;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -3053,19 +3101,13 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel74;
     private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel76;
-    private javax.swing.JLabel jLabel77;
     private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel81;
-    private javax.swing.JLabel jLabel82;
     private javax.swing.JLabel jLabel83;
-    private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel85;
-    private javax.swing.JLabel jLabel86;
-    private javax.swing.JLabel jLabel87;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -3096,7 +3138,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel34;
     private javax.swing.JPanel jPanel35;
     private javax.swing.JPanel jPanel36;
-    private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel38;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel40;
@@ -3125,13 +3166,10 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable4;
     private org.jdesktop.swingx.JXImageView jXImageView1;
     private javax.swing.JButton newSupplier;
     private javax.swing.JButton poCreate;
     private javax.swing.JButton poCreate1;
-    private javax.swing.JButton poCreate2;
     private javax.swing.JPopupMenu poPopup;
     private javax.swing.JMenuItem poReceiveProducts;
     private org.jdesktop.swingx.JXSearchField poSearch;
@@ -3497,5 +3535,59 @@ public class App extends javax.swing.JFrame {
     }
     /*
     End of PO Components
+    */
+    
+    /*
+    Start of Expense Components
+    */
+    public JButton geteAdd() {
+        return eAdd;
+    }
+
+    public JLabel geteAverageLabel() {
+        return eAverageLabel;
+    }
+
+    public JLabel geteAverageMonthly() {
+        return eAverageMonthly;
+    }
+
+    public JLabel geteHighestLabel() {
+        return eHighestLabel;
+    }
+
+    public JLabel geteHighestMonthly() {
+        return eHighestMonthly;
+    }
+
+    public JLabel geteLowestLabel() {
+        return eLowestLabel;
+    }
+
+    public JLabel geteLowestMonthly() {
+        return eLowestMonthly;
+    }
+
+    public JTable geteMonthlyTable() {
+        return eMonthlyTable;
+    }
+
+    public JLabel geteMonthlyTotal() {
+        return eMonthlyTotal;
+    }
+
+    public JTable geteTodayTable() {
+        return eTodayTable;
+    }
+
+    public JLabel geteTodayTotal() {
+        return eTodayTotal;
+    }
+    
+    public JPanel geteExpensePanel() {
+        return eExpensePanel;
+    }
+    /*
+    End of Expense Components
     */
 }

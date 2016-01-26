@@ -18,7 +18,7 @@ public class TimerUtilities {
         ActionListener timerListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 Date date = new Date();
-                timeLabel.setText(Formatter.formatDate(date));
+                timeLabel.setText(Formatter.formatDate2(date));
             }
         };
         

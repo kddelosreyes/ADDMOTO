@@ -356,8 +356,8 @@
                     <StringItem index="100" value="Haiti (HT)"/>
                     <StringItem index="101" value="Heard &amp; McDonald Is. (HM)"/>
                     <StringItem index="102" value="Holy See (VA)"/>
-                    <StringItem index="103" value="Honduras (HN"/>
-                    <StringItem index="104" value="Hong Kong, (HK)"/>
+                    <StringItem index="103" value="Honduras (HN)"/>
+                    <StringItem index="104" value="Hong Kong (HK)"/>
                     <StringItem index="105" value="Hungary (HU)"/>
                     <StringItem index="106" value="Iceland (IS)"/>
                     <StringItem index="107" value="India (IN)"/>
@@ -375,8 +375,8 @@
                     <StringItem index="119" value="Kazakhstan (KZ)"/>
                     <StringItem index="120" value="Kenya (KE)"/>
                     <StringItem index="121" value="Kiribati (KI)"/>
-                    <StringItem index="122" value="Korea Dem. People&apos;s Rep. (KP)"/>
-                    <StringItem index="123" value="Korea, (South) Republic of (KR)"/>
+                    <StringItem index="122" value="North Korea (KP)"/>
+                    <StringItem index="123" value="South Korea (KR)"/>
                     <StringItem index="124" value="Kosovo (KV)"/>
                     <StringItem index="125" value="Kuwait (KW)"/>
                     <StringItem index="126" value="Kyrgyzstan (KG)"/>
@@ -389,7 +389,7 @@
                     <StringItem index="133" value="Liechtenstein (LI)"/>
                     <StringItem index="134" value="Lithuania (LT)"/>
                     <StringItem index="135" value="Luxembourg (LU)"/>
-                    <StringItem index="136" value="Macao, (China) (MO)"/>
+                    <StringItem index="136" value="Macao (MO)"/>
                     <StringItem index="137" value="Macedonia, TFYR (MK)"/>
                     <StringItem index="138" value="Madagascar (MG)"/>
                     <StringItem index="139" value="Malawi (MW)"/>
@@ -412,7 +412,7 @@
                     <StringItem index="156" value="Montserrat (MS)"/>
                     <StringItem index="157" value="Morocco (MA)"/>
                     <StringItem index="158" value="Mozambique (MZ)"/>
-                    <StringItem index="159" value="Myanmar (ex-Burma) (MM)"/>
+                    <StringItem index="159" value="Myanmar (MM)"/>
                     <StringItem index="160" value="Namibia (NA)"/>
                     <StringItem index="161" value="Nauru (NR)"/>
                     <StringItem index="162" value="Nepal (NP)"/>
@@ -441,17 +441,17 @@
                     <StringItem index="185" value="Portugal (PT)"/>
                     <StringItem index="186" value="Puerto Rico (PR)"/>
                     <StringItem index="187" value="Qatar (QA)"/>
-                    <StringItem index="188" value="Reunion (FR) (RE)"/>
+                    <StringItem index="188" value="Reunion (RE)"/>
                     <StringItem index="189" value="Romania (RO)"/>
-                    <StringItem index="190" value="Russia (Russian Fed.) (RU)"/>
+                    <StringItem index="190" value="Russia (RU)"/>
                     <StringItem index="191" value="Rwanda (RW)"/>
                     <StringItem index="192" value="Sahara, Western (EH)"/>
                     <StringItem index="193" value="Saint Barthelemy (FR) (BL)"/>
-                    <StringItem index="194" value="Saint Helena (UK) (SH)"/>
+                    <StringItem index="194" value="Saint Helena (SH)"/>
                     <StringItem index="195" value="Saint Kitts and Nevis (KN)"/>
                     <StringItem index="196" value="Saint Lucia (LC)"/>
-                    <StringItem index="197" value="Saint Martin (FR) (MF)"/>
-                    <StringItem index="198" value="S Pierre &amp; Miquelon(FR) (PM)"/>
+                    <StringItem index="197" value="Saint Martin (MF)"/>
+                    <StringItem index="198" value="S Pierre &amp; Miquelon (PM)"/>
                     <StringItem index="199" value="S Vincent &amp; Grenadines (VC)"/>
                     <StringItem index="200" value="Samoa (WS)"/>
                     <StringItem index="201" value="San Marino (SM)"/>
@@ -470,7 +470,7 @@
                     <StringItem index="214" value="S.George &amp; S.Sandwich (GS)"/>
                     <StringItem index="215" value="South Sudan (SS)"/>
                     <StringItem index="216" value="Spain (ES)"/>
-                    <StringItem index="217" value="Sri Lanka (ex-Ceilan) (LK)"/>
+                    <StringItem index="217" value="Sri Lanka (LK)"/>
                     <StringItem index="218" value="Sudan (SD)"/>
                     <StringItem index="219" value="Suriname (SR)"/>
                     <StringItem index="220" value="Svalbard &amp; Jan Mayen Is. (SJ)"/>
@@ -500,7 +500,7 @@
                     <StringItem index="244" value="Uruguay (UY)"/>
                     <StringItem index="245" value="Uzbekistan (UZ)"/>
                     <StringItem index="246" value="Vanuatu (VU)"/>
-                    <StringItem index="247" value="Vatican (Holy See) (VA)"/>
+                    <StringItem index="247" value="Vatican (VA)"/>
                     <StringItem index="248" value="Venezuela (VE)"/>
                     <StringItem index="249" value="Viet Nam (VN)"/>
                     <StringItem index="250" value="Virgin Islands, British (VG)"/>

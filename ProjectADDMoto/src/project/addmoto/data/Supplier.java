@@ -18,6 +18,15 @@ public class Supplier {
         this.supplierName = supplierName;
     }
     
+    public Supplier(String supplierName, String supplierCity, String supplierCountry,
+            String supplierAddress, int supplierPostal) {
+        this.supplierName = supplierName;
+        this.supplierCity = supplierCity;
+        this.supplierCountry = supplierCountry;
+        this.supplierAddress = supplierAddress;
+        this.supplierPostal = supplierPostal;
+    }
+    
     public Supplier(int supplierID, String supplierName, String supplierCity,
             String supplierCountry, String supplierAddress, int supplierPostal) {
         this.supplierID = supplierID;

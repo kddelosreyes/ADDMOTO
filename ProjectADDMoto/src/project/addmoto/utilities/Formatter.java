@@ -11,7 +11,8 @@ import java.util.Date;
 public class Formatter {
     
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.00");
-    private static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd, yyyy, HH:mm:ss");
+    public static SimpleDateFormat dateTimeFormat = new SimpleDateFormat("MMM dd, yyyy, HH:mm:ss");
+    private static SimpleDateFormat dateTimeFormat2 = new SimpleDateFormat("MMM dd, yyyy, hh:mm:ss a");
     private static SimpleDateFormat dFormat = new SimpleDateFormat("yyyy MM dd HH mm ss");
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
     
@@ -25,6 +26,9 @@ public class Formatter {
     
     public static String formatDate(Date date) {
         return dateTimeFormat.format(date);
+    }
+    public static String formatDate2(Date date) {
+        return dateTimeFormat2.format(date);
     }
     
     public static String formatReceipt(Date date) {
