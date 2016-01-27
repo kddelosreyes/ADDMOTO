@@ -5,6 +5,7 @@
  */
 package project.addmoto.controller;
 
+import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import project.addmoto.data.Expense;
+import project.addmoto.data.MonthAverage;
 import project.addmoto.data.SellerAccount;
 import project.addmoto.model.ExpenseModel;
 import project.addmoto.mvc.Controller;
@@ -35,7 +37,6 @@ public final class ExpenseController extends Controller {
     private final JLabel eTodayTotal;
     
     private final JPanel eExpensePanel;
-    private final JLabel eAverageCost;
     private final JLabel eAverageMonth;
     private final JLabel eHighestCost;
     private final JLabel eHighestMonth;
@@ -47,6 +48,13 @@ public final class ExpenseController extends Controller {
     private final DefaultTableModel eTodayModel;
     
     private final SellerAccount sellerAccount;
+    
+    private final String[] months = {
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    };
     
     public ExpenseController(final App app, final Connection connection, final SellerAccount sellerAccount) {
         this.app = app;
@@ -62,7 +70,6 @@ public final class ExpenseController extends Controller {
         eMonthTotal = app.geteMonthlyTotal();
         eTodayTotal = app.geteTodayTotal();
         eExpensePanel = app.geteExpensePanel();
-        eAverageCost = app.geteAverageLabel();
         eAverageMonth = app.geteAverageMonthly();
         eHighestCost = app.geteHighestLabel();
         eHighestMonth = app.geteHighestMonthly();
@@ -77,7 +84,10 @@ public final class ExpenseController extends Controller {
 
     @Override
     public void setListeners() {
-        
+        eAdd.addActionListener((ActionEvent e) -> {
+            new AddExpenseController(connection, sellerAccount);
+            populateFields();
+        });
     }
     
     private void populateFields() {
@@ -85,6 +95,7 @@ public final class ExpenseController extends Controller {
         _getTodayExpenses();
         _getThisMonthTotal();
         _getThisMonthExpenses();
+        _getMonthlyAverage();
     }
     
     private void _getTodayTotal() {
@@ -93,6 +104,9 @@ public final class ExpenseController extends Controller {
     }
     
     private void _getTodayExpenses() {
+        while(eTodayModel.getRowCount() > 0) {
+            eTodayModel.removeRow(0);
+        }
         ArrayList<Expense> expenses = model.getExpensesToday();
         for(Expense expense : expenses) {
             eTodayModel.addRow(
@@ -112,6 +126,9 @@ public final class ExpenseController extends Controller {
     }
     
     private void _getThisMonthExpenses() {
+        while(eMonthModel.getRowCount() > 0) {
+            eMonthModel.removeRow(0);
+        }
         ArrayList<Expense> expenses = model.getExpensesThisMonth();
         for(Expense expense : expenses) {
             String dateTime = "";
@@ -128,5 +145,14 @@ public final class ExpenseController extends Controller {
                     }
             );
         }
+    }
+    
+    private void _getMonthlyAverage() {
+        MonthAverage[] mA = model.getMonthlyAverage();
+        eHighestMonth.setText("PhP " + Formatter.format(mA[0].expense));
+        eHighestCost.setText(months[mA[0].month - 1] + " " + mA[0].year);
+        eLowestMonth.setText("PhP " + Formatter.format(mA[1].expense));
+        eLowestCost.setText(months[mA[1].month - 1] + " " + mA[1].year);
+        eAverageMonth.setText("PhP " + Formatter.format(mA[2].expense));
     }
 }

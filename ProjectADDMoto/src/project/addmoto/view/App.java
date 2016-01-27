@@ -457,7 +457,6 @@ public class App extends javax.swing.JFrame {
         eHighestMonthly = new javax.swing.JLabel();
         jLabel85 = new javax.swing.JLabel();
         eLowestMonthly = new javax.swing.JLabel();
-        eAverageLabel = new javax.swing.JLabel();
         jSeparator8 = new javax.swing.JSeparator();
         eHighestLabel = new javax.swing.JLabel();
         jSeparator9 = new javax.swing.JSeparator();
@@ -2422,9 +2421,9 @@ public class App extends javax.swing.JFrame {
         eMonthlyTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane7.setViewportView(eMonthlyTable);
         if (eMonthlyTable.getColumnModel().getColumnCount() > 0) {
-            eMonthlyTable.getColumnModel().getColumn(1).setMinWidth(100);
-            eMonthlyTable.getColumnModel().getColumn(1).setPreferredWidth(100);
-            eMonthlyTable.getColumnModel().getColumn(1).setMaxWidth(100);
+            eMonthlyTable.getColumnModel().getColumn(1).setMinWidth(120);
+            eMonthlyTable.getColumnModel().getColumn(1).setPreferredWidth(120);
+            eMonthlyTable.getColumnModel().getColumn(1).setMaxWidth(120);
             eMonthlyTable.getColumnModel().getColumn(2).setMinWidth(80);
             eMonthlyTable.getColumnModel().getColumn(2).setPreferredWidth(80);
             eMonthlyTable.getColumnModel().getColumn(2).setMaxWidth(80);
@@ -2509,9 +2508,9 @@ public class App extends javax.swing.JFrame {
         eTodayTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane9.setViewportView(eTodayTable);
         if (eTodayTable.getColumnModel().getColumnCount() > 0) {
-            eTodayTable.getColumnModel().getColumn(0).setMinWidth(100);
-            eTodayTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-            eTodayTable.getColumnModel().getColumn(0).setMaxWidth(100);
+            eTodayTable.getColumnModel().getColumn(0).setMinWidth(130);
+            eTodayTable.getColumnModel().getColumn(0).setPreferredWidth(130);
+            eTodayTable.getColumnModel().getColumn(0).setMaxWidth(130);
             eTodayTable.getColumnModel().getColumn(2).setMinWidth(80);
             eTodayTable.getColumnModel().getColumn(2).setPreferredWidth(80);
             eTodayTable.getColumnModel().getColumn(2).setMaxWidth(80);
@@ -2616,8 +2615,6 @@ public class App extends javax.swing.JFrame {
         eLowestMonthly.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         eLowestMonthly.setText("PhP 1,000.00");
 
-        eAverageLabel.setText("Month");
-
         eHighestLabel.setText("Month");
 
         eLowestLabel.setText("Month");
@@ -2640,7 +2637,6 @@ public class App extends javax.swing.JFrame {
                             .addComponent(eHighestMonthly)
                             .addComponent(jLabel85)
                             .addComponent(eLowestMonthly)
-                            .addComponent(eAverageLabel)
                             .addComponent(eHighestLabel)
                             .addComponent(eLowestLabel))
                         .addGap(0, 78, Short.MAX_VALUE)))
@@ -2654,9 +2650,7 @@ public class App extends javax.swing.JFrame {
                 .addComponent(jLabel81)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(eAverageMonthly)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eAverageLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel83)
@@ -2992,7 +2986,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel dashboardPanel;
     private javax.swing.JLabel description;
     private javax.swing.JButton eAdd;
-    private javax.swing.JLabel eAverageLabel;
     private javax.swing.JLabel eAverageMonthly;
     private javax.swing.JPanel eExpensePanel;
     private javax.swing.JLabel eHighestLabel;
@@ -3542,10 +3535,6 @@ public class App extends javax.swing.JFrame {
     */
     public JButton geteAdd() {
         return eAdd;
-    }
-
-    public JLabel geteAverageLabel() {
-        return eAverageLabel;
     }
 
     public JLabel geteAverageMonthly() {

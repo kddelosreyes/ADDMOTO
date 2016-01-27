@@ -22,6 +22,15 @@ public class Expense {
         this.expenseDetail = expenseDetail;
         this.sellerID = sellerID;
     }
+    
+    public Expense(double expenseAmount, String expenseTimestamp,
+            String expenseReason, String expenseDetail, int sellerID) {
+        this.expenseAmount = expenseAmount;
+        this.expenseTimestamp = expenseTimestamp;
+        this.expenseReason = expenseReason;
+        this.expenseDetail = expenseDetail;
+        this.sellerID = sellerID;
+    }
 
     public int getExpenseID() {
         return expenseID;

@@ -3566,7 +3566,7 @@
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="100" minWidth="100" prefWidth="100" resizable="true">
+                            <Column maxWidth="120" minWidth="120" prefWidth="120" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -3716,7 +3716,7 @@
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="100" minWidth="100" prefWidth="100" resizable="true">
+                            <Column maxWidth="130" minWidth="130" prefWidth="130" resizable="true">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -3849,7 +3849,6 @@
                                       <Component id="eHighestMonthly" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel85" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="eLowestMonthly" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="eAverageLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="eHighestLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="eLowestLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -3868,9 +3867,7 @@
                           <Component id="jLabel81" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="eAverageMonthly" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="eAverageLabel" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSeparator8" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel83" min="-2" max="-2" attributes="0"/>
@@ -3953,11 +3950,6 @@
                       <Font name="Tahoma" size="24" style="1"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="PhP 1,000.00"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JLabel" name="eAverageLabel">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Month"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator8">

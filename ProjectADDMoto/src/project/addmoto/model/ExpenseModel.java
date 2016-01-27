@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import project.addmoto.data.Expense;
+import project.addmoto.data.MonthAverage;
 import project.addmoto.database.Database;
 
 /**
@@ -121,5 +122,60 @@ public class ExpenseModel {
         }
 
         return expenses;
+    }
+    
+    public MonthAverage[] getMonthlyAverage() {
+        ArrayList<MonthAverage> list = new ArrayList<>();
+        
+        try {
+            query = "select year(STR_TO_DATE(" + Database.EXPENSE_TIMESTAMP +
+                    ", '%b %d, %Y')) as 'year', month(STR_TO_DATE(" + Database.EXPENSE_TIMESTAMP +
+                    ", '%b %d, %Y')) as 'month', ifnull(sum(" + Database.EXPENSE_AMOUNT +
+                    "),0) as 'sumtotal' from " + Database.EXPENSE_TABLE +
+                    " group by month(STR_TO_DATE(" + Database.EXPENSE_TIMESTAMP + ", '%b %d, %Y'))";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            
+            while(resultSet.next()) {
+                int year = resultSet.getInt("year");
+                int month = resultSet.getInt("month");
+                double amount = resultSet.getDouble("sumtotal");
+                list.add(
+                        new MonthAverage(
+                                year,
+                                month,
+                                amount
+                        )
+                );
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        MonthAverage[] yA = new MonthAverage[3];
+        if(list.isEmpty()) {
+            yA[0] = new MonthAverage(0, 0, 0.0);
+            yA[1] = new MonthAverage(0, 0, 0.0);
+            yA[2] = new MonthAverage(0, 0, 0.0);
+        } else {
+            double avrg = 0.0;
+            MonthAverage high = list.get(0), low = high;
+            for (MonthAverage ya : list) {
+                avrg += ya.expense;
+                if (ya.expense >= high.expense) {
+                    high = ya;
+                }
+                if (ya.expense <= low.expense) {
+                    low = ya;
+                }
+            }
+            avrg = ((avrg*1.00) / list.size());
+            yA[0] = high;
+            yA[1] = low;
+            yA[2] = new MonthAverage(0, 0, avrg);
+        }
+        
+        return yA;
     }
 }

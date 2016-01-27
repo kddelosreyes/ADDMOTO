@@ -5,6 +5,11 @@
  */
 package project.addmoto.view;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Kim Howel delos Reyes
@@ -30,15 +35,16 @@ public class AddExpense extends javax.swing.JPanel {
         jLabel69 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        spAddUpdate = new javax.swing.JButton();
+        eAdd = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        eSelect = new javax.swing.JComboBox<>();
+        eOthers = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        eDetails = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        eAmount = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         jLabel69.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel69.setIcon(new javax.swing.ImageIcon(getClass().getResource("/project/addmoto/icons/tab_expenses.png"))); // NOI18N
@@ -52,33 +58,38 @@ public class AddExpense extends javax.swing.JPanel {
         jLabel4.setText("   Information Details");
         jLabel4.setOpaque(true);
 
-        spAddUpdate.setBackground(new java.awt.Color(0, 255, 102));
-        spAddUpdate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        spAddUpdate.setMnemonic('u');
-        spAddUpdate.setText("Add Expense");
+        eAdd.setBackground(new java.awt.Color(0, 255, 102));
+        eAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        eAdd.setMnemonic('u');
+        eAdd.setText("Add Expense");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel1.setText("Expenditure:");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bill (Water)", "Bill (Electricity)", "Bill (Internet)", "Rent", "Tax", "Others" }));
+        eSelect.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        eSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Bill (Water)", "Bill (Electricity)", "Bill (Internet)", "Business Permit", "Rentals", "Salary", "Tax", "Trucking Services", "Others" }));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField1.setEnabled(false);
+        eOthers.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        eOthers.setEnabled(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel2.setText("Details:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        eDetails.setColumns(20);
+        eDetails.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        eDetails.setLineWrap(true);
+        eDetails.setRows(5);
+        jScrollPane1.setViewportView(eDetails);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Amount:");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 0, 21)); // NOI18N
+        eAmount.setFont(new java.awt.Font("Tahoma", 0, 21)); // NOI18N
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 21)); // NOI18N
+        jLabel5.setText("PhP");
+        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -94,18 +105,20 @@ public class AddExpense extends javax.swing.JPanel {
                         .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(spAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(eAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(eAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(eSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)))
+                        .addComponent(eOthers, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -114,22 +127,20 @@ public class AddExpense extends javax.swing.JPanel {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jComboBox1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(eSelect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eOthers, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(1, 1, 1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(spAddUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(eAmount))
+                .addGap(36, 36, 36)
+                .addComponent(eAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -159,17 +170,40 @@ public class AddExpense extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton eAdd;
+    private javax.swing.JTextField eAmount;
+    private javax.swing.JTextArea eDetails;
+    private javax.swing.JTextField eOthers;
+    private javax.swing.JComboBox<String> eSelect;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel69;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JButton spAddUpdate;
     // End of variables declaration//GEN-END:variables
+
+    public JButton geteAdd() {
+        return eAdd;
+    }
+
+    public JTextField geteAmount() {
+        return eAmount;
+    }
+
+    public JTextArea geteDetails() {
+        return eDetails;
+    }
+
+    public JTextField geteOthers() {
+        return eOthers;
+    }
+
+    public JComboBox<String> geteSelect() {
+        return eSelect;
+    }
+
+    
 }
