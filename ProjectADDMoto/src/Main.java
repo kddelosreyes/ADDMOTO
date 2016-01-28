@@ -1,4 +1,5 @@
 
+import com.alee.laf.WebLookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -16,6 +17,7 @@ public class Main {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                //WebLookAndFeel.install();
                 new Login(query).setVisible(true);
             }
         });
