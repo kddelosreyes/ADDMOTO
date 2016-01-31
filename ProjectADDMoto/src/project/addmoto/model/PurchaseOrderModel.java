@@ -15,9 +15,7 @@ import project.addmoto.data.InventoryChange;
 import project.addmoto.data.OrderLine;
 import project.addmoto.data.OrderLineData;
 import project.addmoto.data.Products;
-import project.addmoto.data.SalesItems;
 import project.addmoto.database.Database;
-import project.addmoto.datacollections.SalesItemsList;
 
 /**
  *
@@ -203,14 +201,15 @@ public class PurchaseOrderModel {
         for (InventoryChange change : changeList) {
             try {
                 query = "INSERT INTO " + Database.INVENTORY_CHANGE_TABLE + " (" + Database.CHANGE_TIMESTAMP + ", " + Database.CHANGE_BEFORE + ", "
-                        + Database.CHANGE_AFTER + ", " + Database.CHANGE_QTY + ", " + Database.CHANGE_PRODUCT_ID + ")"
-                        + " VALUES (?, ?, ?, ?, ?)";
+                        + Database.CHANGE_AFTER + ", " + Database.CHANGE_QTY + ", " + Database.CHANGE_PRODUCT_ID + ", TYPE)"
+                        + " VALUES (?, ?, ?, ?, ?, ?)";
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, change.getTimestamp());
                 preparedStatement.setInt(2, change.getChangeBefore());
                 preparedStatement.setInt(3, change.getChangeAfter());
                 preparedStatement.setInt(4, change.getChangeQty());
                 preparedStatement.setInt(5, change.getProductID());
+                preparedStatement.setInt(6, 2);
 
                 insertedValue += preparedStatement.executeUpdate();
                 System.out.println("-> Inserting\n" + change.toString() + "\nValue: " + insertedValue);

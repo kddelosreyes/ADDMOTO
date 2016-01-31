@@ -66,19 +66,6 @@ public final class SupplierProductsController extends Controller {
 
     @Override
     public void setListeners() {
-        /*selectionModel.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if(e.getValueIsAdjusting()) {
-                    return;
-                }
-                List<SupplierProduct> productWithCode = supplierProductsList.stream()
-                        .filter((p) -> p.getAddmotoCode().equals(spProductsTable.getValueAt(spProductsTable.getSelectedRow(), 1)))
-                        .collect(Collectors.toList());
-                
-                JOptionPane.showMessageDialog(view, productWithCode.get(0).toString());
-            }
-        });*/
     }
 
     private void proceedToFunction() {

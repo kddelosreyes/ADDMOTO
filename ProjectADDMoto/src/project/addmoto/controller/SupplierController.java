@@ -238,7 +238,6 @@ public final class SupplierController extends Controller {
                 
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    JOptionPane.showMessageDialog(view, String.valueOf(sSummary.getSupplierID()));
                     sCompanyName.setText(sSummary.getSupplierName());
                     sContactName.setText(sSummary.getContactName());
                     sContactTitle.setText(sSummary.getContactPosition());

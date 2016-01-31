@@ -6,6 +6,7 @@ package project.addmoto.data;
  */
 public class Receipt {
     
+    private int ID;
     private String receiptNo;
     private String transactionTimeStamp;
     private double totalPrice;
@@ -17,6 +18,19 @@ public class Receipt {
     public Receipt(String receiptNo, String transactionTimeStamp,
             double totalPrice, int sellerID, double pricePaid,
             boolean isFullyPaid, double discount) {
+        this.receiptNo = receiptNo;
+        this.transactionTimeStamp = transactionTimeStamp;
+        this.totalPrice = totalPrice;
+        this.sellerID = sellerID;
+        this.pricePaid = pricePaid;
+        this.isFullyPaid = isFullyPaid;
+        this.discount = discount;
+    }
+    
+    public Receipt(int ID, String receiptNo, String transactionTimeStamp,
+            double totalPrice, int sellerID, double pricePaid,
+            boolean isFullyPaid, double discount) {
+        this.ID = ID;
         this.receiptNo = receiptNo;
         this.transactionTimeStamp = transactionTimeStamp;
         this.totalPrice = totalPrice;
@@ -81,4 +95,13 @@ public class Receipt {
     public void setIsFullyPaid(boolean isFullyPaid) {
         this.isFullyPaid = isFullyPaid;
     }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+    
 }

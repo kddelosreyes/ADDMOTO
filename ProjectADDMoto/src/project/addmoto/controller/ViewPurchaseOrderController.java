@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -87,6 +88,7 @@ public final class ViewPurchaseOrderController extends Controller {
         vpSupplier.setText(data.getSupplier());
         vpItems.setText(data.getTotalQuantity() + " items");
         vpTotal.setText("PhP: " + Formatter.format(data.getOrderTotalPrice()));
+        vpDeliveryDate.setText(Formatter.formatOrderDate(new Date(data.getTargetDate())));
         
         if(!data.getStatus().equalsIgnoreCase("Pending")) {
             vpReceived.setForeground(new java.awt.Color(255, 255, 255));

@@ -185,6 +185,15 @@ public class Database {
     */
     public static final String ORDER_TOTAL_QUANTITY = "total_quantity";
     
+    /*
+    RETURNS TABLE fields
+    */
+    public static final String RETURN_ID = "return_id";
+    public static final String RETURN_DATE = "return_date";
+    public static final String RETURN_PRODUCT_ID = "return_product_id";
+    public static final String RETURN_TOTAL_QUANTITY = "return_total_quantity";
+    public static final String RETURN_RECEIPT_ID = "return_receipt_id";
+    
     public Connection getConnection() {
         if(connection == null) {
             try {

@@ -12,6 +12,7 @@ public class SoldItems {
     private double totalProfit;
     private int productID;
     private int receiptID;
+    private String itemName;
     
     public SoldItems(int soldID, int itemQuantity, double totalPrice,
             double totalProfit, int productID, int receiptID) {
@@ -21,6 +22,18 @@ public class SoldItems {
         this.totalProfit = totalProfit;
         this.productID = productID;
         this.receiptID = receiptID;
+    }
+    
+    public SoldItems(int soldID, int itemQuantity, double totalPrice,
+            double totalProfit, int productID, int receiptID,
+            String itemName) {
+        this.soldID = soldID;
+        this.itemQuantity = itemQuantity;
+        this.totalPrice = totalPrice;
+        this.totalProfit = totalProfit;
+        this.productID = productID;
+        this.receiptID = receiptID;
+        this.itemName = itemName;
     }
 
     public int getSoldID() {
@@ -69,5 +82,13 @@ public class SoldItems {
 
     public void setReceiptID(int receiptID) {
         this.receiptID = receiptID;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 }

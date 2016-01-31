@@ -269,6 +269,9 @@ public final class POSController extends Controller {
                     voidItem.setEnabled(false);
                 }
                 itemsTable.clearSelection();
+                if(tableModel.getRowCount() == 0) {
+                    paySales.setEnabled(false);
+                }
             }
         });
 
