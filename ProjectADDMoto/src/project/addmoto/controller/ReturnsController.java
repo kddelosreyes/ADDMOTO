@@ -24,6 +24,7 @@ import org.jdesktop.swingx.JXSearchField;
 import project.addmoto.data.InventoryChange;
 import project.addmoto.data.Receipt;
 import project.addmoto.data.Return;
+import project.addmoto.data.ReturnsData;
 import project.addmoto.data.SellerAccount;
 import project.addmoto.data.SoldItems;
 import project.addmoto.model.ReturnsModel;
@@ -56,6 +57,7 @@ public final class ReturnsController extends Controller {
     private final JLabel rNoItems;
     
     private ArrayList<Receipt> receiptList;
+    private ArrayList<ReturnsData> rData;
     private ArrayList<SoldItems> list;
     private int orderID;
     
@@ -72,10 +74,11 @@ public final class ReturnsController extends Controller {
         rReceiptsTable = app.getrReceiptsTable();
         receiptsModel = (DefaultTableModel) rReceiptsTable.getModel();
         rReturnsTable = app.getrReturnsTable();
-        rReceiptsTable.getTableHeader().setPreferredSize(new Dimension(rReceiptsTable.getWidth(), 30));
+        rReceiptsTable.getTableHeader().setPreferredSize(new Dimension(rReceiptsTable.getWidth(), 38));
         receiptsSelection = rReceiptsTable.getSelectionModel();
         rDropdown = app.getrDropdown();
         returnsModel = (DefaultTableModel) rReturnsTable.getModel();
+        rReturnsTable.getTableHeader().setPreferredSize(new Dimension(rReturnsTable.getWidth(), 38));
         rSearch = app.getrSearch();
         rReturn = app.getrReturn();
         rPrice = app.getrPrice();
@@ -86,10 +89,40 @@ public final class ReturnsController extends Controller {
         setListeners();
     }
     
-    private void populate() {
+    public void populate() {
         _getReceipts();
+        _getReturns();
         rReturn.setEnabled(false);
         rDropdown.setEnabled(false);
+    }
+    
+    private void _getReturns() {
+        rData = model.getReturns();
+        isAdd = true;
+        while(rReturnsTable.getRowCount() > 0) {
+            returnsModel.removeRow(0);
+        }
+        isAdd = false;
+        
+        double sum = 0;
+        int qty = 0;
+        for(ReturnsData rD : rData) {
+            returnsModel.addRow(
+                    new Object[] {
+                        Formatter.formatOrderDate(new Date(rD.getReturnDate())),
+                        rD.getAddmotoCode(),
+                        rD.getItemName(),
+                        rD.getQuantity(),
+                        Formatter.format(rD.getSellingPrice()),
+                        Formatter.format(rD.getTotalPrice())
+                    }
+            );
+            sum += rD.getTotalPrice();
+            qty += rD.getQuantity();
+        }
+        
+        rPrice.setText("-PhP " + Formatter.format(sum));
+        rNoItems.setText("Total of " + qty + " items");
     }
     
     private void _getReceipts() {
@@ -253,9 +286,13 @@ public final class ReturnsController extends Controller {
                 );
             }
             populate();
-            while(rDropdown.getItemCount() > 0) {
-                rDropdown.removeItemAt(0);
-            }
+            resetD();
         });
+    }
+    
+    public void resetD() {
+        while (rDropdown.getItemCount() > 0) {
+            rDropdown.removeItemAt(0);
+        }
     }
 }

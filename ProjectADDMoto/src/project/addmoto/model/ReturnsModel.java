@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import project.addmoto.data.InventoryChange;
 import project.addmoto.data.Receipt;
 import project.addmoto.data.Return;
+import project.addmoto.data.ReturnsData;
 import project.addmoto.data.SoldItems;
 import project.addmoto.database.Database;
 
@@ -221,5 +222,41 @@ public class ReturnsModel {
         } catch(Exception e) {
             return -1;
         }
+    }
+    
+    public ArrayList<ReturnsData> getReturns() {
+        ArrayList<ReturnsData> rList = new ArrayList<>();
+        
+        try {
+            query = "select r.return_date, " +
+                    "p.product_addmoto_code, " +
+                    "concat(pl.product_line_name, ' ', p.product_description, ' ', p.product_characteristic, ' ', p.product_motors) as 'item_name', " +
+                    "r.return_total_quantity, " +
+                    "p.product_selling_price, " +
+                    "(r.return_total_quantity * p.product_selling_price) as 'total_price' " +
+                    "from returns_table as r left join products_table as p on r.return_product_id = p.product_id " +
+                    "left join product_line_table as pl on p.product_line_id = pl.product_line_id";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            
+            while(resultSet.next()) {
+                rList.add(
+                        new ReturnsData(
+                                resultSet.getString("return_date"),
+                                resultSet.getString("product_addmoto_code"),
+                                resultSet.getString("item_name"),
+                                resultSet.getInt("return_total_quantity"),
+                                resultSet.getDouble("product_selling_price"),
+                                resultSet.getDouble("total_price")
+                        )
+                );
+            }
+            
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+        return rList;
     }
 }

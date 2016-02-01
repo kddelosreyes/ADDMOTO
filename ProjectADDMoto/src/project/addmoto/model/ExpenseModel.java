@@ -178,4 +178,33 @@ public class ExpenseModel {
         
         return yA;
     }
+    
+    public ArrayList<MonthAverage> getAverage() {
+        ArrayList<MonthAverage> mAverage = new ArrayList<>();
+        
+        try {
+            query = "select year(STR_TO_DATE(expense_timestamp, '%b %d, %Y')) as 'year', " +
+                    "month(STR_TO_DATE(expense_timestamp, '%b %d, %Y')) as 'month', " +
+                    "ifnull(sum(expense_amount), 0) as 'sumtotal' " +
+                    "from expense_table " +
+                    "group by month(STR_TO_DATE(expense_timestamp, '%b %d, %Y')) " +
+                    "order by year, month limit 5;";
+            
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+            while(resultSet.next()) {
+                mAverage.add(
+                        new MonthAverage(
+                                resultSet.getInt("year"),
+                                resultSet.getInt("month"),
+                                resultSet.getDouble("sumtotal")
+                        )
+                );
+            }
+        } catch(Exception exc) {
+            exc.printStackTrace();
+        }
+        
+        return mAverage;
+    }
 }
